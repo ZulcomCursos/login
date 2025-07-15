@@ -15,14 +15,15 @@
       <header class="content-header">
         <h1>PANEL TÉCNICO</h1>
         <div class="user-actions">
-          <span>Técnico: <%= user.name %></span>
-          <button class="logout-btn">Cerrar Sesión</button>
+          <% if (user && user.name) { %>
+            <span class="user-name">Técnico: <%= user.name %></span>
+          <% } %>
+          <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
         </div>
       </header>
 
-      <!-- Contenido específico del dashboard técnico -->
       <div class="dashboard-content">
-        <!-- Aquí irían los componentes específicos -->
+        <!-- Contenido específico -->
       </div>
     </main>
   </div>

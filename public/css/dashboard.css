@@ -11,7 +11,7 @@
   --blue-500: #339af0;
   --blue-700: #1c7ed6;
   --blue-900: #1864ab;
-  
+  --blue-50: #f0f7ff;
   /* Morados */
   --purple-100: #f3f0ff;
   --purple-300: #b197fc;
@@ -64,9 +64,10 @@ body {
   gap: 15px;
 }
 
-.user-actions span {
+.user-name {
   color: var(--purple-700);
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .logout-btn {
@@ -86,5 +87,5 @@ body {
 .logout-btn:hover {
   background-color: var(--purple-700);
   transform: translateY(-1px);
-  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }

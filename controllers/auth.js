@@ -83,7 +83,7 @@ const redirectByRole = (res, token, role) => {
   // Guardar el token en una cookie segura
   res.cookie('jwt', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'development',
+    secure: process.env.NODE_ENV === 'production', // Cambiado a 'production'
     maxAge: 2 * 60 * 60 * 1000 // 2 horas
   });
   

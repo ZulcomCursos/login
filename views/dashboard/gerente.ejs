@@ -16,11 +16,10 @@
         <h1>PANEL GERENCIAL</h1>
         <div class="user-actions">
           <% if (user && user.name) { %>
-            <span>Gerente: <%= user.name %></span>
+            <span class="user-name">Gerente: <%= user.name %></span>
           <% } else { %>
-            <span>Sesión activa</span>
           <% } %>
-          <a href="/auth/logout" class="logout-btn">Cerrar Sesión</a>
+          <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
         </div>
       </header>
 

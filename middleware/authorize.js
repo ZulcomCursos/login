@@ -1,4 +1,3 @@
-// middlewares/authorize.js
 const authorize = (roles = []) => {
   if (typeof roles === 'string') {
     roles = [roles];

@@ -54,6 +54,7 @@
   align-items: center;
   gap: 10px;
   font-weight: 500;
+  position: relative;
 }
 
 .nav-item::before {
@@ -79,4 +80,66 @@
   height: auto;
   display: block;
   margin: 0 auto;
+}
+/* ... (mantén todos los estilos anteriores) ... */
+
+/* Estilos para el submenú VERTICAL ajustado */
+.nav-item.dropdown {
+  position: relative;
+  padding: 12px 20px;
+}
+
+.submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background-color: var(--light-gray);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  /* Eliminé border y box-shadow que podrían causar la línea negra */
+  background-color: var(--white);
+  border-radius: 0 0 4px 4px;
+}
+
+.nav-item.dropdown:hover .submenu {
+  max-height: 200px;
+}
+
+.submenu-item {
+  padding: 8px 20px 8px 35px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  width: 100%;
+  box-sizing: border-box;
+  /* Asegurando que no haya bordes */
+  border: none;
+  outline: none;
+}
+
+/* Eliminando cualquier borde residual */
+.nav-item.dropdown:hover {
+  background-color: var(--blue-100);
+  border-left: 3px solid var(--blue-500);
+  border-bottom: none; /* Añadido para prevenir línea inferior */
+}
+
+/* Asegurando que no haya bordes en los estados hover */
+.submenu-item:hover {
+  background-color: var(--blue-100);
+  border-left: 3px solid var(--blue-300);
+  border-bottom: none;
+}
+
+/* Estilo para el enlace principal */
+.nav-item.dropdown > a {
+  display: block;
+  width: 100%;
+  border: none; /* Asegurando que no tenga bordes */
 }

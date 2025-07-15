@@ -1,11 +1,10 @@
 const express = require('express');
-const router = express.Router();
 const { verifyToken } = require('../utils/handleJwt');
+const { usersModel } = require('../models');
 
-// Middleware para verificar autenticación
 const authenticate = async (req, res, next) => {
   try {
-    const token = req.cookies?.jwt; // Uso del operador opcional por si las cookies no existen
+    const token = req.cookies?.jwt;
     
     if (!token) {
       return res.redirect('/auth/login');
@@ -15,14 +14,32 @@ const authenticate = async (req, res, next) => {
     if (!decoded) {
       return res.redirect('/auth/login');
     }
-    
-    req.user = decoded;
+
+    // Obtener el usuario completo de la base de datos
+    let user;
+    if (process.env.ENGINE_DB === "nosql") {
+      user = await usersModel.findById(decoded.id).lean();
+    } else {
+      user = await usersModel.findByPk(decoded.id, { raw: true });
+    }
+
+    if (!user) {
+      return res.redirect('/auth/login');
+    }
+
+    // Adjuntar el usuario a la solicitud
+    req.user = {
+      id: user.id,
+      name: user.name,
+      username: user.username,
+      role: user.role
+    };
+
     next();
   } catch (error) {
     console.error('Authentication error:', error);
     return res.redirect('/auth/login');
   }
 };
-
 
 module.exports = authenticate;
