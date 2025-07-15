@@ -1,5 +1,3 @@
-
-
 const models = {
   usersModel: require('./mysql/users'),
 };

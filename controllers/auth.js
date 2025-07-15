@@ -1,3 +1,4 @@
+// controller/auth.js
 const { matchedData } = require("express-validator");
 const { encrypt, compare } = require("../utils/handlePassword");
 const { tokenSign } = require("../utils/handleJwt");
@@ -6,9 +7,7 @@ const { usersModel } = require("../models");
 const ENGINE_DB = process.env.ENGINE_DB;
 
 /**
- * Este controlador es el encargado de registrar un usuario
- * @param {*} req 
- * @param {*} res 
+ * Registro de usuario
  */
 const registerCtrl = async (req, res) => {
   try {
@@ -17,17 +16,19 @@ const registerCtrl = async (req, res) => {
     const body = { ...req, password };
     const dataUser = await usersModel.create(body);
     
-    // Para ambos motores, eliminamos el password de la respuesta
     const userData = ENGINE_DB === "nosql" 
       ? dataUser.toObject() 
       : dataUser.get({ plain: true });
-      delete userData.password;
+    delete userData.password;
 
     const data = {
       token: await tokenSign(userData),
       user: userData,
     };
-    res.status(201).send({ data });
+    
+    // Redirección basada en rol después del registro
+    return redirectByRole(res, data.token, userData.role);
+    
   } catch(e) {
     console.log(e);
     handleHttpError(res, "ERROR_REGISTER_USER");
@@ -35,20 +36,17 @@ const registerCtrl = async (req, res) => {
 };
 
 /**
- * Este controlador es el encargado de logear a una persona
- * @param {*} req 
- * @param {*} res 
+ * Login de usuario
  */
 const loginCtrl = async (req, res) => {
   try {
     req = matchedData(req);
     let user;
+    
     if (ENGINE_DB === "nosql") {
-      // Sintaxis para MongoDB (Mongoose)
       user = await usersModel.findOne({ username: req.username }).select('+password');
       if (user) user = user.toObject();
     } else {
-      // Sintaxis para MySQL (Sequelize)
       user = await usersModel.findOne({ 
         where: { username: req.username },
         raw: true
@@ -67,15 +65,38 @@ const loginCtrl = async (req, res) => {
     }
 
     delete user.password;
-    const data = {
-      token: await tokenSign(user),
-      user
-    };
-
-    res.send({ data });
+    const token = await tokenSign(user);
+    
+    // Redirección basada en rol
+    return redirectByRole(res, token, user.role);
+    
   } catch(e) {
     console.log(e);
     handleHttpError(res, "ERROR_LOGIN_USER");
+  }
+};
+
+/**
+ * Función helper para redirección por rol
+ */
+const redirectByRole = (res, token, role) => {
+  // Guardar el token en una cookie segura
+  res.cookie('jwt', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'development',
+    maxAge: 2 * 60 * 60 * 1000 // 2 horas
+  });
+  
+  // Redireccionar según el rol
+  switch(role) {
+    case 'gerente':
+      return res.redirect('/dashboard/gerente');
+    case 'administrador':
+      return res.redirect('/dashboard/administrador');
+    case 'tecnico':
+      return res.redirect('/dashboard/tecnico');
+    default:
+      return res.redirect('/dashboard/user');
   }
 };
 

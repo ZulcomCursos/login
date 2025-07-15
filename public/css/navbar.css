@@ -1,0 +1,82 @@
+.sidebar {
+  width: 250px;
+  background-color: var(--white);
+  border-right: 1px solid var(--medium-gray);
+  box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+}
+
+.logo-container {
+  padding: 20px;
+  border-bottom: 1px solid var(--medium-gray);
+}
+
+.logo {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  color: var(--purple-700);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo::before {
+  content: "●";
+  color: var(--blue-500);
+  font-size: 1.8rem;
+}
+
+.nav-section {
+  padding: 15px 0;
+}
+
+.nav-title {
+  padding: 0 20px 10px;
+  margin: 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: var(--blue-700);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.nav-item::before {
+  content: "›";
+  color: var(--purple-300);
+}
+
+.nav-item:hover {
+  background-color: var(--blue-100);
+  border-left: 3px solid var(--blue-500);
+}
+
+.nav-item.active {
+  background-color: var(--purple-100);
+  border-left: 3px solid var(--purple-500);
+}
+
+.nav-item.active::before {
+  color: var(--purple-500);
+}
+.img-logo {
+  width: 80px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}

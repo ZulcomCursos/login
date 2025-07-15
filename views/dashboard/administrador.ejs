@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZULCOM - Administrador</title>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/navadministrador') %>
+    
+    <main class="main-content">
+      <header class="content-header">
+        <h1>PANEL ADMINISTRATIVO</h1>
+        <div class="user-actions">
+          <span>Administrador: <%= user.name %></span>
+          <button class="logout-btn">Cerrar Sesión</button>
+        </div>
+      </header>
+
+      <!-- Contenido específico del dashboard administrativo -->
+      <div class="dashboard-content">
+        <!-- Aquí irían los componentes específicos -->
+      </div>
+    </main>
+  </div>
+</body>
+</html>

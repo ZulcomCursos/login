@@ -17,6 +17,9 @@ const validatorRegister = [
     .exists()
     .notEmpty()
     .isLength({min:3, max:15}),
+    check("role")
+    .exists()
+    .notEmpty(),
     (req, res, next) => {
         return validateResults(req, res, next)
     }

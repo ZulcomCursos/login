@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZULCOM - Gerente</title>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/navgerente') %>
+    
+    <main class="main-content">
+      <header class="content-header">
+        <h1>PANEL GERENCIAL</h1>
+        <div class="user-actions">
+          <% if (user && user.name) { %>
+            <span>Gerente: <%= user.name %></span>
+          <% } else { %>
+            <span>Sesión activa</span>
+          <% } %>
+          <a href="/auth/logout" class="logout-btn">Cerrar Sesión</a>
+        </div>
+      </header>
+
+      <!-- Contenido específico del dashboard gerencial -->
+      <div class="dashboard-content">
+        <!-- Aquí irían los componentes específicos -->
+      </div>
+    </main>
+  </div>
+</body>
+</html>
