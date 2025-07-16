@@ -54,14 +54,18 @@ const loginCtrl = async (req, res) => {
     }
 
     if (!user) {
-      handleHttpError(res, "USER_NOT_EXISTS", 404);
-      return;
+      return res.render('auth/login', { 
+        title: 'Iniciar Sesión',
+        error: 'Credenciales Incorrectas' 
+      });
     }
 
     const check = await compare(req.password, user.password);
     if (!check) {
-      handleHttpError(res, "PASSWORD_INVALID", 401);
-      return;
+      return res.render('auth/login', { 
+        title: 'Iniciar Sesión',
+        error: 'Credenciales Incorrectas' 
+      });
     }
 
     delete user.password;
@@ -72,7 +76,10 @@ const loginCtrl = async (req, res) => {
     
   } catch(e) {
     console.log(e);
-    handleHttpError(res, "ERROR_LOGIN_USER");
+    return res.render('auth/login', { 
+      title: 'Iniciar Sesión',
+      error: 'Error al iniciar sesión' 
+    });
   }
 };
 
@@ -83,7 +90,7 @@ const redirectByRole = (res, token, role) => {
   // Guardar el token en una cookie segura
   res.cookie('jwt', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // Cambiado a 'production'
+    secure: process.env.NODE_ENV === 'development', // Cambiado a 'production'
     maxAge: 2 * 60 * 60 * 1000 // 2 horas
   });
   
