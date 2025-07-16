@@ -6,6 +6,14 @@ const validatorRegister = [
     .exists()
     .notEmpty()
     .isLength({min:3, max:99}),
+    check("cedula")
+    .exists()
+    .notEmpty()
+    .isLength({min:10, max:10}),
+    check("telefono")
+    .exists()
+    .notEmpty()
+    .isLength({min:10, max:10}),
     check("email")
     .exists()
     .notEmpty()
