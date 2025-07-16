@@ -3,31 +3,31 @@ const validateResults = require("../utils/handleValidator")
 
 const validatorRegister = [
     check("name")
-    .exists()
-    .notEmpty()
-    .isLength({min:3, max:99}),
+        .exists().withMessage("El nombre es requerido")
+        .notEmpty().withMessage("El nombre no puede estar vacío")
+        .isLength({min:3, max:99}).withMessage("El nombre debe tener entre 3 y 99 caracteres"),
     check("cedula")
-    .exists()
-    .notEmpty()
-    .isLength({min:10, max:10}),
+        .exists().withMessage("La cédula es requerida")
+        .notEmpty().withMessage("La cédula no puede estar vacía")
+        .isLength({min:10, max:10}).withMessage("La cédula debe tener 10 caracteres"),
     check("telefono")
-    .exists()
-    .notEmpty()
-    .isLength({min:10, max:10}),
+        .exists().withMessage("El teléfono es requerido")
+        .notEmpty().withMessage("El teléfono no puede estar vacío")
+        .isLength({min:10, max:10}).withMessage("El teléfono debe tener 10 caracteres"),
     check("email")
-    .exists()
-    .notEmpty()
-    .isEmail(),
+        .exists().withMessage("El email es requerido")
+        .notEmpty().withMessage("El email no puede estar vacío")
+        .isEmail().withMessage("Debe ser un email válido"),
     check("username")
-    .exists()
-    .notEmpty(),
+        .exists().withMessage("El nombre de usuario es requerido")
+        .notEmpty().withMessage("El nombre de usuario no puede estar vacío"),
     check("password")
-    .exists()
-    .notEmpty()
-    .isLength({min:3, max:15}),
+        .exists().withMessage("La contraseña es requerida")
+        .notEmpty().withMessage("La contraseña no puede estar vacía")
+        .isLength({min:3, max:15}).withMessage("La contraseña debe tener entre 3 y 15 caracteres"),
     check("role")
-    .exists()
-    .notEmpty(),
+        .exists().withMessage("El rol es requerido")
+        .notEmpty().withMessage("Debe seleccionar un rol"),
     (req, res, next) => {
         return validateResults(req, res, next)
     }
@@ -35,15 +35,15 @@ const validatorRegister = [
 
 const validatorLogin = [
     check("password")
-    .exists()
-    .notEmpty()
-    .isLength({min:3, max:15}),
+        .exists().withMessage("La contraseña es requerida")
+        .notEmpty().withMessage("La contraseña no puede estar vacía")
+        .isLength({min:3, max:15}).withMessage("La contraseña debe tener entre 3 y 15 caracteres"),
     check("username")
-    .exists()
-    .notEmpty(),
+        .exists().withMessage("El nombre de usuario es requerido")
+        .notEmpty().withMessage("El nombre de usuario no puede estar vacío"),
     (req, res, next) => {
         return validateResults(req, res, next)
     }
 ];
 
-module.exports = { validatorRegister, validatorLogin};
+module.exports = { validatorRegister, validatorLogin };

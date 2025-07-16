@@ -15,6 +15,10 @@
       <header class="content-header">
         <h1>PANEL TÉCNICO</h1>
         <div class="user-actions">
+          <div>
+            <a href="/auth/change_password"><img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil"></a>
+          </div>
+          
           <% if (user && user.name) { %>
             <span class="user-name">Técnico: <%= user.name %></span>
           <% } %>

@@ -19,7 +19,6 @@
 }
 
 body.auth-page {
-  background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
   min-height: 100vh;
   display: flex;
   justify-content: center;

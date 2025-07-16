@@ -1,4 +1,3 @@
-// controller/auth.js
 const { matchedData } = require("express-validator");
 const { encrypt, compare } = require("../utils/handlePassword");
 const { tokenSign } = require("../utils/handleJwt");
@@ -12,6 +11,20 @@ const ENGINE_DB = process.env.ENGINE_DB;
 const registerCtrl = async (req, res) => {
   try {
     req = matchedData(req);
+    
+    // Verificar si el usuario ya existe
+    const existingUser = await usersModel.findOne({
+      where: ENGINE_DB === "nosql" ? { username: req.username } : { username: req.username }
+    });
+    
+    if (existingUser) {
+      return res.render('auth/register', {
+        title: 'Registro',
+        errors: ['El nombre de usuario ya está en uso'],
+        formData: req
+      });
+    }
+
     const password = await encrypt(req.password);
     const body = { ...req, password };
     const dataUser = await usersModel.create(body);
@@ -26,12 +39,15 @@ const registerCtrl = async (req, res) => {
       user: userData,
     };
     
-    // Redirección basada en rol después del registro
     return redirectByRole(res, data.token, userData.role);
     
   } catch(e) {
-    console.log(e);
-    handleHttpError(res, "ERROR_REGISTER_USER");
+    console.error('Error en registerCtrl:', e);
+    return res.render('auth/register', {
+      title: 'Registro',
+      errors: ['Error al registrar el usuario. Por favor, intente nuevamente.'],
+      formData: req.body
+    });
   }
 };
 
@@ -56,7 +72,8 @@ const loginCtrl = async (req, res) => {
     if (!user) {
       return res.render('auth/login', { 
         title: 'Iniciar Sesión',
-        error: 'Credenciales Incorrectas' 
+        errors: ['Credenciales incorrectas'],
+        formData: req
       });
     }
 
@@ -64,21 +81,22 @@ const loginCtrl = async (req, res) => {
     if (!check) {
       return res.render('auth/login', { 
         title: 'Iniciar Sesión',
-        error: 'Credenciales Incorrectas' 
+        errors: ['Credenciales incorrectas'],
+        formData: req
       });
     }
 
     delete user.password;
     const token = await tokenSign(user);
     
-    // Redirección basada en rol
     return redirectByRole(res, token, user.role);
     
   } catch(e) {
-    console.log(e);
+    console.error('Error en loginCtrl:', e);
     return res.render('auth/login', { 
       title: 'Iniciar Sesión',
-      error: 'Error al iniciar sesión' 
+      errors: ['Error al iniciar sesión. Por favor, intente nuevamente.'],
+      formData: req.body
     });
   }
 };
@@ -87,14 +105,12 @@ const loginCtrl = async (req, res) => {
  * Función helper para redirección por rol
  */
 const redirectByRole = (res, token, role) => {
-  // Guardar el token en una cookie segura
   res.cookie('jwt', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'development', // Cambiado a 'production'
+    secure: process.env.NODE_ENV === 'production',
     maxAge: 2 * 60 * 60 * 1000 // 2 horas
   });
   
-  // Redireccionar según el rol
   switch(role) {
     case 'gerente':
       return res.redirect('/dashboard/gerente');

@@ -81,7 +81,15 @@
   display: block;
   margin: 0 auto;
 }
-/* ... (mantén todos los estilos anteriores) ... */
+.img-perfil {
+  width: 60px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.img-perfil:hover {
+  transform: translateY(-1px);
+}
 
 /* Estilos para el submenú VERTICAL ajustado */
 .nav-item.dropdown {
