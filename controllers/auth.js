@@ -105,12 +105,14 @@ const loginCtrl = async (req, res) => {
  * Función helper para redirección por rol
  */
 const redirectByRole = (res, token, role) => {
+  // Guardar el token en una cookie segura
   res.cookie('jwt', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.NODE_ENV === 'development', // Cambiado a 'production'
     maxAge: 2 * 60 * 60 * 1000 // 2 horas
   });
   
+  // Redireccionar según el rol
   switch(role) {
     case 'gerente':
       return res.redirect('/dashboard/gerente');
@@ -123,4 +125,109 @@ const redirectByRole = (res, token, role) => {
   }
 };
 
-module.exports = { registerCtrl, loginCtrl };
+/**
+ * Mostrar formulario para cambiar contraseña
+ */
+const showChangePassword = async (req, res) => {
+  try {
+    // Obtener datos del usuario desde el token
+    const user = req.user;
+    
+    if (ENGINE_DB === "nosql") {
+      const userData = await usersModel.findById(user._id).lean();
+      return res.render('auth/change_password', { 
+        title: 'Cambiar Contraseña',
+        user: userData,
+        errors: null
+      });
+    } else {
+      const userData = await usersModel.findByPk(user.id);
+      return res.render('auth/change_password', { 
+        title: 'Cambiar Contraseña',
+        user: userData.get({ plain: true }),
+        errors: null
+      });
+    }
+  } catch(e) {
+    console.log(e);
+    handleHttpError(res, "ERROR_SHOW_CHANGE_PASSWORD");
+  }
+};
+
+/**
+ * Procesar cambio de contraseña
+ */
+const changePassword = async (req, res) => {
+  try {
+    //const { currentPassword, newPassword, repeatPassword, telefono, email } = req.body;
+    const { newPassword, repeatPassword, telefono, email } = req.body;
+    const userId = req.user.id; // o req.user._id para MongoDB
+
+    // Validaciones básicas
+    const errors = [];
+    
+    if (newPassword !== repeatPassword) {
+      errors.push("Las contraseñas nuevas no coinciden");
+    }
+    
+    if (newPassword.length < 3 || newPassword.length > 15) {
+      errors.push("La nueva contraseña debe tener entre 3 y 15 caracteres");
+    }
+
+    // Obtener usuario con contraseña
+    let user;
+    if (ENGINE_DB === "nosql") {
+      user = await usersModel.findById(userId).select('+password').lean();
+    } else {
+      user = await usersModel.findByPk(userId);
+      user = user.get({ plain: true });
+    }
+
+    // Comparar contraseñas (la importante)
+    //const isMatch = await compare(currentPassword, user.password);
+    //if (!isMatch) {
+      //errors.push("La contraseña actual es incorrecta");
+    //}
+
+    if (errors.length > 0) {
+      return res.render('auth/change_password', {
+        title: 'Cambiar Contraseña',
+        user: { ...user, telefono, email },
+        errors
+      });
+    }
+
+    // Si todo está bien, actualizar
+    const encryptedPassword = await encrypt(newPassword);
+    
+    if (ENGINE_DB === "nosql") {
+      await usersModel.findByIdAndUpdate(userId, {
+        password: encryptedPassword,
+        telefono,
+        email
+      });
+    } else {
+      await usersModel.update({
+        password: encryptedPassword,
+        telefono,
+        email
+      }, { where: { id: userId } });
+    }
+
+    // Redirigir
+    return redirectByRole(res, req.cookies.jwt, req.user.role);
+    
+  } catch(e) {
+    console.log(e);
+    handleHttpError(res, "ERROR_CHANGING_PASSWORD");
+  }
+};
+
+// Actualiza el export al final del archivo
+module.exports = { 
+  registerCtrl, 
+  loginCtrl,
+  showChangePassword,
+  changePassword,
+  redirectByRole
+};

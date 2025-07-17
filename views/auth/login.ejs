@@ -13,8 +13,8 @@
         <h2>Iniciar Sesión</h2>
       </div>
       <div class="auth-body">
-        <% if (typeof error !== 'undefined') { %>
-          <div class="auth-error"><%= error %></div>
+        <% if (typeof errors !== 'undefined') { %>
+          <div class="auth-error"><%= errors %></div>
         <% } %>
         <form action="/auth/login" method="POST" class="auth-form">
           <div class="form-group">

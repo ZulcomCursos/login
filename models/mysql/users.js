@@ -18,22 +18,26 @@ const User = sequelize.define(
     },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     username: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     role: {
       type: DataTypes.ENUM(["user","tecnico", "administrador", "gerente"]),
-      defaultValue:('user'),
+      defaultValue: 'user',
     },
   },
   {
     timestamps: true,
   }
 );
+
 User.find = User.findAll;
 User.findById = User.findByPk;
 module.exports = User;

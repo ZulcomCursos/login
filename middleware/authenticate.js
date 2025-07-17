@@ -17,11 +17,9 @@ const authenticate = async (req, res, next) => {
 
     // Obtener el usuario completo de la base de datos
     let user;
-    if (process.env.ENGINE_DB === "nosql") {
-      user = await usersModel.findById(decoded.id).lean();
-    } else {
-      user = await usersModel.findByPk(decoded.id, { raw: true });
-    }
+
+    user = await usersModel.findByPk(decoded.id, { raw: true });
+    
 
     if (!user) {
       return res.redirect('/auth/login');

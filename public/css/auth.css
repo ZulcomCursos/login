@@ -136,6 +136,30 @@ body.auth-page {
   text-align: center;
 }
 
+/* Estilos para el icono de mostrar contraseña */
+.password-toggle {
+  position: relative;
+}
+
+.password-toggle input {
+  padding-right: 35px;
+}
+
+.password-toggle .toggle-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  cursor: pointer;
+  color: var(--dark-gray);
+}
+
+/* Estilos para campos de solo lectura */
+input[readonly] {
+  background-color: var(--light-gray);
+  cursor: not-allowed;
+}
 /* Responsive */
 @media (max-width: 600px) {
   .auth-body {
