@@ -24,27 +24,6 @@ const registerCtrl = async (req, res) => {
 
     const reqData = matchedData(req);
     
-    // Verificar si el usuario ya existe
-    const existingUser = await usersModel.findOne({
-      where: { cedula: reqData.cedula }
-    });
-    
-    if (existingUser) {
-      // Eliminar archivos subidos si el usuario ya existe
-      if (req.files['copia_cedula']) {
-        fs.unlinkSync(path.join(__dirname, '../storage/cedula', req.files['copia_cedula'][0].filename));
-      }
-      if (req.files['record_policial']) {
-        fs.unlinkSync(path.join(__dirname, '../storage/record', req.files['record_policial'][0].filename));
-      }
-      
-      return res.render('auth/register', {
-        title: 'Registro',
-        errors: ['El usuario con esta cédula ya está registrado'],
-        formData: reqData
-      });
-    }
-
     // Generar username automático
     const username = generateUsername(reqData.nombres, reqData.apellidos);
     
@@ -87,9 +66,22 @@ const registerCtrl = async (req, res) => {
       }
     }
 
+    // Manejar errores de validación de Sequelize
+    let errorMessages = ['Error al registrar el usuario. Por favor, intente nuevamente.'];
+    
+    if (e.name === 'SequelizeUniqueConstraintError') {
+      errorMessages = e.errors.map(err => {
+        if (err.path === 'cedula') return 'La cédula ya está registrada';
+        if (err.path === 'telefono') return 'El teléfono ya está registrado';
+        if (err.path === 'email') return 'El email ya está registrado';
+        if (err.path === 'username') return 'El nombre de usuario ya existe';
+        return err.message;
+      });
+    }
+
     return res.render('auth/register', {
       title: 'Registro',
-      errors: ['Error al registrar el usuario. Por favor, intente nuevamente.'],
+      errors: errorMessages,
       formData: req.body
     });
   }
