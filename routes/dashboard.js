@@ -12,33 +12,45 @@ const ensureUser = (req, res, next) => {
 };
 
 // Dashboard gerente
-router.get('/gerente', authenticate, authorize('gerente'), ensureUser, (req, res) => {
-  res.render('dashboard/gerente', { user: req.user });
+router.get('/gerente', authenticate, authorize(['Gerente']), ensureUser, (req, res) => {
+  res.render('dashboard/gerente', { 
+    title: 'Dashboard Gerente',
+    user: req.user 
+  });
 });
 
 // Dashboard administrador
-router.get('/administrador', authenticate, authorize('administrador'), ensureUser, (req, res) => {
-  res.render('dashboard/administrador', { user: req.user });
+router.get('/administrador', authenticate, authorize(['Administracion']), ensureUser, (req, res) => {
+  res.render('dashboard/administrador', { 
+    title: 'Dashboard Administración',
+    user: req.user 
+  });
 });
 
 // Dashboard técnico
-router.get('/tecnico', authenticate, authorize('tecnico'), ensureUser, (req, res) => {
-  res.render('dashboard/tecnico', { user: req.user });
+router.get('/tecnico', authenticate, authorize(['Tecnico']), ensureUser, (req, res) => {
+  res.render('dashboard/tecnico', { 
+    title: 'Dashboard Técnico',
+    user: req.user 
+  });
 });
 
 // Dashboard usuario normal
 router.get('/user', authenticate, ensureUser, (req, res) => {
-  res.render('dashboard/user', { user: req.user });
+  res.render('dashboard/user', { 
+    title: 'Dashboard Usuario',
+    user: req.user 
+  });
 });
 
 // Ruta principal que redirige según rol
 router.get('/', authenticate, ensureUser, (req, res) => {
   switch(req.user.role) {
-    case 'gerente':
+    case 'Gerente':
       return res.redirect('/dashboard/gerente');
-    case 'administrador':
+    case 'Administracion':
       return res.redirect('/dashboard/administrador');
-    case 'tecnico':
+    case 'Tecnico':
       return res.redirect('/dashboard/tecnico');
     default:
       return res.redirect('/dashboard/user');

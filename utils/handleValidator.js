@@ -1,23 +1,22 @@
-const { validationResult } = require("express-validator");
+const { validationResult } = require('express-validator');
 
 const validateResults = (req, res, next) => {
   try {
-    validationResult(req).throw();
-    return next();
-  } catch (err) {
-    const errors = err.array();
-    const errorMessages = errors.map(error => error.msg);
-    
-    // Para rutas de API
-    if (req.originalUrl.startsWith('/api')) {
-      return res.status(403).json({ errors: err.array() });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.render(req.originalUrl, {
+        title: 'Registro',
+        errors: errors.array().map(err => err.msg), // Convertir a array de mensajes
+        formData: req.body
+      });
     }
-    
-    // Para vistas
-    return res.render(req.originalUrl.includes('login') ? 'auth/login' : 'auth/register', {
-      title: req.originalUrl.includes('login') ? 'Iniciar Sesión' : 'Registro',
-      errors: errorMessages,
-      formData: req.body // Mantener los datos del formulario
+    return next();
+  } catch (e) {
+    console.error(e);
+    return res.render(req.originalUrl, {
+      title: 'Registro',
+      errors: ['Error en la validación'],
+      formData: req.body
     });
   }
 };

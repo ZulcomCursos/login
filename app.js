@@ -1,13 +1,18 @@
-// app.js
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const cookieParser = require('cookie-parser'); // Añadir esta línea
+const methodOverride = require('method-override');
+const cookieParser = require('cookie-parser'); 
 const { dbConnectMySql } = require("./config/mysql");
+
+
 
 const app = express();
 const NODE_ENV = process.env.NODE_ENV || 'development';
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Configurar el motor de vistas EJS
 app.set('view engine', 'ejs');
@@ -17,9 +22,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser()); // Añadir esta línea para habilitar el manejo de cookies
+app.use(cookieParser());
+app.use(methodOverride('_method'));
 
-const port = process.env.PORT || 3001; // Noté que usas el puerto 3001 en tu .env
+
+const port = process.env.PORT || 3001; 
 
 // Rutas principales
 app.get("/", (req, res) => {
