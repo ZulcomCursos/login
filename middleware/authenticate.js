@@ -28,7 +28,8 @@ const authenticate = async (req, res, next) => {
     // Adjuntar el usuario a la solicitud
     req.user = {
       id: user.id,
-      name: user.name,
+      nombres: user.nombres,
+      apellidos: user.apellidos,
       username: user.username,
       role: user.role
     };

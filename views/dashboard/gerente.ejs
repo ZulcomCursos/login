@@ -18,8 +18,8 @@
           <div>
             <a href="/auth/change-password"><img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil"></a>
           </div>
-          <% if (user && user.name) { %>
-            <span class="user-name">Gerente: <%= user.name %></span>
+          <% if (user && user.nombres && user.apellidos) { %>
+            <span class="user-name">Gerente: <%= user.nombres %> <%= user.apellidos %></span>
           <% } else { %>
           <% } %>
           <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>

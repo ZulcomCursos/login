@@ -1,6 +1,6 @@
-DROP DATABASE zulcom_prueba;
-CREATE DATABASE zulcom_prueba;
-use zulcom_prueba;
+DROP DATABASE zulcom;
+CREATE DATABASE zulcom;
+use zulcom;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,

@@ -7,7 +7,7 @@ const authorize = require('../middleware/authorize');
 const upload = require('../utils/handleStorage'); 
 const fs = require('fs');
 const path = require('path');
-
+const {usersModel} = require ('../models')
   const ensureUser = (req, res, next) => {
     if (!req.user) {
       return res.redirect('/auth/login');
