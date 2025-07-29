@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZULCOM - Administrador</title>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/navadministrador') %>
+    
+    <main class="main-content">
+      <header class="content-header">
+        <h1>PANEL ADMINISTRATIVO</h1>
+        <div class="user-actions">
+          <div>
+            <a href="/auth/change-password"><img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil"></a>
+          </div>
+          <% if (user && user.nombres && user.apellidos) { %>
+            <span class="user-name">Administrador: <%= user.nombres %> <%= user.apellidos %> </span>
+          <% } %>
+          <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
+        </div>
+      </header>
+
+      <!-- Contenido específico del dashboard administrativo -->
+      <div class="dashboard-content">
+        <h2>Nuevo Cliente</h2>
+
+        <form action="/clientes" method="POST">
+          <div class="form-group">
+            <label for="estado">Estado:</label>
+            <select id="estado" name="estado" required>
+              <option value="Activo" selected>Activo</option>
+              <option value="Inactivo">Inactivo</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="ip">IP:</label>
+            <input type="text" id="ip" name="ip" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cedula">Cédula:</label>
+            <input type="text" id="cedula" name="cedula" required>
+          </div>
+
+          <div class="form-group">
+            <label for="apellido">Apellidos:</label>
+            <input type="text" id="apellido" name="apellido" required>
+          </div>
+
+          <div class="form-group">
+            <label for="nombre">Nombres:</label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+
+          <div class="form-group">
+            <label for="direccion">Dirección:</label>
+            <textarea id="direccion" name="direccion" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="coordenadas">Coordenadas:</label>
+            <input type="text" id="coordenadas" name="coordenadas">
+          </div>
+
+          <div class="form-group">
+            <label for="referencias">Referencias:</label>
+            <textarea id="referencias" name="referencias"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="telefono1">Teléfono Principal:</label>
+            <input type="text" id="telefono1" name="telefono1" required>
+          </div>
+
+          <div class="form-group">
+            <label for="telefono2">Teléfono Secundario:</label>
+            <input type="text" id="telefono2" name="telefono2">
+          </div>
+
+          <div class="form-group">
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo" required>
+          </div>
+
+          <div class="form-group">
+            <label for="id_plan">Plan:</label>
+            <select id="id_plan" name="id_plan" required>
+              <% planes.forEach(plan => { %>
+                <option value="<%= plan.id_plan %>"><%= plan.nombre_plan %> - <%= plan.megas %> Mbps - $<%= plan.costo %></option>
+              <% }) %>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Discapacidad:</label>
+            <div>
+              <label for="discapacidad_si">Sí</label>
+              <input type="radio" id="discapacidad_si" name="discapacidad" value="si" required>
+
+              <label for="discapacidad_no">No</label>
+              <input type="radio" id="discapacidad_no" name="discapacidad" value="no">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="parroquia">Parroquia:</label>
+            <input type="text" id="parroquia" name="parroquia" required value="Calderon">
+          </div>
+
+          <div class="form-group">
+            <label for="canton">Cantón:</label>
+            <input type="text" id="canton" name="canton" required value="Quito">
+          </div>
+
+          <div class="form-group">
+            <label for="ciudad">Ciudad:</label>
+            <input type="text" id="ciudad" name="ciudad" required value="Quito">
+          </div>
+
+          <div class="form-group">
+            <label for="provincia">Provincia:</label>
+            <input type="text" id="provincia" name="provincia" required value="Pichincha">
+          </div>
+
+          <button type="submit" class="btn">Guardar</button>
+          <a href="/clientes" class="btn secondary">Cancelar</a>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

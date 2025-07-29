@@ -151,7 +151,7 @@ const redirectByRole = (res, token, role) => {
     case 'Gerente':
       return res.redirect('/dashboard/gerente');
     case 'Administracion':
-      return res.redirect('/dashboard/administrador');
+      return res.redirect('/dashboard/administracion');
     case 'Tecnico':
       return res.redirect('/dashboard/tecnico');
     default:

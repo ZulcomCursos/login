@@ -20,8 +20,8 @@ router.get('/gerente', authenticate, authorize(['Gerente']), ensureUser, (req, r
 });
 
 // Dashboard administrador
-router.get('/administrador', authenticate, authorize(['Administracion']), ensureUser, (req, res) => {
-  res.render('dashboard/administrador', { 
+router.get('/administracion', authenticate, authorize(['Administracion']), ensureUser, (req, res) => {
+  res.render('dashboard/administracion', { 
     title: 'Dashboard Administración',
     user: req.user 
   });
@@ -49,7 +49,7 @@ router.get('/', authenticate, ensureUser, (req, res) => {
     case 'Gerente':
       return res.redirect('/dashboard/gerente');
     case 'Administracion':
-      return res.redirect('/dashboard/administrador');
+      return res.redirect('/dashboard/administracion');
     case 'Tecnico':
       return res.redirect('/dashboard/tecnico');
     default:

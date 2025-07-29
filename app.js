@@ -40,7 +40,18 @@ app.use("/api", require("./routes"));
 app.use("/auth", require("./routes/authViews"));
 
 app.use("/dashboard", require("./routes/dashboard"));
+// Rutas
+const tecnicoRoutes = require('./routes/tecnicoRoutes');
+const clientesRoutes = require('./routes/clientesRoutes');
+const planesRoutes = require('./routes/planesRoutes');
+const pdfRoutes = require('./routes/pdfRoutes');
+const ticketsRoutes = require('./routes/ticketsRoutes');
 
+app.use('/tecnico' , tecnicoRoutes); 
+app.use('/clientes', clientesRoutes);
+app.use('/planes', planesRoutes);
+app.use('/pdf', pdfRoutes);
+app.use('/tickets', ticketsRoutes);
 if(NODE_ENV !== 'test'){
     app.listen(port, () => {
         console.log(`Servidor corriendo en http://localhost:${port}`);

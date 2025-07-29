@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZULCOM - Resolver Ticket</title>
+  <link rel="stylesheet" href="/css/navbar.css" />
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <!-- Puedes añadir estilos específicos para el formulario aquí -->
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/navtecnico') %>
+
+    <main class="main-content">
+      <header class="content-header">
+        <h1>Resolver Ticket</h1>
+        <div class="user-actions">
+          <div>
+            <a href="/auth/change-password">
+              <img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil" />
+            </a>
+          </div>
+
+          <% if (user && user.nombres && user.apellidos) { %>
+            <span class="user-name">Técnico: <%= user.nombres %> <%= user.apellidos %></span>
+          <% } %>
+          <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
+        </div>
+      </header>
+
+      <div class="dashboard-content">
+        <p><strong>Número:</strong> <%= ticket.ticketNumber %></p>
+        <p><strong>Cliente:</strong> <%= ticket.client.nombre %> <%= ticket.client.apellido %></p>
+        <p><strong>Descripción:</strong> <%= ticket.description %></p>
+
+        <p><strong>Fecha de solución:</strong> <span id="fechaSol"></span></p>
+        <p><strong>Hora de solución:</strong> <span id="horaSol"></span></p>
+
+        <form action="/tecnico/<%= ticket.id %>/resolver" method="POST">
+          <div>
+            <label for="solution">Solución:</label><br />
+            <textarea name="solution" id="solution" rows="5" required></textarea>
+          </div>
+
+          <div>
+            <label for="status">Estado:</label>
+            <select name="status" id="status" required>
+              <option value="completado">Completado</option>
+              <option value="cerrado">Cerrado</option>
+            </select>
+          </div>
+
+          <button type="submit">Guardar solución</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Mostrar fecha y hora actuales
+    const ahora = new Date();
+    document.getElementById('fechaSol').innerText = ahora.toLocaleDateString('es-EC');
+    document.getElementById('horaSol').innerText = ahora.toLocaleTimeString('es-EC', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+  </script>
+</body>
+</html>

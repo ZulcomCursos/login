@@ -45,12 +45,11 @@ CREATE TABLE clientes (
     canton VARCHAR(100),
     ciudad VARCHAR(100),
     provincia VARCHAR(100),
-    discapacidad ENUM('Si','No') DEFAULT 'No',
+    discapacidad ENUM('si','no') NOT NULL,
     referencias TEXT,
     fecha_contrato DATE,
     id_plan INT,
     estado ENUM('Activo','Inactivo') DEFAULT 'Activo',
-    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (id_plan) REFERENCES planes(id_plan)
 );

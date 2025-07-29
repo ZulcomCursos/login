@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZULCOM - Administrador</title>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/navadministrador') %>
+    
+    <main class="main-content">
+      <header class="content-header">
+        <h1>PANEL ADMINISTRATIVO</h1>
+        <div class="user-actions">
+          <div>
+            <a href="/auth/change-password"><img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil"></a>
+          </div>
+          <% if (user && user.nombres && user.apellidos) { %>
+            <span class="user-name">Administrador: <%= user.nombres %> <%= user.apellidos %> </span>
+          <% } %>
+          <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
+        </div>
+      </header>
+
+      <!-- Contenido específico del dashboard administrativo -->
+      <div class="dashboard-content">
+        <h2>Lista de Clientes</h2>
+        <a href="/clientes/create" class="btn">Nuevo Cliente</a>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Cédula</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              <th>Teléfono</th>
+              <th>Ubicación</th>
+              <th>Coordenadas</th>
+              <th>IP</th>
+              <th>Estado</th>
+              <th>Plan</th>           
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% clientes.forEach(cliente => { %>
+              <tr>
+                <td><%= cliente.cedula %></td>
+                <td><%= cliente.nombre %></td>
+                <td><%= cliente.apellido %></td>
+                <td><%= cliente.telefono1 %></td>
+                <td><%= cliente.direccion %></td>
+                <td><%= cliente.coordenadas %></td>
+                <td><%= cliente.ip %></td>
+                <td><%= cliente.estado %></td>
+                <td><%= cliente.Plan ? cliente.Plan.nombre_plan : 'Sin plan' %></td>
+                <td>    
+                  <a href="/clientes/<%= cliente.id_cliente %>/edit" class="btn">Editar</a>
+                  <a href="/clientes/<%= cliente.id_cliente %>/delete" class="btn danger" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                  <a href="/pdf/generate/<%= cliente.id_cliente %>" class="btn contract-btn">Crear Contrato</a>    
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

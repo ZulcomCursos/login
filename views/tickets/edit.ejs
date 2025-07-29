@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZULCOM - Administrador - Editar Ticket #<%= ticket.ticketNumber %></title>
+  <link rel="stylesheet" href="/css/navbar.css" />
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/edit.css" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/navadministrador') %>
+
+    <main class="main-content">
+      <header class="content-header">
+        <h1>PANEL ADMINISTRATIVO</h1>
+        <div class="user-actions">
+          <div>
+            <a href="/auth/change-password"><img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil" /></a>
+          </div>
+          <% if (user && user.nombres && user.apellidos) { %>
+            <span class="user-name">Administrador: <%= user.nombres %> <%= user.apellidos %></span>
+          <% } %>
+          <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
+        </div>
+      </header>
+
+      <!-- Contenido específico del dashboard administrativo -->
+      <div class="dashboard-content">
+        <div class="container mt-4">
+          <h1 class="mb-4">Editar Ticket #<%= ticket.ticketNumber %></h1>
+
+          <form action="/tickets/<%= ticket.id %>?_method=PUT" method="POST">
+            <!-- Cédula del cliente -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="cedula">Cédula del Cliente</label>
+                  <input type="text" class="form-control" id="cedula" name="cedula" 
+                         value="<%= ticket.client.cedula %>" readonly />
+                </div>
+              </div>
+            </div>
+
+            <!-- Información del cliente -->
+            <div id="clientInfo" class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Información del Cliente</h5>
+                <div class="row">
+                  <div class="col-md-6">
+                    <p><strong>Nombre:</strong> <%= ticket.client.nombre %> <%= ticket.client.apellido %></p>
+                    <p><strong>Teléfono:</strong> <%= ticket.client.telefono1 %></p>
+                  </div>
+                  <div class="col-md-6">
+                    <p><strong>Correo:</strong> <%= ticket.client.correo %></p>
+                    <p><strong>Dirección:</strong> <%= ticket.client.direccion %></p>
+                  </div>
+                </div>
+                <input type="hidden" id="clientId" name="clientId" value="<%= ticket.clientId %>" />
+              </div>
+            </div>
+
+            <!-- Tipo de problema y prioridad -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="issueType">Tipo de Problema</label>
+                  <select class="form-control" id="issueType" name="issueType" required>
+                    <option value="Hardware" <%= ticket.issueType === 'Hardware' ? 'selected' : '' %>>Hardware</option>
+                    <option value="Software" <%= ticket.issueType === 'Software' ? 'selected' : '' %>>Software</option>
+                    <option value="Red" <%= ticket.issueType === 'Red' ? 'selected' : '' %>>Red</option>
+                    <option value="Otro" <%= ticket.issueType === 'Otro' ? 'selected' : '' %>>Otro</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="priority">Prioridad</label>
+                  <select class="form-control" id="priority" name="priority" required>
+                    <option value="baja" <%= ticket.priority === 'baja' ? 'selected' : '' %>>Baja</option>
+                    <option value="media" <%= ticket.priority === 'media' ? 'selected' : '' %>>Media</option>
+                    <option value="alta" <%= ticket.priority === 'alta' ? 'selected' : '' %>>Alta</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Estado -->
+            <div class="form-group">
+              <label for="status">Estado</label>
+              <select class="form-control" id="status" name="status" required>
+                <option value="abierto" <%= ticket.status === 'abierto' ? 'selected' : '' %>>Abierto</option>
+                <option value="en_proceso" <%= ticket.status === 'en_proceso' ? 'selected' : '' %>>En Proceso</option>
+                <option value="cerrado" <%= ticket.status === 'cerrado' ? 'selected' : '' %>>Cerrado</option>
+              </select>
+            </div>
+
+            <!-- Descripción -->
+            <div class="form-group">
+              <label for="description">Descripción del Problema</label>
+              <textarea class="form-control" id="description" name="description" rows="5" required><%= ticket.description %></textarea>
+            </div>
+
+            <!-- Botones -->
+            <button type="submit" class="btn btn-primary">Actualizar Ticket</button>
+            <a href="/tickets" class="btn btn-secondary">Cancelar</a>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

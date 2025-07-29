@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZULCOM - Administrador</title>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/navadministrador') %>
+    
+    <main class="main-content">
+      <header class="content-header">
+        <h1>PANEL ADMINISTRATIVO</h1>
+        <div class="user-actions">
+          <div>
+            <a href="/auth/change-password"><img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil"></a>
+          </div>
+          <% if (user && user.nombres && user.apellidos) { %>
+            <span class="user-name">Administrador: <%= user.nombres %> <%= user.apellidos %> </span>
+          <% } %>
+          <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
+        </div>
+      </header>
+
+      <!-- Contenido específico del dashboard administrativo -->
+      <div class="dashboard-content">
+        <h2>Crear Nuevo Plan</h2>
+
+        <% if (typeof error !== 'undefined') { %>
+          <div class="alert alert-danger"><%= error %></div>
+        <% } %>
+
+        <form action="/planes" method="POST">
+          <div class="form-group">
+            <label for="nombre_plan">Nombre del Plan:</label>
+            <input type="text" id="nombre_plan" name="nombre_plan" 
+                   value="<%= typeof plan !== 'undefined' ? plan.nombre_plan : '' %>" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="costo">Costo Mensual:</label>
+            <input type="number" id="costo" name="costo" step="0.01" min="0"
+                   value="<%= typeof plan !== 'undefined' ? plan.costo : '' %>" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="megas">Velocidad (Megas):</label>
+            <input type="number" id="megas" name="megas" min="1"
+                   value="<%= typeof plan !== 'undefined' ? plan.megas : '' %>" required>
+          </div>
+          
+          <button type="submit" class="btn">Guardar</button>
+          <a href="/planes" class="btn secondary">Cancelar</a>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

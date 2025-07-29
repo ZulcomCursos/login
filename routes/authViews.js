@@ -92,4 +92,8 @@ const {usersModel} = require ('../models')
   // Procesar cambio de contraseña
   router.post('/change-password', authenticate, changePassword);
 
+   router.get('/error', (req, res) => {
+    res.clearCookie('jwt');
+    res.redirect('/auth/error');
+  });
   module.exports = router;

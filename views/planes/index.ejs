@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZULCOM - Administrador</title>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/navadministrador') %>
+    
+    <main class="main-content">
+      <header class="content-header">
+        <h1>PANEL ADMINISTRATIVO</h1>
+        <div class="user-actions">
+          <div>
+            <a href="/auth/change-password"><img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil"></a>
+          </div>
+          <% if (user && user.nombres && user.apellidos) { %>
+            <span class="user-name">Administrador: <%= user.nombres %> <%= user.apellidos %> </span>
+          <% } %>
+          <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
+        </div>
+      </header>
+
+      <!-- Contenido específico del dashboard administrativo -->
+      <div class="dashboard-content">
+        <h2>Lista de Planes</h2>
+        <a href="/planes/create" class="btn">Nuevo Plan</a>
+
+        <% if (typeof error !== 'undefined') { %>
+          <div class="alert alert-danger"><%= error %></div>
+        <% } %>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Costo</th>
+              <th>Megas</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% planes.forEach(plan => { %>
+              <tr>
+                <td><%= plan.id_plan %></td>
+                <td><%= plan.nombre_plan %></td>
+                <td>$<%= parseFloat(plan.costo).toFixed(2) %></td>
+                <td><%= plan.megas %> Mbps</td>
+                <td>
+                  <a href="/planes/<%= plan.id_plan %>/edit" class="btn">Editar</a>
+                  <a href="/planes/<%= plan.id_plan %>/delete" class="btn danger" 
+                     onclick="return confirm('¿Estás seguro de eliminar este plan?')">Eliminar</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
