@@ -103,3 +103,29 @@ CREATE TABLE roles_pago (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (id_trabajador) REFERENCES users(id)
 );
+
+CREATE TABLE plataformas_cuentas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    plataforma ENUM('Netflix', 'HBO Max', 'Disney', 'CrunchyRoll'),
+    tipo_suscripcion ENUM('mensual', 'Incluido en 3 meses basico', 'Incluido 1 año avanzado', 'Incluido Plan Premium'),
+    estado ENUM('activa', 'inactiva', 'suspendida'),
+    valor_adicional DECIMAL(10,2),
+    fecha_entrega DATE,
+    fecha_caducidad DATE,
+    correo_cuenta VARCHAR(100),
+    password_cuenta VARCHAR(100),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE plataformas_usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_cuenta INT,
+    nombre_perfil VARCHAR(100),
+    contraseña_perfil VARCHAR(100),
+    id_cliente INT,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_cuenta) REFERENCES plataformas_cuentas(id),
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
+);

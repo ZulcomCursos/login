@@ -159,7 +159,7 @@ module.exports = {
       res.status(500).send('Error al crear el ticket');
     }
   },
-
+//CAMBIO 
   show: async (req, res) => {
     try {
       const { id } = req.params;
