@@ -1,0 +1,159 @@
+/* ===== Estilo general del body ===== */
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #212529;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Título principal ===== */
+h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #343a40;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== Navbar simple ===== */
+nav {
+  background-color: #343a40;
+  padding: 1rem;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+nav li {
+  display: inline;
+}
+
+nav a {
+  color: #f8f9fa;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #ffc107;
+}
+
+/* ===== Tabla responsiva ===== */
+.table-responsive {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Encabezado de tabla ===== */
+.table thead th {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+/* ===== Celdas ===== */
+.table td, .table th {
+  vertical-align: middle;
+}
+
+/* ===== Descripción larga truncada ===== */
+td:nth-child(5) {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== Badges de prioridad y estado ===== */
+.badge {
+  font-size: 0.85rem;
+  padding: 0.4em 0.6em;
+  border-radius: 0.5rem;
+  text-transform: capitalize;
+}
+
+/* ===== Botones de acción mejorados ===== */
+.btn-accion {
+  padding: 0.45rem 0.75rem;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-accion.info {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.btn-accion.warning {
+  background: linear-gradient(135deg, #ffc107, #d39e00);
+  color: #212529;
+}
+
+.btn-accion.danger {
+  background: linear-gradient(135deg, #dc3545, #a71d2a);
+}
+
+.btn-accion:hover {
+  transform: translateY(-1px) scale(1.03);
+  opacity: 0.9;
+}
+
+/* ===== Select de estado estilizado ===== */
+.status-select {
+  min-width: 120px;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  background-color: #ffffff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.status-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* ===== Contenedor de acciones flexibles ===== */
+.acciones-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* ===== Responsive h1 en mobile ===== */
+@media (max-width: 576px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .table th, .table td {
+    font-size: 0.85rem;
+  }
+
+  .btn-accion {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .status-select {
+    font-size: 0.85rem;
+  }
+}

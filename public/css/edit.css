@@ -1,0 +1,73 @@
+body {
+  background: #f4f6f9;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.editar-ticket {
+  max-width: 900px;
+  margin: auto;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+form {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.form-control, select {
+  font-size: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+  transition: 0.3s;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.btn {
+  font-size: 1.1rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.badge {
+  font-size: 0.95rem;
+  padding: 0.5em 0.9em;
+  border-radius: 0.4rem;
+  font-weight: 600;
+}
+
+textarea.form-control {
+  min-height: 150px;
+  resize: vertical;
+}

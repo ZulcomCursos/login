@@ -1,0 +1,12 @@
+.card-header h4 {
+  font-weight: 700;
+}
+
+.card-body p {
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.border-end {
+  border-right: 1px solid #dee2e6 !important;
+}
