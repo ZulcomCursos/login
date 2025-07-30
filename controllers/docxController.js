@@ -32,7 +32,7 @@ exports.generateContract = async (req, res) => {
 
     // Ruta de la plantilla y del DOCX resultante
     const templatePath = path.join(__dirname, '../templates/contrato_template.docx');
-    const downloadsPath = require('os').homedir() + '/Downloads';
+    const downloadsPath = '/tmp';
     const outputFileName = `Contrato_${cliente.nombre}_${cliente.apellido}_${cliente.cedula}.docx`;
     const outputPath = path.join(downloadsPath, outputFileName);
 

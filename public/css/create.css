@@ -1,0 +1,260 @@
+/* Contenedor principal */
+.dashboard-content {
+  display: flex;
+  justify-content: center;
+  padding: 30px 15px;
+  background: #f5f7fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Tarjeta formulario */
+.ticket-create-container {
+  background: #fff;
+  max-width: 900px;
+  width: 100%;
+  padding: 40px 35px;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+}
+
+/* Título */
+.ticket-create-container h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Alertas de error */
+.alert {
+  background-color: #ffe5e5;
+  border: 1.5px solid #e74c3c;
+  color: #b32e2e;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  position: relative;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.alert .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #b32e2e;
+}
+
+/* Formularios y campos */
+form {
+  width: 100%;
+}
+
+/* Labels */
+label {
+  font-weight: 600;
+  color: #444;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+/* Inputs, selects y textarea */
+input[type="text"],
+input[type="time"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+input[type="time"] {
+  max-width: 150px;
+  padding: 10px 12px;
+}
+
+input[type="text"]:focus,
+input[type="time"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #667eea;
+  outline: none;
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
+}
+
+/* Textarea */
+textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+/* Flex filas y columnas */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.col-md-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 25px;
+  box-sizing: border-box;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* Botones */
+button.btn,
+a.btn {
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 12px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+  user-select: none;
+  border: none;
+}
+
+button.btn-primary {
+  background-color: #667eea;
+  color: white;
+}
+
+button.btn-primary:hover {
+  background-color: #5a6ddb;
+}
+
+a.btn-outline-secondary {
+  background-color: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+a.btn-outline-secondary:hover {
+  background-color: #667eea;
+  color: white;
+}
+
+/* Iconos dentro botones */
+button.btn i,
+a.btn i {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+/* Card info cliente */
+#clientInfo.card {
+  border: 2px solid #667eea;
+  border-radius: 12px;
+  margin-top: 30px;
+  background: #f7f8ff;
+  box-shadow: 0 4px 10px rgba(102, 126, 234, 0.15);
+  padding: 20px 25px;
+}
+
+#clientInfo.card-header {
+  background-color: #667eea;
+  color: white;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 8px 8px 0 0;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+}
+
+#clientInfo.card-header i {
+  margin-right: 12px;
+  font-size: 1.5rem;
+}
+
+#clientInfo.card-body p {
+  margin-bottom: 14px;
+  font-size: 1.05rem;
+  color: #333;
+}
+
+#clientInfo.card-body p strong {
+  font-weight: 700;
+}
+
+/* Texto pequeño para ayuda */
+.form-text.text-muted {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Input group para búsqueda */
+.input-group {
+  display: flex;
+  max-width: 100%;
+}
+
+.input-group input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+
+.input-group-append button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border: 1.8px solid #ccc;
+  background-color: #e1e5f5;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  font-size: 1.1rem;
+  color: #667eea;
+}
+
+.input-group-append button:hover {
+  background-color: #667eea;
+  color: white;
+  border-color: #556dc6;
+}
+
+.input-group-append button i {
+  margin-left: 2px;
+}
+
+/* Flecha personalizada para select */
+select.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("data:image/svg+xml;charset=US-ASCII,%3csvg fill='%236677eea' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e")
+    no-repeat right 15px center / 14px 14px;
+  padding-right: 40px;
+  cursor: pointer;
+}

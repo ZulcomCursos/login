@@ -24,14 +24,14 @@ const {usersModel} = require ('../models')
   router.post('/login', validatorLogin, loginCtrl);
 
   // Mostrar formulario de registro
-  router.get('/register', (req, res) => { //, authenticate, authorize(['Gerente','Administracion']), ensureUser
+  router.get('/register', authenticate, authorize(['Gerente','Administracion']), ensureUser,(req, res) => { 
     res.render('auth/register', { 
       title: 'Registro',
-      errors: [], // Inicializa como array vacÃ­o en lugar de null/undefined
+      errors: [], // Inicializa como array vacío en lugar de null/undefined
       formData: {},
       user: req.user 
     });
-  });
+  })
 
   // Procesar registro
   router.post(

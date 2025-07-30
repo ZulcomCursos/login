@@ -21,7 +21,7 @@
 }
 
 .logo::before {
-  content: "‚óè";
+  content: "?";
   color: var(--blue-500);
   font-size: 1.8rem;
 }
@@ -58,7 +58,7 @@
 }
 
 .nav-item::before {
-  content: "‚Ä∫";
+  content: "õ";
   color: var(--purple-300);
 }
 
@@ -91,7 +91,7 @@
   transform: translateY(-1px);
 }
 
-/* Estilos para el submen√∫ VERTICAL ajustado */
+/* Estilos para el submen˙ VERTICAL ajustado */
 .nav-item.dropdown {
   position: relative;
   padding: 12px 20px;
@@ -110,7 +110,7 @@
   top: 100%;
   left: 0;
   z-index: 1000;
-  /* Elimin√© border y box-shadow que podr√≠an causar la l√≠nea negra */
+  /* EliminÈ border y box-shadow que podrÌan causar la lÌnea negra */
   background-color: var(--white);
   border-radius: 0 0 4px 4px;
 }
@@ -135,7 +135,7 @@
 .nav-item.dropdown:hover {
   background-color: var(--blue-100);
   border-left: 3px solid var(--blue-500);
-  border-bottom: none; /* A√±adido para prevenir l√≠nea inferior */
+  border-bottom: none; /* AÒadido para prevenir lÌnea inferior */
 }
 
 /* Asegurando que no haya bordes en los estados hover */
