@@ -9,7 +9,7 @@ exports.list = async (req, res) => {
                 as: 'Plan'
             }
         });
-
+/**hola */
         res.render('clientes/index', { clientes, user: req.user });
     } catch (error) {
         console.error(error);
