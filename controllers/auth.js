@@ -9,7 +9,7 @@ const path = require('path');
 const ENGINE_DB = process.env.ENGINE_DB;
 
 /**
- * Controlador para registrar un nuevo usuario
+ * Controlador para registrar un nuevo usuario sp
  */
 const registerCtrl = async (req, res) => {
   try {
