@@ -16,7 +16,7 @@ exports.list = async (req, res) => {
         res.status(500).send('Error al obtener los clientes');
     }
 };
-
+/**uwu */
 exports.createForm = async (req, res) => {
     try {
         const planes = await Plan.findAll();
