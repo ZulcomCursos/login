@@ -11,6 +11,7 @@ const ENGINE_DB = process.env.ENGINE_DB;
 /**
  * Controlador para registrar un nuevo usuario sp
  */
+/**ejemplo */
 const registerCtrl = async (req, res) => {
   try {
     // Verificar que se subieron los archivos
