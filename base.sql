@@ -69,6 +69,7 @@ CREATE TABLE tickets (
     hora_solucion TIME,
     solucion TEXT DEFAULT 'Sin solución',
     horaVisita TIME,
+    prioridad enum ('Alta', 'Media', 'Baja'),
     FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente),
     FOREIGN KEY (id_tecnico) REFERENCES users(id)
 );
