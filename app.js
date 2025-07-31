@@ -12,6 +12,7 @@ const app = express();
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const port = process.env.PORT || 3001; // Puerto definido por ENV o 3001
 
+//nueva linea de practicante 1
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
