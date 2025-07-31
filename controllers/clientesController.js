@@ -1,6 +1,6 @@
 const Cliente = require('../models/mysql/Cliente');
 const Plan = require('../models/mysql/Plan');
-
+//probando otra edicion
 exports.list = async (req, res) => {
     try {
         const clientes = await Cliente.findAll({
