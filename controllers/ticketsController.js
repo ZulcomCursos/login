@@ -208,37 +208,39 @@ module.exports = {
   },
 
   update: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { issueType, description, priority, status, tecnicoId, solution, horaVisita } = req.body;
+  try {
+    const { id } = req.params;
+    const { issueType, description, priority, status, tecnicoId, solution, horaVisita } = req.body;
 
-      const ticket = await Ticket.findByPk(id);
-      if (!ticket) return res.status(404).send('Ticket no encontrado');
+    const ticket = await Ticket.findByPk(id);
+    if (!ticket) return res.status(404).send('Ticket no encontrado');
 
-      ticket.issueType = issueType;
-      ticket.description = description;
-      ticket.priority = priority;
-      ticket.status = status;
-      ticket.tecnicoId = tecnicoId || ticket.tecnicoId;
-      ticket.solution = solution || ticket.solution;
-      ticket.horaVisita = horaVisita || ticket.horaVisita; // NUEVO
+    ticket.issueType = issueType;
+    ticket.description = description;
+    ticket.priority = priority;
+    ticket.status = status;
+    ticket.tecnicoId = tecnicoId || ticket.tecnicoId;
+    ticket.solution = solution || ticket.solution;
+    ticket.horaVisita = horaVisita || ticket.horaVisita;
 
-      if (status === 'cerrado' || status === 'completado') {
-        const now = new Date();
-        ticket.solutionDate = now;
-        ticket.solutionTime = now.toTimeString().split(' ')[0];
-      } else {
-        ticket.solutionDate = null;
-        ticket.solutionTime = null;
-      }
-
-      await ticket.save();
-      res.redirect(`/tickets/${ticket.id}`);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Error al actualizar el ticket');
+    if (status === 'cerrado' || status === 'completado') {
+      const now = new Date();
+      ticket.solutionDate = now.toISOString().split('T')[0];      
+      ticket.solutionTime = now.toTimeString().split(' ')[0];     
+    } else {
+      ticket.solutionDate = null;
+      ticket.solutionTime = null;
     }
-  },
+
+    await ticket.save();
+    res.redirect(`/tickets/${ticket.id}`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al actualizar el ticket');
+  }
+},
+
+
 
   updateStatus: async (req, res) => {
     try {

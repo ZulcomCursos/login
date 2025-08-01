@@ -1,4 +1,4 @@
-/* ===== Estilo general del body y tipografía ===== */
+/* ===== Estilo general del body y tipografï¿½a ===== */
 body {
   background-color: #f5f7fa;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -125,7 +125,7 @@ h1, h2 {
   padding-top: 0.5rem;
 }
 
-/* ===== Botón nuevo ticket ===== */
+/* ===== Botï¿½n nuevo ticket ===== */
 .btn.btn-primary.mb-3 {
   border-radius: 16px;
   padding: 0.85rem 1.75rem;
@@ -247,6 +247,50 @@ h1, h2 {
   opacity: 0.9;
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
+
+.badge.bg-danger {
+  background-color: #dc3545 !important;
+  border-radius: 50px !important;
+  padding: 0.25em 0.6em !important; /* para mejor forma */
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  color: white !important;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.badge.bg-warning {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+  border-radius: 50px !important;
+  padding: 0.25em 0.6em !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.badge.bg-success {
+  background-color: #198754 !important;
+  border-radius: 50px !important;
+  padding: 0.25em 0.6em !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  color: white !important;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+
 
 /* ===== Responsive ajustes ===== */
 @media (max-width: 768px) {

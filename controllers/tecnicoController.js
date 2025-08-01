@@ -9,7 +9,7 @@ module.exports = {
   index: async (req, res) => {
     try {
       const estadoFiltro = req.query.estado || '';
-      const tecnicoId = req.user.id;  // <-- Aquí se usa el id del usuario autenticado
+      const tecnicoId = req.user.id;  // Id del técnico autenticado
 
       const whereCondition = { tecnicoId };
       if (estadoFiltro) {
@@ -28,7 +28,7 @@ module.exports = {
       res.render('tecnico/index', {
         tickets,
         estadoSeleccionado: estadoFiltro,
-        user: req.user  // <-- Para usar datos del usuario en la vista
+        user: req.user
       });
     } catch (error) {
       console.error(error);
@@ -54,7 +54,7 @@ module.exports = {
 
       res.render('tecnico/resolver', { 
         ticket,
-        user: req.user  // <-- Para vista
+        user: req.user
       });
     } catch (error) {
       console.error(error);
@@ -79,13 +79,29 @@ module.exports = {
 
       if (status === 'cerrado' || status === 'completado') {
         const now = new Date();
+        // Obtener fecha y hora en zona horaria de Guayaquil
         const fechaLocalString = now.toLocaleString('en-US', { timeZone: 'America/Guayaquil' });
         const [fechaStr, horaStr] = fechaLocalString.split(', ');
         const fechaParts = fechaStr.split('/');
+        // Formatear fecha ISO YYYY-MM-DD
         const fechaISO = `${fechaParts[2]}-${fechaParts[0].padStart(2, '0')}-${fechaParts[1].padStart(2, '0')}`;
 
+        // Función para convertir hora 12h AM/PM a 24h
+        function convertTo24Hour(time12h) {
+          const [time, modifier] = time12h.split(' ');
+          let [hours, minutes, seconds] = time.split(':');
+
+          if (hours === '12') {
+            hours = '00';
+          }
+          if (modifier === 'PM') {
+            hours = parseInt(hours, 10) + 12;
+          }
+          return `${hours.toString().padStart(2, '0')}:${minutes}:${seconds}`;
+        }
+
         ticket.solutionDate = fechaISO;
-        ticket.solutionTime = horaStr;
+        ticket.solutionTime = convertTo24Hour(horaStr);
       } else {
         ticket.solutionDate = null;
         ticket.solutionTime = null;

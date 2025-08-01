@@ -6,7 +6,6 @@
   <title>ZULCOM - Resolver Ticket</title>
   <link rel="stylesheet" href="/css/navbar.css" />
   <link rel="stylesheet" href="/css/dashboard.css" />
-  <!-- Puedes añadir estilos específicos para el formulario aquí -->
 </head>
 <body>
   <div class="dashboard-container">
@@ -34,20 +33,24 @@
         <p><strong>Cliente:</strong> <%= ticket.client.nombre %> <%= ticket.client.apellido %></p>
         <p><strong>Descripción:</strong> <%= ticket.description %></p>
 
-        <p><strong>Fecha de solución:</strong> <span id="fechaSol"></span></p>
-        <p><strong>Hora de solución:</strong> <span id="horaSol"></span></p>
+        <p><strong>Fecha de solución:</strong> 
+          <%= ticket.solutionDate ? ticket.solutionDate : 'No resuelto aún' %>
+        </p>
+        <p><strong>Hora de solución:</strong> 
+          <%= ticket.solutionTime ? ticket.solutionTime : 'No resuelto aún' %>
+        </p>
 
         <form action="/tecnico/<%= ticket.id %>/resolver" method="POST">
           <div>
             <label for="solution">Solución:</label><br />
-            <textarea name="solution" id="solution" rows="5" required></textarea>
+            <textarea name="solution" id="solution" rows="5" required><%= ticket.solution || '' %></textarea>
           </div>
 
           <div>
             <label for="status">Estado:</label>
             <select name="status" id="status" required>
-              <option value="completado">Completado</option>
-              <option value="cerrado">Cerrado</option>
+              <option value="completado" <%= ticket.status === 'completado' ? 'selected' : '' %>>Completado</option>
+              <option value="cerrado" <%= ticket.status === 'cerrado' ? 'selected' : '' %>>Cerrado</option>
             </select>
           </div>
 
@@ -56,16 +59,5 @@
       </div>
     </main>
   </div>
-
-  <script>
-    // Mostrar fecha y hora actuales
-    const ahora = new Date();
-    document.getElementById('fechaSol').innerText = ahora.toLocaleDateString('es-EC');
-    document.getElementById('horaSol').innerText = ahora.toLocaleTimeString('es-EC', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-    });
-  </script>
 </body>
 </html>
