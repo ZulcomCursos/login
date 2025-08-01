@@ -1,163 +1,177 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZULCOM - Administrador</title>
   <link rel="stylesheet" href="/css/navbar.css" />
   <link rel="stylesheet" href="/css/dashboard.css" />
-<link rel="stylesheet" href="/css/tabla.css" />
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 </head>
+
 <body>
   <div class="dashboard-container">
     <%- include('../partials/navadministrador') %>
-    
-    <main class="main-content">
-      <header class="content-header">
-        <h1>PANEL ADMINISTRATIVO Jorge</h1>
-        <div class="user-actions">
-          <div>
-            <a href="/auth/change-password">
-              <img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil" />
-            </a>
+
+      <main class="main-content">
+        <header class="content-header">
+          <h1>PANEL ADMINISTRATIVO</h1>
+          <div class="user-actions">
+            <div>
+              <a href="/auth/change-password">
+                <img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil" />
+              </a>
+            </div>
+            <% if (user && user.nombres && user.apellidos) { %>
+              <span class="user-name">Administrador: <%= user.nombres %>
+                  <%= user.apellidos %> </span>
+              <% } %>
+                <a href="/auth/logout" class="logout-btn"
+                  onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
           </div>
-          <% if (user && user.nombres && user.apellidos) { %>
-            <span class="user-name">Administrador: <%= user.nombres %> <%= user.apellidos %> </span>
-          <% } %>
-          <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
-        </div>
-      </header>
+        </header>
 
-      <div class="dashboard-content">
-        
+        <div class="dashboard-content">
+          <h2>Listado de Tickets</h2>
 
-        <!-- Filtro Avanzado -->
-        <form id="filtroAvanzadoForm" class="row g-3 mb-4 px-3">
-          <!-- Estado -->
-          <div class="col-md-3">
-            <label for="estadoFiltro" class="form-label">Estado</label>
-            <select class="form-select" id="estadoFiltro" name="estado">
-              <option value="" <%= estadoSeleccionado === '' ? 'selected' : '' %>>Todos</option>
-              <option value="abierto" <%= estadoSeleccionado === 'abierto' ? 'selected' : '' %>>Abierto</option>
-              <option value="completado" <%= estadoSeleccionado === 'completado' ? 'selected' : '' %>>Completado</option>
-              <option value="cerrado" <%= estadoSeleccionado === 'cerrado' ? 'selected' : '' %>>Cerrado</option>
-            </select>
-          </div>
+          <!-- Filtro Avanzado -->
+          <form id="filtroAvanzadoForm" class="row g-3 mb-4 px-3">
+            <!-- Estado -->
+            <div class="col-md-3">
+              <label for="estadoFiltro" class="form-label">Estado</label>
+              <select class="form-select" id="estadoFiltro" name="estado">
+                <option value="" <%=estadoSeleccionado==='' ? 'selected' : '' %>>Todos</option>
+                <option value="abierto" <%=estadoSeleccionado==='abierto' ? 'selected' : '' %>>Abierto</option>
+                <option value="completado" <%=estadoSeleccionado==='completado' ? 'selected' : '' %>>Completado</option>
+                <option value="cerrado" <%=estadoSeleccionado==='cerrado' ? 'selected' : '' %>>Cerrado</option>
+              </select>
+            </div>
 
-          <!-- Técnico -->
-          <div class="col-md-3">
-            <label for="tecnicoFiltro" class="form-label">Técnico</label>
-            <select class="form-select" id="tecnicoFiltro" name="tecnico">
-              <option value="">Todos</option>
-              <% tecnicos.forEach(tecnico => { %>
-                <option value="<%= tecnico.id %>" <%= tecnicoSeleccionado == tecnico.id ? 'selected' : '' %>><%= tecnico.nombres + ' ' + tecnico.apellidos %></option>
-              <% }) %>
-            </select>
-          </div>
+            <!-- Técnico -->
+            <div class="col-md-3">
+              <label for="tecnicoFiltro" class="form-label">Técnico</label>
+              <select class="form-select" id="tecnicoFiltro" name="tecnico">
+                <option value="">Todos</option>
+                <% tecnicos.forEach(tecnico=> { %>
+                  <option value="<%= tecnico.id %>" <%=tecnicoSeleccionado==tecnico.id ? 'selected' : '' %>><%=
+                      tecnico.nombres + ' ' + tecnico.apellidos %>
+                  </option>
+                  <% }) %>
+              </select>
+            </div>
 
-          <!-- Tipo de Problema -->
-          <div class="col-md-3">
-            <label for="tipoProblemaFiltro" class="form-label">Tipo de Problema</label>
-            <select class="form-select" id="tipoProblemaFiltro" name="problema">
-              <option value="">Todos</option>
-              <% tiposProblema.forEach(tipo => { %>
-                <option value="<%= tipo %>" <%= problemaSeleccionado === tipo ? 'selected' : '' %>><%= tipo %></option>
-              <% }) %>
-            </select>
-          </div>
+            <!-- Tipo de Problema -->
+            <div class="col-md-3">
+              <label for="tipoProblemaFiltro" class="form-label">Tipo de Problema</label>
+              <select class="form-select" id="tipoProblemaFiltro" name="problema">
+                <option value="">Todos</option>
+                <% tiposProblema.forEach(tipo=> { %>
+                  <option value="<%= tipo %>" <%=problemaSeleccionado===tipo ? 'selected' : '' %>><%= tipo %>
+                  </option>
+                  <% }) %>
+              </select>
+            </div>
 
-          <!-- Fechas -->
-          <div class="col-md-3">
-            <label for="fechaInicio" class="form-label">Fecha Inicio</label>
-            <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" value="<%= fechaInicio %>" />
-          </div>
-          <div class="col-md-3">
-            <label for="fechaFin" class="form-label">Fecha Fin</label>
-            <input type="date" id="fechaFin" name="fechaFin" class="form-control" value="<%= fechaFin %>" />
-          </div>
+            <!-- Fechas -->
+            <div class="col-md-3">
+              <label for="fechaInicio" class="form-label">Fecha Inicio</label>
+              <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" value="<%= fechaInicio %>" />
+            </div>
+            <div class="col-md-3">
+              <label for="fechaFin" class="form-label">Fecha Fin</label>
+              <input type="date" id="fechaFin" name="fechaFin" class="form-control" value="<%= fechaFin %>" />
+            </div>
 
-          <div class="col-12 text-end">
-            <button type="submit" class="btn btn-primary">
-              <i class="bi bi-search"></i> Buscar
-            </button>
-            <a href="/tickets" class="btn btn-secondary">
-              <i class="bi bi-x-circle"></i> Limpiar
-            </a>
-          </div>
-        </form>
+            <div class="col-12 text-end">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-search"></i> Buscar
+              </button>
+              <a href="/tickets" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Limpiar
+              </a>
+            </div>
+          </form>
 
-        <a href="/tickets/create" class="btn btn-primary mb-3">
-                
+          <a href="/tickets/create" class="btn btn-primary mb-3">
+            <i class="bi bi-plus-circle"></i> Nuevo Ticket
+          </a>
 
-          <i class="bi bi-plus-circle"></i> Nuevo Ticket
-        </a>
-           <br><br><br>
-
-        <h2>Listado de Tickets</h2>
-
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover align-middle">
-            <thead class="table-dark">
-              <tr>
-                <th>N° Ticket</th>
-                <th>Cliente</th>
-                <th>Cédula</th>
-                <th>Técnico</th>
-                <th>Tipo de Problema</th>
-                <th>Descripción</th>
-                <th>Solución</th>
-                <th>Estado</th>
-                <th>Fecha de Creación</th>
-                <th>Fecha de Solución</th>
-                <th>Hora de Solución</th>
-                <th>Hora de Visita</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% tickets.forEach(ticket => { %>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+              <thead class="table-dark">
                 <tr>
-                  <td><%= ticket.ticketNumber %></td>
-                  <td><%= ticket.client ? ticket.client.nombres + ' ' + ticket.client.apellidos : 'Cliente no asignado' %></td>
-                  <td><%= ticket.client ? ticket.client.cedula : 'Sin cédula' %></td>
-                  <td><%= ticket.tecnico ? ticket.tecnico.nombres + ' ' + ticket.tecnico.apellidos : 'Sin técnico' %></td>
-                  <td><%= ticket.issueType %></td>
-                  <td><%= ticket.description.length > 50 ? ticket.description.substring(0, 50) + '...' : ticket.description %></td>
-                  <td><%= ticket.solution ? (ticket.solution.length > 50 ? ticket.solution.substring(0, 50) + '...' : ticket.solution) : 'Sin solución' %></td>
-                  <td>
-                    <span class="badge <%= ticket.status === 'cerrado' ? 'bg-success' : ticket.status === 'completado' ? 'bg-secondary' : ticket.status === 'abierto' ? 'bg-warning text-dark' : '' %>">
-                      <%= ticket.status.replace('_', ' ') %>
-                    </span>
-                  </td>
-                  <td><%= new Date(ticket.createdAt).toLocaleDateString('es-EC', { timeZone: 'America/Guayaquil' }) %></td>
-                  <td><%= ticket.solutionDate || '—' %></td>
-                  <td><%= ticket.solutionTime || '—' %></td>
-                  <td><%= ticket.horaVisita || '—' %></td>
-                  <td>
-                    <div class="acciones-container">
-                      <a href="/tickets/<%= ticket.id %>" class="btn-accion info" title="Ver">
-                        <i class="bi bi-eye"></i>
-                      </a>
-                      <a href="/tickets/<%= ticket.id %>/edit" class="btn-accion warning" title="Editar">
-                        <i class="bi bi-pencil"></i>
-                      </a>
-                      <form action="/tickets/<%= ticket.id %>?_method=DELETE" method="POST" onsubmit="return confirm('¿Eliminar este ticket?')" class="d-inline">
-                        <button type="submit" class="btn-accion danger" title="Eliminar">
-                          <i class="bi bi-trash"></i>
-                        </button>
-                      </form>
-                    </div>
-                  </td>
+                  <th>N° Ticket</th>
+                  <th>Cliente</th>
+                  <th>Cédula</th>
+                  <th>Técnico</th>
+                  <th>Tipo de Problema</th>
+                  <th>Descripción</th>
+                  <th>Solución</th>
+                  <th>Estado</th>
+                  <th>Fecha de Creación</th>
+                  <th>Fecha de Solución</th>
+                  <th>Hora de Solución</th>
+                  <th>Hora de Visita</th>
+                  <th>Prioridad</th>
+                  <th>Acciones</th>
                 </tr>
-              <% }) %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+  <% tickets.forEach(ticket => { %>
+    <tr>
+      <td><%= ticket.ticketNumber %></td>
+      <td><%= ticket.client ? ticket.client.nombres + ' ' + ticket.client.apellidos : 'Cliente no asignado' %></td>
+      <td><%= ticket.client ? ticket.client.cedula : 'Sin cédula' %></td>
+      <td><%= ticket.tecnico ? ticket.tecnico.nombres + ' ' + ticket.tecnico.apellidos : 'Sin técnico' %></td>
+      <td><%= ticket.issueType %></td>
+      <td><%= ticket.description.length > 50 ? ticket.description.substring(0, 50) + '...' : ticket.description %></td>
+      <td><%= ticket.solution ? (ticket.solution.length > 50 ? ticket.solution.substring(0, 50) + '...' : ticket.solution) : 'Sin solución' %></td>
+      <td>
+        <span class="badge <%= ticket.status === 'cerrado' ? 'bg-success' : ticket.status === 'completado' ? 'bg-secondary' : ticket.status === 'abierto' ? 'bg-warning text-dark' : '' %>">
+          <%= ticket.status.replace('_', ' ') %>
+        </span>
+      </td>
+      <td><%= new Date(ticket.createdAt).toLocaleDateString('es-EC', { timeZone: 'America/Guayaquil' }) %></td>
+      <td><%= ticket.solutionDate || '—' %></td>
+      <td><%= ticket.solutionTime || '—' %></td>
+      <td><%= ticket.horaVisita || '—' %></td>
+      <td>
+        <% if (ticket.priority') { %>
+          <span class="badge bg-danger">Alta</span>
+        <% } else if (ticket.priority === 'Media') { %>
+          <span class="badge bg-warning text-dark">Media</span>
+        <% } else if (ticket.priority === 'Baja') { %>
+          <span class="badge bg-success">Baja</span>
+        <% } else { %>
+          <span class="badge bg-secondary">Sin prioridad</span>
+        <% } %>
+      </td>
+      <td>
+        <div class="acciones-container">
+          <a href="/tickets/<%= ticket.id %>" class="btn-accion info" title="Ver">
+            <i class="bi bi-eye"></i>
+          </a>
+          <a href="/tickets/<%= ticket.id %>/edit" class="btn-accion warning" title="Editar">
+            <i class="bi bi-pencil"></i>
+          </a>
+          <form action="/tickets/<%= ticket.id %>?_method=DELETE" method="POST" onsubmit="return confirm('¿Eliminar este ticket?')" class="d-inline">
+            <button type="submit" class="btn-accion danger" title="Eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </form>
         </div>
-      </div>
-    </main>
+      </td>
+    </tr>
+  <% }) %>
+</tbody>
+
+            </table>
+          </div>
+        </div>
+      </main>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
