@@ -19,8 +19,10 @@ exports.list = async (req, res) => {
 /**hola */
 /**hola */
 /**hola */
-/**hola */
-/**hola */
+/**hola *
+ * asdasdasdasdsass
+/** */
+
 exports.createForm = async (req, res) => {
     try {
         const planes = await Plan.findAll();
