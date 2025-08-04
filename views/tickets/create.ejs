@@ -98,17 +98,17 @@
                     <option value="" disabled <%= (typeof formData === 'undefined' || !formData.issueType) ? 'selected' : '' %>>
                       Seleccione un tipo...
                     </option>
-                    <option value="Hardware" <%= (typeof formData !== 'undefined' && formData.issueType === 'Hardware') ? 'selected' : '' %>>
-                      Hardware
+                    <option value="Revisión General" <%= (typeof formData !== 'undefined' && formData.issueType === 'Revisión General') ? 'selected' : '' %>>
+                     Revisión General
                     </option>
-                    <option value="Software" <%= (typeof formData !== 'undefined' && formData.issueType === 'Software') ? 'selected' : '' %>>
-                      Software
+                    <option value="Revisión de Fibra Óptica" <%= (typeof formData !== 'undefined' && formData.issueType === 'Revisión de Fibra Óptica') ? 'selected' : '' %>>
+                      Revisión de Fibra Óptica
                     </option>
-                    <option value="Red" <%= (typeof formData !== 'undefined' && formData.issueType === 'Red') ? 'selected' : '' %>>
-                      Problema de Red
+                    <option value="Instalación de Fibra Óptica" <%= (typeof formData !== 'undefined' && formData.issueType === 'Instalación de Fibra Óptica') ? 'selected' : '' %>>
+                      Instalación de Fibra Óptica
                     </option>
-                    <option value="Facturación" <%= (typeof formData !== 'undefined' && formData.issueType === 'Facturación') ? 'selected' : '' %>>
-                      Facturación
+                    <option value="Cambio de domicilio " <%= (typeof formData !== 'undefined' && formData.issueType === 'Cambio de domicilio ') ? 'selected' : '' %>>
+                      Cambio de domicilio 
                     </option>
                     <option value="Otro" <%= (typeof formData !== 'undefined' && formData.issueType === 'Otro') ? 'selected' : '' %>>
                       Otro
@@ -116,6 +116,18 @@
                   </select>
                 </div>
               </div>
+
+              <div class="col-md-6">
+  <div class="form-group">
+    <label for="priority">Prioridad *</label>
+    <select class="form-control" id="priority" name="priority" required>
+      <option value="Alta">Alta</option>
+      <option value="Media" selected>Media</option>
+      <option value="Baja">Baja</option>
+    </select>
+  </div>
+</div>
+
 
               <div class="col-md-6">
                 <div class="form-group">
