@@ -9,7 +9,7 @@ module.exports = {
   index: async (req, res) => {
     try {
       const estadoFiltro = req.query.estado || '';
-      const tecnicoId = req.user.id;  // <-- Aquí se usa el id del usuario autenticado
+      const tecnicoId = req.user.id;
 
       const whereCondition = { tecnicoId };
       if (estadoFiltro) {
@@ -28,7 +28,7 @@ module.exports = {
       res.render('tecnico/index', {
         tickets,
         estadoSeleccionado: estadoFiltro,
-        user: req.user  // <-- Para usar datos del usuario en la vista
+        user: req.user
       });
     } catch (error) {
       console.error(error);
@@ -52,9 +52,9 @@ module.exports = {
         return res.status(404).send('Ticket no encontrado');
       }
 
-      res.render('tecnico/resolver', { 
+      res.render('tecnico/resolver', {
         ticket,
-        user: req.user  // <-- Para vista
+        user: req.user
       });
     } catch (error) {
       console.error(error);
@@ -66,7 +66,7 @@ module.exports = {
   resolverTicket: async (req, res) => {
     try {
       const { id } = req.params;
-      const { solution, status } = req.body;
+      const { solution, status, precio } = req.body;
 
       const ticket = await Ticket.findByPk(id);
 
@@ -76,6 +76,7 @@ module.exports = {
 
       ticket.solution = solution;
       ticket.status = status;
+      ticket.precio = precio || null;
 
       if (status === 'cerrado' || status === 'completado') {
         const now = new Date();

@@ -100,4 +100,37 @@ document.addEventListener('DOMContentLoaded', function () {
       window.location.href = `/tickets?${params.toString()}`;
     });
   }
+
+  // ===============================
+  // 4️⃣ Mostrar/ocultar campo precio y hora actual en resolver ticket
+  // ===============================
+  const fechaSol = document.getElementById('fechaSol');
+  const horaSol = document.getElementById('horaSol');
+
+  if (fechaSol && horaSol) {
+    const ahora = new Date();
+    fechaSol.innerText = ahora.toLocaleDateString('es-EC');
+    horaSol.innerText = ahora.toLocaleTimeString('es-EC', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+  }
+
+  const tieneCosto = document.getElementById('tieneCosto');
+  const campoPrecio = document.getElementById('campoPrecio');
+  const precioInput = document.getElementById('precio');
+
+  if (tieneCosto && campoPrecio && precioInput) {
+    tieneCosto.addEventListener('change', () => {
+      if (tieneCosto.checked) {
+        campoPrecio.style.display = 'block';
+        precioInput.setAttribute('required', 'required');
+      } else {
+        campoPrecio.style.display = 'none';
+        precioInput.removeAttribute('required');
+        precioInput.value = '';
+      }
+    });
+  }
 });
