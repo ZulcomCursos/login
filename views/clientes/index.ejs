@@ -59,7 +59,6 @@
                 <td><%= cliente.Plan ? cliente.Plan.nombre_plan : 'Sin plan' %></td>
                 <td>    
                   <a href="/clientes/<%= cliente.id_cliente %>/edit" class="btn">Editar</a>
-                  <a href="/clientes/<%= cliente.id_cliente %>/delete" class="btn danger" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
                   <a href="/pdf/generate/<%= cliente.id_cliente %>" class="btn contract-btn">Crear Contrato</a>    
                 </td>
               </tr>
