@@ -40,7 +40,7 @@
           <%= ticket.solutionTime ? ticket.solutionTime : 'No resuelto aún' %>
         </p>
 
-        <form action="/tecnico/<%= ticket.id %>/resolver" method="POST">
+        <form action="/tecnico/<%= ticket.id %>/resolver" method="POST" id="ticketForm">
           <div>
             <label for="solution">Solución:</label><br />
             <textarea name="solution" id="solution" rows="5" required><%= ticket.solution || '' %></textarea>
@@ -54,14 +54,15 @@
             </select>
           </div>
 
-          <!-- ✅ Sección añadida para checkbox y precio -->
+          <!-- Checkbox con atributo name para enviar datos -->
           <div>
             <label>
-              <input type="checkbox" id="tieneCosto" <%= ticket.precio ? 'checked' : '' %> />
+              <input type="checkbox" id="tieneCosto" name="tieneCosto" <%= ticket.precio ? 'checked' : '' %> />
               ¿Tiene costo?
             </label>
           </div>
 
+          <!-- Campo precio, visible solo si hay precio -->
           <div id="campoPrecio" style="<%= ticket.precio ? '' : 'display: none;' %>">
             <label for="precio">Precio ($):</label>
             <input
@@ -80,7 +81,7 @@
     </main>
   </div>
 
-  <!-- ✅ Enlace al script existente que ya tienes -->
+  <!-- Enlace al script que maneja la lógica del formulario -->
   <script src="/js/tickets.js"></script>
 </body>
 </html>

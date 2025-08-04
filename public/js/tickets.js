@@ -102,19 +102,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ===============================
-  // 4️⃣ Mostrar/ocultar campo precio y hora actual en resolver ticket
+  // 4️⃣ Fecha/hora + campo precio
   // ===============================
   const fechaSol = document.getElementById('fechaSol');
   const horaSol = document.getElementById('horaSol');
 
   if (fechaSol && horaSol) {
     const ahora = new Date();
-    fechaSol.innerText = ahora.toLocaleDateString('es-EC');
-    horaSol.innerText = ahora.toLocaleTimeString('es-EC', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-    });
+    fechaSol.textContent = ahora.toISOString().split('T')[0]; // yyyy-mm-dd
+    horaSol.textContent = ahora.toTimeString().split(' ')[0]; // hh:mm:ss
   }
 
   const tieneCosto = document.getElementById('tieneCosto');
