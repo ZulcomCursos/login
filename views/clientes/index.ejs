@@ -6,6 +6,7 @@
   <title>ZULCOM - Administrador</title>
   <link rel="stylesheet" href="/css/navbar.css">
   <link rel="stylesheet" href="/css/dashboard.css">
+  
 </head>
 <body>
   <div class="dashboard-container">
@@ -30,6 +31,21 @@
         <h2>Lista de Clientes</h2>
         <a href="/clientes/create" class="btn">Nuevo Cliente</a>
 
+        <!-- Filtros avanzados -->
+        <div class="filtro-avanzado">
+          <input type="text" id="filtroCedula" placeholder="Filtrar por cédula">
+          <input type="text" id="filtroNombre" placeholder="Filtrar por nombres">
+          <input type="text" id="filtroApellido" placeholder="Filtrar por apellidos">
+          <select id="filtroEstado">
+            <option value="">Todos los estados</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+          </select>
+          <input type="text" id="filtroPlan" placeholder="Filtrar por plan">
+          <button onclick="limpiarFiltros()">Limpiar Filtros</button>
+        </div>
+
+        <!-- Tabla de clientes -->
         <table>
           <thead>
             <tr>
@@ -68,5 +84,6 @@
       </div>
     </main>
   </div>
+  <script src="/js/cliente.js"></script>
 </body>
 </html>
