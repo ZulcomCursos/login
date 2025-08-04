@@ -97,7 +97,7 @@ module.exports = {
       res.redirect('/tecnico');
     } catch (error) {
       console.error(error);
-      res.status(500).send('Error al guardar la solución del ticket');
+      res.status(500).send('Error al guardar la solución del ticket2');
     }
   }
 };
