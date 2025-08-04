@@ -69,15 +69,20 @@ const Ticket = sequelize.define('Ticket', {
     allowNull: true,
     field: 'hora_solucion'
   },
-  solution: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-    field: 'solucion'
-  },
+ solution: {
+  type: DataTypes.TEXT,
+  allowNull: true,
+  field: 'solucion'
+},
   horaVisita: {
   type: DataTypes.TIME,
   allowNull: true,
   field: 'horaVisita'
+},
+priority: {
+  type: DataTypes.ENUM('Alta', 'Media', 'Baja'),
+  defaultValue: 'Media',
+  field: 'prioridad'
 }
 
 }, {
