@@ -83,7 +83,13 @@ priority: {
   type: DataTypes.ENUM('Alta', 'Media', 'Baja'),
   defaultValue: 'Media',
   field: 'prioridad'
+},
+precio: {
+  type: DataTypes.DECIMAL(10,2),
+  allowNull: true,
+  field: 'precio'
 }
+
 
 }, {
   tableName: 'tickets',
