@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZULCOM - Administrador - Editar Ticket #<%= ticket.ticketNumber %></title>
-  <link rel="stylesheet" href="/css/navbar.css" />
-  <link rel="stylesheet" href="/css/dashboard.css" />
-  <link rel="stylesheet" href="/css/edit.css" />
+  <link rel="stylesheet" href="/css/dashboard/navbar.css" />
+  <link rel="stylesheet" href="/css/dashboard/dashboard.css" />
+  <link rel="stylesheet" href="/css/tickets/create.css" />
 </head>
 <body>
   <div class="dashboard-container">
@@ -26,7 +26,6 @@
         </div>
       </header>
 
-      <!-- Contenido específico del dashboard administrativo -->
       <div class="dashboard-content">
         <div class="container mt-4">
           <h1 class="mb-4">Editar Ticket #<%= ticket.ticketNumber %></h1>
@@ -67,33 +66,40 @@
                 <div class="form-group">
                   <label for="issueType">Tipo de Problema</label>
                   <select class="form-control" id="issueType" name="issueType" required>
-                    <option value="Hardware" <%= ticket.issueType === 'Hardware' ? 'selected' : '' %>>Hardware</option>
-                    <option value="Software" <%= ticket.issueType === 'Software' ? 'selected' : '' %>>Software</option>
-                    <option value="Red" <%= ticket.issueType === 'Red' ? 'selected' : '' %>>Red</option>
+                    <option value="Revisión General" <%= ticket.issueType === 'Revisión General' ? 'selected' : '' %>>Revisión General</option>
+                    <option value="Revisión de Fibra Óptica" <%= ticket.issueType === 'Revisión de Fibra Óptica' ? 'selected' : '' %>>Revisión de Fibra Óptica</option>
+                    <option value="Instalación de Fibra Óptica" <%= ticket.issueType === 'Instalación de Fibra Óptica' ? 'selected' : '' %>>Instalación de Fibra Óptica</option>
+                    <option value="Cambio de domicilio " <%= ticket.issueType === 'Cambio de domicilio ' ? 'selected' : '' %>>Cambio de domicilio</option>
                     <option value="Otro" <%= ticket.issueType === 'Otro' ? 'selected' : '' %>>Otro</option>
                   </select>
                 </div>
               </div>
+
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="priority">Prioridad</label>
                   <select class="form-control" id="priority" name="priority" required>
-                    <option value="baja" <%= ticket.priority === 'baja' ? 'selected' : '' %>>Baja</option>
-                    <option value="media" <%= ticket.priority === 'media' ? 'selected' : '' %>>Media</option>
-                    <option value="alta" <%= ticket.priority === 'alta' ? 'selected' : '' %>>Alta</option>
+                    <option value="Alta" <%= ticket.priority === 'Alta' ? 'selected' : '' %>>Alta</option>
+                    <option value="Media" <%= ticket.priority === 'Media' ? 'selected' : '' %>>Media</option>
+                    <option value="Baja" <%= ticket.priority === 'Baja' ? 'selected' : '' %>>Baja</option>
                   </select>
                 </div>
               </div>
-            </div>
 
-            <!-- Estado -->
-            <div class="form-group">
-              <label for="status">Estado</label>
-              <select class="form-control" id="status" name="status" required>
-                <option value="abierto" <%= ticket.status === 'abierto' ? 'selected' : '' %>>Abierto</option>
-                <option value="en_proceso" <%= ticket.status === 'en_proceso' ? 'selected' : '' %>>En Proceso</option>
-                <option value="cerrado" <%= ticket.status === 'cerrado' ? 'selected' : '' %>>Cerrado</option>
-              </select>
+              <!-- Asignar Técnico -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="tecnicoId">Asignar Técnico</label>
+                  <select class="form-control" id="tecnicoId" name="tecnicoId" required>
+                    <option value="">Seleccione un técnico</option>
+                    <% tecnicos.forEach(tecnico => { %>
+                      <option value="<%= tecnico.id %>" <%= ticket.tecnicoId == tecnico.id ? 'selected' : '' %>>
+                        <%= tecnico.nombres + ' ' + tecnico.apellidos %>
+                      </option>
+                    <% }) %>
+                  </select>
+                </div>
+              </div>
             </div>
 
             <!-- Descripción -->
@@ -102,14 +108,32 @@
               <textarea class="form-control" id="description" name="description" rows="5" required><%= ticket.description %></textarea>
             </div>
 
+            <!-- Hora de la Visita -->
+            <div class="form-group">
+              <label for="horaVisita">Hora de la Visita</label>
+              <input
+                type="time"
+                class="form-control"
+                id="horaVisita"
+                name="horaVisita"
+                value="<%= ticket.horaVisita ? ticket.horaVisita : '' %>"
+                required
+              />
+            </div>
+
             <!-- Botones -->
-            <button type="submit" class="btn btn-primary">Actualizar Ticket</button>
-            <a href="/tickets" class="btn btn-secondary">Cancelar</a>
+            <div class="form-group text-right">
+              <button type="submit" class="btn btn-primary px-4">
+                <i class="fas fa-save mr-2"></i>Actualizar Ticket
+              </button>
+              <a href="/tickets" class="btn btn-outline-secondary px-4 ml-2">
+                <i class="fas fa-times mr-2"></i>Cancelar
+              </a>
+            </div>
           </form>
         </div>
       </div>
     </main>
   </div>
-
 </body>
 </html>
