@@ -1,0 +1,140 @@
+<h2 class="mb-4">Gestión de Roles de Pago</h2>
+
+<!-- Nav Tabs -->
+<ul class="nav nav-tabs" id="rolTabs" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="generar-tab" data-bs-toggle="tab" data-bs-target="#generar" type="button" role="tab">Generar Rol</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="listado-tab" data-bs-toggle="tab" data-bs-target="#listado" type="button" role="tab">Listado de Roles</button>
+  </li>
+</ul>
+
+<!-- Tab Content -->
+<div class="tab-content mt-4" id="rolTabsContent">
+
+  <!-- TAB 1: Generar Rol -->
+  <div class="tab-pane fade show active" id="generar" role="tabpanel">
+    <div class="card">
+      <div class="card-body">
+        <form id="formularioRol">
+          <div class="mb-3">
+            <label for="colaboradoresSelect" class="form-label">Colaborador</label>
+            <select id="colaboradoresSelect" class="form-select" name="id_trabajador" required>
+              <option value="" disabled selected>Seleccione un colaborador</option>
+            </select>
+            <div id="mensajeCargoGenerar" class="mt-2 text-primary fw-semibold"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="salario" class="form-label">Salario</label>
+            <input type="number" id="salario" name="salario" class="form-control" min="0" step="0.01" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="periodo" class="form-label">Periodo</label>
+            <select id="periodo" name="periodo" class="form-select" required>
+              <option value="" disabled selected>Seleccione un periodo</option>
+              <!-- Meses ejemplo 2024 y 2025 -->
+              <option value="2025-12">2025-12</option>
+              <option value="2025-11">2025-11</option>
+              <option value="2025-10">2025-10</option>
+              <option value="2025-09">2025-09</option>
+              <option value="2025-08">2025-08</option>
+              <option value="2025-07">2025-07</option>
+              <option value="2025-06">2025-06</option>
+              <option value="2025-05">2025-05</option>
+              <option value="2025-04">2025-04</option>
+              <option value="2025-03">2025-03</option>
+              <option value="2025-02">2025-02</option>
+              <option value="2025-01">2025-01</option>
+
+              
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="horas_extra" class="form-label">Horas Extra</label>
+            <input type="number" class="form-control" id="horas_extra" name="horas_extra" value="0" min="0" step="0.01" />
+          </div>
+
+          <div class="mb-3">
+            <label for="decimos" class="form-label">Décimos</label>
+            <input type="number" class="form-control" id="decimos" name="decimos" value="0" min="0" step="0.01" />
+          </div>
+
+          <div class="mb-3">
+            <label for="bonos" class="form-label">Bonos</label>
+            <input type="number" class="form-control" id="bonos" name="bonos" value="0" min="0" step="0.01" />
+          </div>
+
+          <div class="mb-3">
+            <label for="descuentos" class="form-label">Descuentos</label>
+            <input type="number" class="form-control" id="descuentos" name="descuentos" value="0" min="0" step="0.01" />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Generar Rol</button>
+        </form>
+
+        <div id="mensaje" class="mt-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: Listado de Roles -->
+  <div class="tab-pane fade" id="listado" role="tabpanel">
+    <div class="card">
+      <div class="card-body">
+        <div class="mb-3">
+          <label for="filtroMes" class="form-label">Filtrar por mes:</label>
+          <select id="filtroMes" class="form-select">
+            <option value="">-- Todos los meses --</option>
+            <!-- Todos meses 2024 y 2025 -->
+            <option value="2025-12">2025-12</option>
+            <option value="2025-11">2025-11</option>
+            <option value="2025-10">2025-10</option>
+            <option value="2025-09">2025-09</option>
+            <option value="2025-08">2025-08</option>
+            <option value="2025-07">2025-07</option>
+            <option value="2025-06">2025-06</option>
+            <option value="2025-05">2025-05</option>
+            <option value="2025-04">2025-04</option>
+            <option value="2025-03">2025-03</option>
+            <option value="2025-02">2025-02</option>
+            <option value="2025-01">2025-01</option>
+
+            
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="filtroColaborador" class="form-label">Filtrar por colaborador:</label>
+          <select id="filtroColaborador" class="form-select">
+            <option value="">Todos los colaboradores</option>
+          </select>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Periodo</th>
+                <th>Salario</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-roles">
+              <!-- Aquí se llenará dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
