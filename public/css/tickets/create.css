@@ -1,4 +1,4 @@
-/* === Reset general === */
+/* === RESET GENERAL === */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f4f6f9;
@@ -7,46 +7,49 @@ body {
   color: #333;
 }
 
-/* === Contenedor del formulario === */
+/* === CONTENEDOR PRINCIPAL === */
 .container {
-  padding: 40px;
-  max-width: 1200px; /* Nuevo ancho más largo */
+  max-width: 900px;
   margin: 40px auto;
-  background-color: #ffffff;
+  padding: 40px 50px;
+  background-color: #fff;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-/* === Título === */
+/* === TÍTULO === */
 .container h1 {
   text-align: center;
   color: #2c3e50;
   font-size: 32px;
+  font-weight: 700;
   margin-bottom: 35px;
 }
 
-/* === Etiquetas === */
+/* === ETIQUETAS === */
 form label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-weight: 600;
   color: #2c3e50;
 }
 
-/* === Inputs y selects === */
+/* === INPUTS, SELECTS, TEXTAREA === */
 form input[type="text"],
 form input[type="date"],
 form input[type="time"],
 form select,
 form textarea {
   width: 100%;
-  padding: 14px;
-  margin-bottom: 22px;
-  border: 1px solid #ccd1d9;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border: 1.5px solid #ccd1d9;
   border-radius: 8px;
   background-color: #fdfdfd;
-  transition: border-color 0.3s ease;
   font-size: 16px;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+  resize: vertical;
 }
 
 form input:focus,
@@ -54,14 +57,15 @@ form select:focus,
 form textarea:focus {
   border-color: #3498db;
   outline: none;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.4);
 }
 
-/* === Grilla de campos en dos columnas === */
+/* === GRILLA DOS COLUMNAS === */
 .row {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .col-md-6 {
@@ -76,55 +80,106 @@ form textarea:focus {
   }
 }
 
-/* === Botones === */
-form button,
-form a.btn {
+/* === BÚSQUEDA DE CLIENTE === */
+.search-group {
+  display: flex;
+  gap: 10px;
+}
+
+.search-group input {
+  flex: 1;
+  padding: 14px 18px;
+  border-radius: 8px;
+  border: 1.5px solid #ccd1d9;
+  font-size: 16px;
+}
+
+.search-group button {
+  background-color: #5c6ac4;
+  color: #fff;
+  border: none;
+  padding: 0 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-group button:hover {
+  background-color: #4054b2;
+}
+
+/* === BOTONES === */
+.form-group.text-right {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+button,
+a.btn {
   padding: 14px 30px;
   font-size: 16px;
   border-radius: 8px;
-  font-weight: bold;
+  font-weight: 700;
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.3s ease;
 }
 
-form button i,
-form a.btn i {
-  margin-right: 8px;
-}
-
-form .btn-primary {
+.btn-primary {
   background-color: #3498db;
   color: #fff;
   border: none;
 }
 
-form .btn-primary:hover {
+.btn-primary:hover {
   background-color: #2980b9;
 }
 
-form .btn-outline-secondary {
+.btn-outline-secondary {
   background-color: transparent;
-  border: 1px solid #ccd1d9;
+  border: 1.5px solid #ccd1d9;
   color: #333;
-  margin-left: 15px;
 }
 
-form .btn-outline-secondary:hover {
+.btn-outline-secondary:hover {
   background-color: #e4e7ea;
-  color: #000;
+  border-color: #aeb6c1;
 }
 
-/* === Botones alineados a la derecha === */
-.form-group.text-right {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 35px;
+/* === TARJETA DE CLIENTE === */
+#clientInfo {
+  border: 1.5px solid #3498db;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(52, 152, 219, 0.15);
+  background-color: #f9fbff;
+  margin-bottom: 25px;
+  overflow: hidden;
 }
 
-/* === Alerta de error === */
+.card-header {
+  background-color: #3498db;
+  color: #fff;
+  padding: 14px 20px;
+  font-weight: 600;
+}
+
+.card-body {
+  background-color: #f9fbff;
+  padding: 20px 25px;
+}
+
+.card-body p {
+  margin: 10px 0;
+  font-size: 15px;
+  color: #34495e;
+}
+
+/* === ALERTAS === */
 .alert {
   padding: 14px 20px;
   border-radius: 6px;
@@ -138,59 +193,107 @@ form .btn-outline-secondary:hover {
   border: 1px solid #f5c6cb;
 }
 
-.alert button.close {
+.alert .close {
   background: none;
   border: none;
   font-size: 22px;
-  line-height: 1;
   color: #721c24;
+  cursor: pointer;
 }
 
-/* === Tarjeta de cliente === */
-#clientInfo {
-  border: 1px solid #3498db;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+/* === AGRUPACIÓN: TIPO DE PROBLEMA Y PRIORIDAD === */
+.row.problema-prioridad {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+/* === AGRUPACIÓN: ASIGNAR TÉCNICO Y HORA === */
+.row.tecnico-hora {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.row.tecnico-hora .col-md-6 {
+  flex: 0 0 48%;
+  max-width: 48%;
+}
+
+@media (max-width: 768px) {
+  .row.tecnico-hora .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+/* === AGRUPACIÓN: TIPO DE PROBLEMA Y PRIORIDAD === */
+.row.problema-prioridad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.row.problema-prioridad .col-md-6 {
+  flex: 0 0 48%;
+  max-width: 48%;
+}
+
+/* === AGRUPACIÓN: ASIGNAR TÉCNICO Y HORA DE VISITA === */
+.row.tecnico-hora {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.row.tecnico-hora .col-md-6 {
+  flex: 0 0 48%;
+  max-width: 48%;
+}
+
+/* === DESCRIPCIÓN DEL PROBLEMA === */
+.descripcion-wrapper {
   margin-bottom: 25px;
 }
 
-.card-header {
-  background-color: #3498db;
-  color: white;
-  padding: 14px 20px;
-}
-
-.card-body {
-  background-color: #f9f9f9;
-  padding: 25px;
-}
-
-.card-body p {
-  margin: 10px 0;
-  font-size: 15px;
-}
-
-/* === Campo de búsqueda cedula + botón === */
-.search-group {
-  display: flex;
-  gap: 10px;
-}
-
-.search-group input {
-  flex: 1;
-}
-
-.search-group button {
-  background-color: #17a2b8;
-  color: white;
-  border: none;
-  padding: 0 15px;
+.descripcion-wrapper textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px 18px;
+  border: 1.5px solid #ccd1d9;
   border-radius: 8px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+  font-size: 16px;
+  resize: vertical;
+  font-family: inherit;
+  background-color: #fdfdfd;
+  transition: border-color 0.3s ease;
 }
 
-.search-group button:hover {
-  background-color: #117a8b;
+.descripcion-wrapper textarea:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.4);
+}
+
+/* === BOTONES FINALES === */
+.form-group.text-right {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .row.problema-prioridad .col-md-6,
+  .row.tecnico-hora .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .form-group.text-right {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }

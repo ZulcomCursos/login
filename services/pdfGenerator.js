@@ -24,18 +24,13 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
   const nombreCompleto = `${colaborador.nombres} ${colaborador.apellidos}`;
 
   const fechaCreacion = new Date().toLocaleString('es-EC', {
-  dateStyle: 'short',
-  timeStyle: 'short'
-});
+    dateStyle: 'short',
+    timeStyle: 'short'
+  });
 
   // Datos desde colaborador
   const cedula = colaborador.cedula || 'N/A';
   const cargo = colaborador.cargo || 'N/A';
-
-  // Fecha ingreso (si está en colaborador, sino 'N/A')
-  const fechaIngreso = colaborador.fecha_ingreso
-    ? new Date(colaborador.fecha_ingreso).toLocaleDateString('es-EC')
-    : 'N/A';
 
   const moradoLogo = '#443fcc';
 
@@ -82,7 +77,6 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
     .text(`Colaborador: ${nombreCompleto}`, 50, 120)
     .text(`Cédula: ${cedula}`, 50, 140)
     .text(`Cargo: ${cargo}`, 300, 120)
-    .text(`Fecha de Ingreso: ${fechaIngreso}`, 300, 140)
     .text(`Fecha de Creación: ${fechaCreacion}`, 50, 160);
 
   // Tabla con rol[0]

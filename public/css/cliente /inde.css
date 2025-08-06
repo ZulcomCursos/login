@@ -1,0 +1,177 @@
+/* ===== Estilo general ===== */
+body {
+  background-color: #f5f7fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2e3a59;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Contenedor principal ===== */
+.dashboard-content {
+  max-width: 1200px;
+  margin: 2rem auto;
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(46, 58, 89, 0.07);
+}
+
+/* ===== Título ===== */
+.dashboard-content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222f53;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== Botón nuevo cliente ===== */
+.dashboard-content .btn {
+  background: linear-gradient(135deg, #5c6ac4, #3c50e8);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  text-decoration: none;
+  margin-bottom: 2rem;
+  display: inline-block;
+  box-shadow: 0 6px 16px rgb(92 106 196 / 0.3);
+  transition: transform 0.3s ease;
+}
+
+.dashboard-content .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgb(60 80 232 / 0.4);
+}
+
+/* ===== Filtro avanzado ===== */
+.filtro-avanzado {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 18px rgba(46, 58, 89, 0.05);
+}
+
+.filtro-avanzado input,
+.filtro-avanzado select {
+  padding: 0.6rem 1rem;
+  border: 1.8px solid #d0d7e0;
+  border-radius: 12px;
+  background-color: #fefefe;
+  font-size: 1rem;
+  color: #3c4a6e;
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.05);
+}
+
+.filtro-avanzado input::placeholder {
+  color: #9aa3ba;
+  font-style: italic;
+}
+
+.filtro-avanzado button {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 0.65rem 1.2rem;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(231, 76, 60, 0.4);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.filtro-avanzado button:hover {
+  transform: scale(1.05);
+  background: #c0392b;
+}
+
+/* ===== Tabla de clientes ===== */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  font-size: 0.95rem;
+}
+
+thead {
+  background-color: #5c6ac4;
+  color: white;
+}
+
+thead th {
+  text-align: center;
+  padding: 1rem;
+  font-weight: 600;
+}
+
+tbody tr {
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(92, 106, 196, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+  background-color: #eef1ff;
+}
+
+tbody td {
+  text-align: center;
+  padding: 1rem;
+  color: #364467;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== Acciones ===== */
+td .btn {
+  margin: 0 0.3rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  display: inline-block;
+  text-decoration: none;
+}
+
+td .btn.contract-btn {
+  background-color: #198754;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(25, 135, 84, 0.4);
+}
+
+td .btn.contract-btn:hover {
+  background-color: #157347;
+}
+
+td .btn:hover {
+  background-color: #3c50e8;
+  color: white;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .filtro-avanzado {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  thead {
+    font-size: 0.85rem;
+  }
+
+  tbody td {
+    font-size: 0.85rem;
+    padding: 0.65rem;
+  }
+
+  .dashboard-content .btn {
+    width: 100%;
+    text-align: center;
+  }
+}

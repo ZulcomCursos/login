@@ -8,6 +8,11 @@ window.loadContent = async function(url) {
     if (!contentDiv) throw new Error('No se encontró el contenedor #contenido-dinamico');
     contentDiv.innerHTML = html;
 
+    // <-- Corrección: ejecutar init() si es la vista crear rol para que el form funcione
+    if (url === '/rolpago/crear' && typeof init === 'function') {
+      init();
+    }
+
     // Cargar colaboradores en filtros y asignar listeners para filtros en el tab listado
     if (url === '/rolpago/crear' || url === '/rolpago/ver' || url === '/rolpago/listar') {
       await cargarFiltroColaboradores();
@@ -287,6 +292,12 @@ window.addEventListener('popstate', function(event) {
   if (url) window.loadContent(url);
 });
 
+// <-- Corrección: cargar contenido dinámico en carga de página para rutas SPA
 document.addEventListener('DOMContentLoaded', () => {
   configurarSpaLinks();
+
+  const rutasSpa = ['/rolpago/crear', '/rolpago/ver', '/rolpago/listar'];
+  if (rutasSpa.includes(window.location.pathname)) {
+    window.loadContent(window.location.pathname);
+  }
 });

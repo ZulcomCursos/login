@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,182 +9,181 @@
   <link rel="stylesheet" href="/css/dashboard/dashboard.css" />
   <link rel="stylesheet" href="/css/tickets/create.css" />
 </head>
+
 <body>
   <div class="dashboard-container">
     <%- include('../partials/navadministrador') %>
 
-    <main class="main-content">
-      <header class="content-header">
-        <h1>PANEL ADMINISTRATIVO</h1>
-        <div class="user-actions">
-          <div>
-            <a href="/auth/change-password"><img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil" /></a>
+      <main class="main-content">
+        <header class="content-header">
+          <h1>PANEL ADMINISTRATIVO</h1>
+          <div class="user-actions">
+            <div>
+              <a href="/auth/change-password"><img src="/img/logo-perfil.png" alt="Logo Perfil"
+                  class="img-perfil" /></a>
+            </div>
+            <% if (user && user.nombres && user.apellidos) { %>
+              <span class="user-name">Administrador: <%= user.nombres %>
+                  <%= user.apellidos %></span>
+              <% } %>
+                <a href="/auth/logout" class="logout-btn"
+                  onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
           </div>
-          <% if (user && user.nombres && user.apellidos) { %>
-            <span class="user-name">Administrador: <%= user.nombres %> <%= user.apellidos %></span>
-          <% } %>
-          <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
-        </div>
-      </header>
+        </header>
 
-      <!-- Contenido específico del dashboard administrativo -->
-      <div class="dashboard-content">
-        <div id="ticket-create-container" class="ticket-create-container container mt-4">
-          <h1>Crear Nuevo Ticket</h1>
+        <!-- Contenido específico del dashboard administrativo -->
+        <div class="dashboard-content">
+          <div id="ticket-create-container" class="ticket-create-container container mt-4">
+            <h1>Crear Nuevo Ticket</h1>
 
-          <% if (typeof error !== 'undefined') { %>
-            <div class="alert alert-danger alert-dismissible fade show">
-              <%= error %>
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-          <% } %>
-
-          <form id="ticketForm" action="/tickets" method="POST" novalidate>
-            <div class="row">
-              <div class="col-md-6">
-               <div class="form-group">
-  <label for="cedula">Cédula del Cliente *</label>
-  <div class="search-group">
-    <input
-      type="text"
-      id="cedula"
-      name="cedula"
-      placeholder="Ingrese la cédula del cliente"
-      pattern="[0-9]{10}"
-      title="Ingrese una cédula válida (10 dígitos)"
-      value="<%= (typeof formData !== 'undefined' && formData.cedula) ? formData.cedula : '' %>"
-      required
-    />
-    <button type="button" id="searchClientBtn">
-      <i class="fas fa-search"></i> Buscar
-    </button>
-  </div>
-  <small class="form-text text-muted">Ingrese la cédula del cliente (10 dígitos)</small>
-</div>
-
+            <% if (typeof error !=='undefined' ) { %>
+              <div class="alert alert-danger alert-dismissible fade show">
+                <%= error %>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
               </div>
-            </div>
+              <% } %>
 
-            <div id="clientInfo" class="card mb-3" style="display: none;">
-              <div class="card-header bg-primary text-white">
-                <h5 class="card-title mb-0">
-                  <i class="fas fa-user-circle mr-2"></i>Información del Cliente
-                </h5>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-6">
-                    <p><strong><i class="fas fa-user mr-2"></i>Nombre:</strong> <span id="clientName"></span></p>
-                    <p><strong><i class="fas fa-phone mr-2"></i>Teléfono:</strong> <span id="clientPhone"></span></p>
-                    <p><strong><i class="fas fa-map-marker-alt mr-2"></i>Dirección:</strong> <span id="clientAddress"></span></p>
-                    <p><strong><i class="fas fa-network-wired mr-2"></i>IP:</strong> <span id="clientIP"></span></p>
+                <form id="ticketForm" action="/tickets" method="POST" novalidate>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="cedula">Cédula del Cliente *</label>
+                        <div class="search-group">
+                          <input type="text" id="cedula" name="cedula" placeholder="Ingrese la cédula del cliente"
+                            pattern="[0-9]{10}" title="Ingrese una cédula válida (10 dígitos)"
+                            value="<%= (typeof formData !== 'undefined' && formData.cedula) ? formData.cedula : '' %>"
+                            required />
+                          <button type="button" id="searchClientBtn">
+                            <i class="fas fa-search"></i> Buscar
+                          </button>
+                        </div>
+                        <small class="form-text text-muted">Ingrese la cédula del cliente (10 dígitos)</small>
+                      </div>
+
+                    </div>
                   </div>
-                  <div class="col-md-6">
-                    <p><strong><i class="fas fa-envelope mr-2"></i>Correo:</strong> <span id="clientEmail"></span></p>
-                    <p><strong><i class="fas fa-bookmark mr-2"></i>Referencias:</strong> <span id="clientReferences"></span></p>
-                    <input type="hidden" id="clientId" name="clientId" />
+
+                  <div id="clientInfo" class="card mb-3" style="display: none;">
+                    <div class="card-header bg-primary text-white">
+                      <h5 class="card-title mb-0">
+                        <i class="fas fa-user-circle mr-2"></i>Información del Cliente
+                      </h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong><i class="fas fa-user mr-2"></i>Nombre:</strong> <span id="clientName"></span></p>
+                          <p><strong><i class="fas fa-phone mr-2"></i>Teléfono:</strong> <span id="clientPhone"></span>
+                          </p>
+                          <p><strong><i class="fas fa-map-marker-alt mr-2"></i>Dirección:</strong> <span
+                              id="clientAddress"></span></p>
+                          <p><strong><i class="fas fa-network-wired mr-2"></i>IP:</strong> <span id="clientIP"></span>
+                          </p>
+                        </div>
+                        <div class="col-md-6">
+                          <p><strong><i class="fas fa-envelope mr-2"></i>Correo:</strong> <span id="clientEmail"></span>
+                          </p>
+                          <p><strong><i class="fas fa-bookmark mr-2"></i>Referencias:</strong> <span
+                              id="clientReferences"></span></p>
+                          <input type="hidden" id="clientId" name="clientId" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="issueType">Tipo de Problema *</label>
-                  <select class="form-control custom-select" id="issueType" name="issueType" required>
-                    <option value="" disabled <%= (typeof formData === 'undefined' || !formData.issueType) ? 'selected' : '' %>>
-                      Seleccione un tipo...
-                    </option>
-                    <option value="Revisión General" <%= (typeof formData !== 'undefined' && formData.issueType === 'Revisión General') ? 'selected' : '' %>>
-                     Revisión General
-                    </option>
-                    <option value="Revisión de Fibra Óptica" <%= (typeof formData !== 'undefined' && formData.issueType === 'Revisión de Fibra Óptica') ? 'selected' : '' %>>
-                      Revisión de Fibra Óptica
-                    </option>
-                    <option value="Instalación de Fibra Óptica" <%= (typeof formData !== 'undefined' && formData.issueType === 'Instalación de Fibra Óptica') ? 'selected' : '' %>>
-                      Instalación de Fibra Óptica
-                    </option>
-                    <option value="Cambio de domicilio " <%= (typeof formData !== 'undefined' && formData.issueType === 'Cambio de domicilio ') ? 'selected' : '' %>>
-                      Cambio de domicilio 
-                    </option>
-                    <option value="Otro" <%= (typeof formData !== 'undefined' && formData.issueType === 'Otro') ? 'selected' : '' %>>
-                      Otro
-                    </option>
-                  </select>
-                </div>
-              </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="issueType">Tipo de Problema *</label>
+                        <select class="form-control custom-select" id="issueType" name="issueType" required>
+                          <option value="" disabled <%=(typeof formData==='undefined' || !formData.issueType)
+                            ? 'selected' : '' %>>
+                            Seleccione un tipo...
+                          </option>
+                          <option value="Revisión General" <%=(typeof formData !=='undefined' &&
+                            formData.issueType==='Revisión General' ) ? 'selected' : '' %>>
+                            Revisión General
+                          </option>
+                          <option value="Revisión de Fibra Óptica" <%=(typeof formData !=='undefined' &&
+                            formData.issueType==='Revisión de Fibra Óptica' ) ? 'selected' : '' %>>
+                            Revisión de Fibra Óptica
+                          </option>
+                          <option value="Instalación de Fibra Óptica" <%=(typeof formData !=='undefined' &&
+                            formData.issueType==='Instalación de Fibra Óptica' ) ? 'selected' : '' %>>
+                            Instalación de Fibra Óptica
+                          </option>
+                          <option value="Cambio de domicilio " <%=(typeof formData !=='undefined' &&
+                            formData.issueType==='Cambio de domicilio ' ) ? 'selected' : '' %>>
+                            Cambio de domicilio
+                          </option>
+                          <option value="Otro" <%=(typeof formData !=='undefined' && formData.issueType==='Otro' )
+                            ? 'selected' : '' %>>
+                            Otro
+                          </option>
+                        </select>
+                      </div>
+                    </div>
 
-              <div class="col-md-6">
-  <div class="form-group">
-    <label for="priority">Prioridad *</label>
-    <select class="form-control" id="priority" name="priority" required>
-      <option value="Alta">Alta</option>
-      <option value="Media" selected>Media</option>
-      <option value="Baja">Baja</option>
-    </select>
-  </div>
-</div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="priority">Prioridad *</label>
+                        <select class="form-control" id="priority" name="priority" required>
+                          <option value="Alta">Alta</option>
+                          <option value="Media" selected>Media</option>
+                          <option value="Baja">Baja</option>
+                        </select>
+                      </div>
+                    </div>
 
 
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="tecnicoId">Asignar Técnico *</label>
-                  <select class="form-control" id="tecnicoId" name="tecnicoId" required>
-                    <option value="">Seleccione un técnico</option>
-                    <% tecnicos.forEach(tecnico => { %>
-                      <option value="<%= tecnico.id %>" <%= (typeof formData !== 'undefined' && formData.tecnicoId == tecnico.id) ? 'selected' : '' %>>
-                        <%= tecnico.nombres + ' ' + tecnico.apellidos %>
-                      </option>
-                    <% }) %>
-                  </select>
-                </div>
-              </div>
-            </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="tecnicoId">Asignar Técnico *</label>
+                        <select class="form-control" id="tecnicoId" name="tecnicoId" required>
+                          <option value="">Seleccione un técnico</option>
+                          <% tecnicos.forEach(tecnico=> { %>
+                            <option value="<%= tecnico.id %>" <%=(typeof formData !=='undefined' &&
+                              formData.tecnicoId==tecnico.id) ? 'selected' : '' %>>
+                              <%= tecnico.nombres + ' ' + tecnico.apellidos %>
+                            </option>
+                            <% }) %>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
 
-            <div class="form-group">
-              <label for="description">Descripción del Problema *</label>
-              <textarea
-                class="form-control"
-                id="description"
-                name="description"
-                rows="5"
-                placeholder="Describa detalladamente el problema..."
-                required
-              ><%= (typeof formData !== 'undefined' && formData.description) ? formData.description : '' %></textarea>
-            </div>
+                  <div class="form-group">
+                    <label for="description">Descripción del Problema *</label>
+                    <textarea class="form-control" id="description" name="description" rows="5"
+                      placeholder="Describa detalladamente el problema..."
+                      required><%= (typeof formData !== 'undefined' && formData.description) ? formData.description : '' %></textarea>
+                  </div>
 
-            <!-- CAMPO AÑADIDO: Hora de la Visita -->
-            <div class="form-group">
-              <label for="horaVisita">Hora de la Visita *</label>
-              <input
-                type="time"
-                class="form-control"
-                id="horaVisita"
-                name="horaVisita"
-                value="<%= (typeof formData !== 'undefined' && formData.horaVisita) ? formData.horaVisita : '' %>"
-                required
-              />
-            </div>
+                  <!-- CAMPO AÑADIDO: Hora de la Visita -->
+                  <div class="form-group">
+                    <label for="horaVisita">Hora de la Visita *</label>
+                    <input type="time" class="form-control" id="horaVisita" name="horaVisita"
+                      value="<%= (typeof formData !== 'undefined' && formData.horaVisita) ? formData.horaVisita : '' %>"
+                      required />
+                  </div>
 
-            <div class="form-group text-right">
-              <button type="submit" class="btn btn-primary px-4">
-                <i class="fas fa-ticket-alt mr-2"></i>Generar Ticket
-              </button>
-              <a href="/tickets" class="btn btn-outline-secondary px-4 ml-2">
-                <i class="fas fa-times mr-2"></i>Cancelar
-              </a>
-            </div>
-          </form>
+                  <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary px-4">
+                      <i class="fas fa-ticket-alt mr-2"></i>Generar Ticket
+                    </button>
+                    <a href="/tickets" class="btn btn-outline-secondary px-4 ml-2">
+                      <i class="fas fa-times mr-2"></i>Cancelar
+                    </a>
+                  </div>
+                </form>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
   </div>
 
-  <script src="/js/
-  
-  tickets.js"></script>
+  <script src="/js/tickets.js"></script>
 </body>
+
 </html>

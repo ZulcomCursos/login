@@ -118,7 +118,7 @@ const generarPDF = async (req, res) => {
     const { id_trabajador } = req.params;
 
     const colaboradores = await sequelize.query(
-      `SELECT id, nombres, apellidos, cedula, role AS cargo, fecha_ingreso 
+      `SELECT id, nombres, apellidos, cedula, role AS cargo
        FROM users 
        WHERE id = ?`,
       { replacements: [id_trabajador], type: QueryTypes.SELECT }
