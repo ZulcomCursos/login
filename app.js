@@ -6,7 +6,7 @@ const cors = require("cors");
 const path = require("path");
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser'); 
-const { dbConnectMySql } = require("./config/mysql");
+const { sequelize, dbConnectMySql } = require("./config/mysql");
 
 const app = express();
 const NODE_ENV = process.env.NODE_ENV || 'development';

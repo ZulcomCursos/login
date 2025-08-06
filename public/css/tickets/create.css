@@ -1,125 +1,72 @@
-/* === Variables de color (puedes ajustar) === */
-:root {
-  --white: #ffffff;
-  --light-gray: #f4f6f8;
-  --medium-gray: #ccc;
-  --dark-gray: #2c3e50;
-  --purple-500: #845ef7;
-  --purple-700: #5a3ebd;
-  --blue-50: #e6f0ff;
-  --blue-500: #339af0;
-  --blue-700: #1c7ed6;
+/* === Reset general === */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f9;
+  margin: 0;
+  padding: 0;
+  color: #333;
 }
 
-/* === Contenedor Principal del Formulario === */
-.dashboard-content {
-  display: flex;
-  justify-content: center;
-  padding: 30px 15px;
-  background-color: var(--light-gray);
-  min-height: 100vh;
-  box-sizing: border-box;
+/* === Contenedor del formulario === */
+.container {
+  padding: 40px;
+  max-width: 1200px; /* Nuevo ancho más largo */
+  margin: 40px auto;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-/* === Tarjeta del Formulario === */
-.ticket-create-container {
-  background-color: var(--white);
-  max-width: 900px;
-  width: 100%;
-  padding: 40px 35px;
-  border-radius: 16px;
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-}
-
-/* === Título del Formulario === */
-.ticket-create-container h1 {
-  font-size: 2.2rem;
-  font-weight: bold;
-  color: var(--dark-gray);
-  margin-bottom: 30px;
+/* === Título === */
+.container h1 {
   text-align: center;
-}
-
-/* === Alerta de Error === */
-.alert {
-  background-color: #ffe5e5;
-  border: 2px solid #e74c3c;
-  color: #b32e2e;
-  padding: 15px 20px;
-  border-radius: 10px;
-  margin-bottom: 25px;
-  position: relative;
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-.alert .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 1.3rem;
-  cursor: pointer;
-  color: #b32e2e;
+  color: #2c3e50;
+  font-size: 32px;
+  margin-bottom: 35px;
 }
 
 /* === Etiquetas === */
-label {
-  font-weight: 600;
-  color: var(--dark-gray);
+form label {
   display: block;
-  margin-bottom: 8px;
-  font-size: 1rem;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #2c3e50;
 }
 
-/* === Inputs, Selects y Textareas === */
-input[type="text"],
-input[type="time"],
-select,
-textarea {
+/* === Inputs y selects === */
+form input[type="text"],
+form input[type="date"],
+form input[type="time"],
+form select,
+form textarea {
   width: 100%;
-  padding: 12px 14px;
-  font-size: 1rem;
-  border: 2px solid var(--medium-gray);
-  border-radius: 10px;
-  box-sizing: border-box;
-  font-family: inherit;
-  transition: all 0.3s ease;
-  background-color: var(--white);
+  padding: 14px;
+  margin-bottom: 22px;
+  border: 1px solid #ccd1d9;
+  border-radius: 8px;
+  background-color: #fdfdfd;
+  transition: border-color 0.3s ease;
+  font-size: 16px;
 }
 
-input[type="time"] {
-  max-width: 160px;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: var(--purple-500);
-  box-shadow: 0 0 6px rgba(132, 94, 247, 0.3);
+form input:focus,
+form select:focus,
+form textarea:focus {
+  border-color: #3498db;
   outline: none;
 }
 
-textarea {
-  min-height: 130px;
-  resize: vertical;
-}
-
-/* === Layout del Formulario === */
+/* === Grilla de campos en dos columnas === */
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -10px;
-  gap: 20px;
+  gap: 24px;
+  margin-bottom: 10px;
 }
 
 .col-md-6 {
   flex: 0 0 48%;
   max-width: 48%;
-  padding: 0 10px;
-  margin-bottom: 25px;
 }
 
 @media (max-width: 768px) {
@@ -130,93 +77,101 @@ textarea {
 }
 
 /* === Botones === */
-button.btn,
-a.btn {
-  font-weight: 700;
-  font-size: 1.1rem;
-  padding: 12px 28px;
-  border-radius: 10px;
-  cursor: pointer;
+form button,
+form a.btn {
+  padding: 14px 30px;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  user-select: none;
+}
+
+form button i,
+form a.btn i {
+  margin-right: 8px;
+}
+
+form .btn-primary {
+  background-color: #3498db;
+  color: #fff;
   border: none;
 }
 
-button.btn-primary {
-  background-color: var(--purple-500);
-  color: white;
+form .btn-primary:hover {
+  background-color: #2980b9;
 }
 
-button.btn-primary:hover {
-  background-color: var(--purple-700);
+form .btn-outline-secondary {
+  background-color: transparent;
+  border: 1px solid #ccd1d9;
+  color: #333;
+  margin-left: 15px;
 }
 
-a.btn-outline-secondary {
-  background: none;
-  color: var(--purple-500);
-  border: 2px solid var(--purple-500);
+form .btn-outline-secondary:hover {
+  background-color: #e4e7ea;
+  color: #000;
 }
 
-a.btn-outline-secondary:hover {
-  background-color: var(--purple-500);
-  color: white;
-}
-
-/* === Iconos dentro de botones === */
-button.btn i,
-a.btn i {
-  margin-right: 10px;
-  font-size: 1.2rem;
-}
-
-/* === Card de Información del Cliente === */
-#clientInfo.card {
-  border: 2px solid var(--blue-500);
-  border-radius: 12px;
-  background: var(--blue-50);
-  box-shadow: 0 4px 10px rgba(51, 154, 240, 0.15);
-  padding: 25px 30px;
-  margin-top: 30px;
-}
-
-#clientInfo.card-header {
-  background-color: var(--blue-500);
-  color: white;
-  font-weight: 700;
-  padding: 14px 20px;
-  border-radius: 10px 10px 0 0;
-  font-size: 1.25rem;
+/* === Botones alineados a la derecha === */
+.form-group.text-right {
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 35px;
 }
 
-#clientInfo.card-header i {
-  margin-right: 12px;
-  font-size: 1.5rem;
+/* === Alerta de error === */
+.alert {
+  padding: 14px 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-weight: 500;
 }
 
-#clientInfo.card-body p {
-  margin-bottom: 14px;
-  font-size: 1.05rem;
-  color: var(--dark-gray);
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }
 
-#clientInfo.card-body p strong {
-  font-weight: 700;
+.alert button.close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  line-height: 1;
+  color: #721c24;
 }
 
-/* === Texto de Ayuda === */
-.form-text.text-muted {
-  font-size: 0.85rem;
-  color: #6c757d;
-  margin-top: 5px;
+/* === Tarjeta de cliente === */
+#clientInfo {
+  border: 1px solid #3498db;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
 }
 
-/* === Input Group para Búsqueda === */
+.card-header {
+  background-color: #3498db;
+  color: white;
+  padding: 14px 20px;
+}
+
+.card-body {
+  background-color: #f9f9f9;
+  padding: 25px;
+}
+
+.card-body p {
+  margin: 10px 0;
+  font-size: 15px;
+}
+
+/* === Campo de búsqueda cedula + botón === */
 .search-group {
   display: flex;
   gap: 10px;
@@ -224,41 +179,18 @@ a.btn i {
 
 .search-group input {
   flex: 1;
-  border-radius: 10px 0 0 10px;
-  border: 2px solid var(--medium-gray);
-  padding: 12px 14px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.search-group input:focus {
-  border-color: var(--purple-500);
-  box-shadow: 0 0 6px rgba(132, 94, 247, 0.3);
-  outline: none;
 }
 
 .search-group button {
-  background-color: var(--blue-500);
+  background-color: #17a2b8;
   color: white;
   border: none;
-  padding: 0 20px;
-  border-radius: 0 10px 10px 0;
-  cursor: pointer;
-  font-size: 1.1rem;
+  padding: 0 15px;
+  border-radius: 8px;
+  font-weight: 600;
   transition: background-color 0.3s ease;
 }
 
 .search-group button:hover {
-  background-color: var(--blue-700);
-}
-
-/* === Flecha Personalizada para Select === */
-select.custom-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: url("data:image/svg+xml,%3csvg fill='%23845ef7' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e")
-    no-repeat right 15px center / 14px 14px;
-  padding-right: 40px;
-  cursor: pointer;
+  background-color: #117a8b;
 }
