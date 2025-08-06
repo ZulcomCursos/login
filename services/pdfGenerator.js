@@ -39,7 +39,8 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
   doc.pipe(res);
 
   // Logo
-  const logoPath = path.join(__dirname, '../img/logo.png');
+const logoPath = path.resolve(__dirname, '..', 'public', 'img', 'logo.png');
+
   if (fs.existsSync(logoPath)) {
     doc.image(logoPath, 50, 45, { width: 60 });
   }
@@ -60,7 +61,7 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
     .fontSize(16)
     .fillColor(moradoLogo)
     .font('Helvetica-Bold')
-    .text('COMPROBANTE DE PAGO', { align: 'right' });
+    .text('ROL DE PAGO', { align: 'right' });
 
   doc
     .moveTo(50, 110)

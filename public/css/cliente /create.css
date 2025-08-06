@@ -1,0 +1,124 @@
+/* ===== Contenedor principal del formulario ===== */
+.dashboard-content {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(46, 58, 89, 0.07);
+}
+
+/* ===== Título ===== */
+.dashboard-content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222f53;
+  margin-bottom: 1.8rem;
+}
+
+/* ===== Estilos generales del formulario ===== */
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #344563;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.7rem 1rem;
+  border: 1.8px solid #d0d7e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  background-color: #fefefe;
+  color: #3c4a6e;
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #5c6ac4;
+  box-shadow: 0 0 8px rgba(92, 106, 196, 0.3);
+  outline: none;
+}
+
+/* ===== Radios para discapacidad ===== */
+.form-group div {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.form-group input[type="radio"] {
+  margin-left: 0.5rem;
+}
+
+/* ===== Botones ===== */
+button.btn,
+a.btn {
+  padding: 0.75rem 1.6rem;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-top: 1rem;
+  box-shadow: 0 6px 16px rgb(92 106 196 / 0.3);
+  display: inline-block;
+  text-align: center;
+}
+
+button.btn {
+  background: linear-gradient(135deg, #5c6ac4, #3c50e8);
+  color: #fff;
+  border: none;
+}
+
+button.btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #3c50e8, #5c6ac4);
+}
+
+a.btn.secondary {
+  background: #e74c3c;
+  color: #fff;
+  margin-left: 1rem;
+  box-shadow: 0 6px 14px rgba(231, 76, 60, 0.4);
+}
+
+a.btn.secondary:hover {
+  background: #c0392b;
+  transform: scale(1.05);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  button.btn,
+  a.btn.secondary {
+    width: 100%;
+    margin-left: 0;
+  }
+}
