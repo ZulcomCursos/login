@@ -63,10 +63,10 @@ module.exports = {
 
       // Arreglo con tipos de problema disponibles:
       const tiposProblema = [
-        'Hardware',
-        'Software',
-        'Red',
-        'Facturación',
+        ' Revisión General',
+        'Revisión de Fibra Óptica',
+        'Instalación de Fibra Óptica',
+        'Cambio de domicilio',
         'Otro'
       ];
 

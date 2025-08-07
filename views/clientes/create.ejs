@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/css/dashboard/navbar.css" />
   <link rel="stylesheet" href="/css/dashboard/dashboard.css" />
   <link rel="stylesheet" href="/css/cliente/create.css" />
+ 
 
 </head>
 <body>
@@ -28,113 +29,114 @@
       </header>
 
       <!-- Contenido específico del dashboard administrativo -->
-      <div class="dashboard-content">
-        <h2>Nuevo Cliente</h2>
+     <div class="dashboard-content">
+  <h2>Nuevo Cliente</h2>
 
-        <form action="/clientes" method="POST">
-          <div class="form-group">
-            <label for="estado">Estado:</label>
-            <select id="estado" name="estado" required>
-              <option value="Activo" selected>Activo</option>
-              <option value="Inactivo">Inactivo</option>
-            </select>
-          </div>
+  <form action="/clientes" method="POST">
+    <div class="form-group">
+      <label for="estado">Estado:</label>
+      <select id="estado" name="estado" required>
+        <option value="Activo" selected>Activo</option>
+        <option value="Inactivo">Inactivo</option>
+      </select>
+    </div>
 
-          <div class="form-group">
-            <label for="ip">IP:</label>
-            <input type="text" id="ip" name="ip" required>
-          </div>
+    <div class="form-group">
+      <label for="ip">IP:</label>
+      <input type="text" id="ip" name="ip" required pattern="^(\d{1,3}\.){3}\d{1,3}$" title="Formato de IP inválido. Ej: 192.168.0.1">
+    </div>
 
-          <div class="form-group">
-            <label for="cedula">Cédula:</label>
-            <input type="text" id="cedula" name="cedula" required>
-          </div>
+    <div class="form-group">
+      <label for="cedula">Cédula:</label>
+      <input type="text" id="cedula" name="cedula" required pattern="[0-9]{10}" maxlength="10" title="Ingrese 10 dígitos numéricos">
+    </div>
 
-          <div class="form-group">
-            <label for="apellido">Apellidos:</label>
-            <input type="text" id="apellido" name="apellido" required>
-          </div>
+    <div class="form-group">
+      <label for="apellido">Apellidos:</label>
+      <input type="text" id="apellido" name="apellido" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ ]+" title="Solo letras y espacios">
+    </div>
 
-          <div class="form-group">
-            <label for="nombre">Nombres:</label>
-            <input type="text" id="nombre" name="nombre" required>
-          </div>
+    <div class="form-group">
+      <label for="nombre">Nombres:</label>
+      <input type="text" id="nombre" name="nombre" required pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ ]+" title="Solo letras y espacios">
+    </div>
 
-          <div class="form-group">
-            <label for="direccion">Dirección:</label>
-            <textarea id="direccion" name="direccion" required></textarea>
-          </div>
+    <div class="form-group">
+      <label for="direccion">Dirección:</label>
+      <textarea id="direccion" name="direccion" required></textarea>
+    </div>
 
-          <div class="form-group">
-            <label for="coordenadas">Coordenadas:</label>
-            <input type="text" id="coordenadas" name="coordenadas">
-          </div>
+    <div class="form-group">
+      <label for="coordenadas">Coordenadas:</label>
+      <input type="text" id="coordenadas" name="coordenadas" pattern="^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$" title="Formato válido: -0.1234, -78.5678">
+    </div>
 
-          <div class="form-group">
-            <label for="referencias">Referencias:</label>
-            <textarea id="referencias" name="referencias"></textarea>
-          </div>
+    <div class="form-group">
+      <label for="referencias">Referencias:</label>
+      <textarea id="referencias" name="referencias"></textarea>
+    </div>
 
-          <div class="form-group">
-            <label for="telefono1">Teléfono Principal:</label>
-            <input type="text" id="telefono1" name="telefono1" required>
-          </div>
+    <div class="form-group">
+      <label for="telefono1">Teléfono Principal:</label>
+      <input type="text" id="telefono1" name="telefono1" required pattern="[0-9]{10}" maxlength="10" title="Ingrese 10 dígitos numéricos">
+    </div>
 
-          <div class="form-group">
-            <label for="telefono2">Teléfono Secundario:</label>
-            <input type="text" id="telefono2" name="telefono2">
-          </div>
+    <div class="form-group">
+      <label for="telefono2">Teléfono Secundario:</label>
+      <input type="text" id="telefono2" name="telefono2" pattern="[0-9]{10}" maxlength="10" title="Ingrese 10 dígitos numéricos">
+    </div>
 
-          <div class="form-group">
-            <label for="correo">Correo:</label>
-            <input type="email" id="correo" name="correo" required>
-          </div>
+    <div class="form-group">
+      <label for="correo">Correo:</label>
+      <input type="email" id="correo" name="correo" required>
+    </div>
 
-          <div class="form-group">
-            <label for="id_plan">Plan:</label>
-            <select id="id_plan" name="id_plan" required>
-              <% planes.forEach(plan => { %>
-                <option value="<%= plan.id_plan %>"><%= plan.nombre_plan %> - <%= plan.megas %> Mbps - $<%= plan.costo %></option>
-              <% }) %>
-            </select>
-          </div>
+    <div class="form-group">
+      <label for="id_plan">Plan:</label>
+      <select id="id_plan" name="id_plan" required>
+        <% planes.forEach(plan => { %>
+          <option value="<%= plan.id_plan %>"><%= plan.nombre_plan %> - <%= plan.megas %> Mbps - $<%= plan.costo %></option>
+        <% }) %>
+      </select>
+    </div>
 
-          <div class="form-group">
-            <label>Discapacidad:</label>
-            <div>
-              <label for="discapacidad_si">Sí</label>
-              <input type="radio" id="discapacidad_si" name="discapacidad" value="si" required>
+    <div class="form-group">
+      <label>Discapacidad:</label>
+      <div>
+        <label for="discapacidad_si">Sí</label>
+        <input type="radio" id="discapacidad_si" name="discapacidad" value="si" required>
 
-              <label for="discapacidad_no">No</label>
-              <input type="radio" id="discapacidad_no" name="discapacidad" value="no">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="parroquia">Parroquia:</label>
-            <input type="text" id="parroquia" name="parroquia" required value="Calderon">
-          </div>
-
-          <div class="form-group">
-            <label for="canton">Cantón:</label>
-            <input type="text" id="canton" name="canton" required value="Quito">
-          </div>
-
-          <div class="form-group">
-            <label for="ciudad">Ciudad:</label>
-            <input type="text" id="ciudad" name="ciudad" required value="Quito">
-          </div>
-
-          <div class="form-group">
-            <label for="provincia">Provincia:</label>
-            <input type="text" id="provincia" name="provincia" required value="Pichincha">
-          </div>
-
-          <button type="submit" class="btn">Guardar</button>
-          <a href="/clientes" class="btn secondary">Cancelar</a>
-        </form>
+        <label for="discapacidad_no">No</label>
+        <input type="radio" id="discapacidad_no" name="discapacidad" value="no">
       </div>
+    </div>
+
+    <div class="form-group">
+      <label for="parroquia">Parroquia:</label>
+      <input type="text" id="parroquia" name="parroquia" required value="Calderon" pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ ]+" title="Solo letras y espacios">
+    </div>
+
+    <div class="form-group">
+      <label for="canton">Cantón:</label>
+      <input type="text" id="canton" name="canton" required value="Quito" pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ ]+" title="Solo letras y espacios">
+    </div>
+
+    <div class="form-group">
+      <label for="ciudad">Ciudad:</label>
+      <input type="text" id="ciudad" name="ciudad" required value="Quito" pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ ]+" title="Solo letras y espacios">
+    </div>
+
+    <div class="form-group">
+      <label for="provincia">Provincia:</label>
+      <input type="text" id="provincia" name="provincia" required value="Pichincha" pattern="[A-Za-zÁÉÍÓÚÑáéíóúñ ]+" title="Solo letras y espacios">
+    </div>
+
+    <button type="submit" class="btn">Guardar</button>
+    <a href="/clientes" class="btn secondary">Cancelar</a>
+  </form>
+</div>
     </main>
   </div>
+      <script src="/js/cliente.js"></script>
 </body>
 </html>

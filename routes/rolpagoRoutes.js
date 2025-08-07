@@ -67,7 +67,6 @@ router.post('/crear', crearRolPago);
 // Generar PDF
 router.get('/pdf/:id_trabajador', generarPDF);
 
-// Cargar vista parcial SPA para gestión de roles
 router.get('/crear', async (req, res) => {
   try {
     const [colaboradores] = await sequelize.query(`
@@ -79,11 +78,23 @@ router.get('/crear', async (req, res) => {
       FROM users
       ORDER BY nombres ASC
     `);
-    res.render('rolespago/gestion_roles_pago_parcial', { colaboradores });
+
+    if (req.xhr || req.headers['x-requested-with'] === 'XMLHttpRequest') {
+      // petición AJAX: enviar solo parcial
+      res.render('rolespago/gestion_roles_pago_parcial', { colaboradores });
+    } else {
+      // petición normal: enviar dashboard completo con parcial embebido
+      res.render('dashboard/gerente', {
+        user: req.user,
+        colaboradores,
+        section: 'rolespago/gestion_roles_pago_parcial'
+      });
+    }
   } catch (error) {
     console.error('Error al cargar vista parcial crear rol:', error);
     res.status(500).send('Error al cargar vista parcial crear rol');
   }
 });
+
 
 module.exports = router;
