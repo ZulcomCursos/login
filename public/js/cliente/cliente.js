@@ -1,9 +1,11 @@
+// Referencias a los inputs de filtro
 const cedulaInput = document.getElementById('filtroCedula');
 const nombreInput = document.getElementById('filtroNombre');
 const apellidoInput = document.getElementById('filtroApellido');
 const estadoSelect = document.getElementById('filtroEstado');
 const planInput = document.getElementById('filtroPlan');
 
+// Filtro dinámico en tabla
 function filtrarTabla() {
   const filas = document.querySelectorAll("table tbody tr");
 
@@ -26,6 +28,7 @@ function filtrarTabla() {
   });
 }
 
+// Buscar por cédula exacta
 function buscarPorCedulaExacta() {
   const cedulaExacta = cedulaInput.value.trim();
   const filas = document.querySelectorAll("table tbody tr");
@@ -36,6 +39,7 @@ function buscarPorCedulaExacta() {
   });
 }
 
+// Limpiar filtros
 function limpiarFiltros() {
   cedulaInput.value = "";
   nombreInput.value = "";
@@ -54,27 +58,40 @@ apellidoInput.addEventListener('keyup', filtrarTabla);
 estadoSelect.addEventListener('change', filtrarTabla);
 planInput.addEventListener('keyup', filtrarTabla);
 
-// Validaciones de inputs del formulario
+// =====================
+// VALIDACIONES EN FORMULARIO
+// =====================
 const cedula = document.getElementById("cedula");
 const nombre = document.getElementById("nombre");
 const apellido = document.getElementById("apellido");
+const ip = document.getElementById("ip");
 
+const soloLetras = /[^A-Za-zÁÉÍÓÚÑáéíóúñ ]/g;
+
+// Validar cédula (solo números, máx 10)
 if (cedula) {
   cedula.addEventListener("input", () => {
     cedula.value = cedula.value.replace(/[^0-9]/g, '').slice(0, 10);
   });
 }
 
-const soloLetras = /[^A-Za-zÁÉÍÓÚÑáéíóúñ ]/g;
-
+// Validar nombre (solo letras)
 if (nombre) {
   nombre.addEventListener("input", () => {
     nombre.value = nombre.value.replace(soloLetras, '');
   });
 }
 
+// Validar apellido (solo letras)
 if (apellido) {
   apellido.addEventListener("input", () => {
     apellido.value = apellido.value.replace(soloLetras, '');
+  });
+}
+
+// Validar IP (solo números y puntos)
+if (ip) {
+  ip.addEventListener("input", () => {
+    ip.value = ip.value.replace(/[^0-9.]/g, '');
   });
 }
