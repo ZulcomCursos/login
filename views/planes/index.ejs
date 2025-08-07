@@ -6,6 +6,7 @@
   <title>ZULCOM - Administrador</title>
   <link rel="stylesheet" href="/css/dashboard/navbar.css">
   <link rel="stylesheet" href="/css/dashboard/dashboard.css">
+   <link rel="stylesheet" href="/css/planes/index.css">
 </head>
 <body>
   <div class="dashboard-container">
@@ -27,40 +28,38 @@
 
       <!-- Contenido específico del dashboard administrativo -->
       <div class="dashboard-content">
-        <h2>Lista de Planes</h2>
-        <a href="/planes/create" class="btn">Nuevo Plan</a>
+  <h2>Lista de Planes</h2>
+  <a href="/planes/create" class="btn">Nuevo Plan</a>
 
-        <% if (typeof error !== 'undefined') { %>
-          <div class="alert alert-danger"><%= error %></div>
-        <% } %>
+  <% if (typeof error !== 'undefined') { %>
+    <div class="alert alert-danger"><%= error %></div>
+  <% } %>
 
-        <table class="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Costo</th>
-              <th>Megas</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% planes.forEach(plan => { %>
-              <tr>
-                <td><%= plan.id_plan %></td>
-                <td><%= plan.nombre_plan %></td>
-                <td>$<%= parseFloat(plan.costo).toFixed(2) %></td>
-                <td><%= plan.megas %> Mbps</td>
-                <td>
-                  <a href="/planes/<%= plan.id_plan %>/edit" class="btn">Editar</a>
-                  
-                </td>
-              </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </div>
-    </main>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Costo</th>
+        <th>Megas</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% planes.forEach(plan => { %>
+        <tr>
+          <td><%= plan.id_plan %></td>
+          <td><%= plan.nombre_plan %></td>
+          <td>$<%= parseFloat(plan.costo).toFixed(2) %></td>
+          <td><%= plan.megas %> Mbps</td>
+          <td>
+            <a href="/planes/<%= plan.id_plan %>/edit" class="btn edit-btn">Editar</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
 </body>
 </html>

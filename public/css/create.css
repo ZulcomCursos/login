@@ -1,0 +1,120 @@
+/* ===== Contenedor del formulario ===== */
+.dashboard-content {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem 2.5rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* ===== Título del formulario ===== */
+.dashboard-content h2 {
+  font-size: 1.75rem;
+  color: #1d3557;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+/* ===== Agrupación de campos ===== */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #1f2937;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* ===== Inputs, selects y textareas ===== */
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  color: #111827;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #4f46e5;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+/* ===== Radios de discapacidad ===== */
+.form-group div {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+input[type="radio"] {
+  transform: scale(1.2);
+  margin-left: 0.5rem;
+}
+
+/* ===== Botones ===== */
+form .btn {
+  display: inline-block;
+  padding: 0.7rem 1.6rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+}
+
+form .btn[type="submit"] {
+  background-color: #4f46e5;
+  color: #fff;
+}
+
+form .btn[type="submit"]:hover {
+  background-color: #4338ca;
+  transform: translateY(-2px);
+}
+
+form .btn.secondary {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+form .btn.secondary:hover {
+  background-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+/* ===== Responsive en pantallas pequeñas ===== */
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 1.5rem;
+  }
+
+  form .btn {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .form-group div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

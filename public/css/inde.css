@@ -1,18 +1,29 @@
+/* ===== Variables ===== */
+:root {
+  --color-primario: #5c6ac4;
+  --color-secundario: #3c50e8;
+  --color-peligro: #e74c3c;
+  --color-texto: #2e3a59;
+  --fondo: #f5f7fa;
+  --blanco: #ffffff;
+}
+
 /* ===== Estilo general ===== */
 body {
-  background-color: #f5f7fa;
+  background-color: var(--fondo);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #2e3a59;
+  color: var(--color-texto);
   margin: 0;
   padding: 0;
 }
 
 /* ===== Contenedor principal ===== */
 .dashboard-content {
-  max-width: 1200px;
+  max-width: 120000px;
   margin: 2rem auto;
-  background-color: #fff;
+  background-color: var(--blanco);
   padding: 2.5rem;
+  padding-bottom: 3rem;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(46, 58, 89, 0.07);
 }
@@ -27,8 +38,8 @@ body {
 
 /* ===== Botón nuevo cliente ===== */
 .dashboard-content .btn {
-  background: linear-gradient(135deg, #5c6ac4, #3c50e8);
-  color: #fff;
+  background: linear-gradient(135deg, var(--color-primario));
+  color: var(--blanco);
   padding: 0.75rem 1.5rem;
   font-weight: bold;
   border: none;
@@ -52,7 +63,7 @@ body {
   gap: 1rem 1.5rem;
   margin-bottom: 2rem;
   padding: 1.5rem;
-  background-color: #ffffff;
+  background-color: var(--blanco);
   border-radius: 16px;
   box-shadow: 0 8px 18px rgba(46, 58, 89, 0.05);
 }
@@ -74,8 +85,8 @@ body {
 }
 
 .filtro-avanzado button {
-  background: #e74c3c;
-  color: #fff;
+  background: var(--color-peligro);
+  color: var(--blanco);
   border: none;
   padding: 0.65rem 1.2rem;
   font-weight: bold;
@@ -90,6 +101,12 @@ body {
   background: #c0392b;
 }
 
+/* Botón activo de filtros */
+.filtro-avanzado .estado-btn.active {
+  background-color: var(--color-secundario);
+  color: var(--blanco);
+}
+
 /* ===== Tabla de clientes ===== */
 table {
   width: 100%;
@@ -99,8 +116,8 @@ table {
 }
 
 thead {
-  background-color: #5c6ac4;
-  color: white;
+  background-color: var(--color-primario);
+  color: var(--blanco);
 }
 
 thead th {
@@ -110,13 +127,18 @@ thead th {
 }
 
 tbody tr {
-  background-color: #fff;
+  background-color: var(--blanco);
   box-shadow: 0 4px 12px rgba(92, 106, 196, 0.1);
   transition: background-color 0.3s ease;
 }
 
 tbody tr:hover {
   background-color: #eef1ff;
+}
+
+/* Alternar color de filas */
+tbody tr:nth-child(even) {
+  background-color: #f9f9fc;
 }
 
 tbody td {
@@ -128,7 +150,7 @@ tbody td {
   text-overflow: ellipsis;
 }
 
-/* ===== Acciones ===== */
+/* ===== Acciones (botones dentro de la tabla) ===== */
 td .btn {
   margin: 0 0.3rem;
   padding: 0.5rem 0.9rem;
@@ -139,19 +161,22 @@ td .btn {
   text-decoration: none;
 }
 
+/* Botón editar */
+td .btn.edit-btn {
+  background-color: var(--color-secundario);
+  color: var(--blanco);
+  box-shadow: 0 4px 12px rgba(60, 80, 232, 0.4);
+}
+
+td .btn.edit-btn:hover {
+  background-color: #2f3ecf;
+}
+
+/* Botón contrato */
 td .btn.contract-btn {
-  background-color: #198754;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(25, 135, 84, 0.4);
-}
-
-td .btn.contract-btn:hover {
-  background-color: #157347;
-}
-
-td .btn:hover {
-  background-color: #3c50e8;
-  color: white;
+  background-color: var(--color-exito);
+  color: var(--blanco);
+ 
 }
 
 /* ===== Responsive ===== */
@@ -173,5 +198,13 @@ td .btn:hover {
   .dashboard-content .btn {
     width: 100%;
     text-align: center;
+  }
+
+  /* Ocultar columnas poco útiles en móvil */
+  td:nth-child(5),
+  td:nth-child(6),
+  td:nth-child(7),
+  td:nth-child(8) {
+    display: none;
   }
 }

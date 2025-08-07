@@ -1,0 +1,127 @@
+/* ===== Contenedor principal (ya definido) */
+.dashboard-content {
+  max-width: 600px;
+  margin: 2rem auto;
+  background-color: var(--blanco);
+  padding: 2.5rem 2.5rem 3rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(46, 58, 89, 0.07);
+}
+
+/* ===== Título ===== */
+.dashboard-content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222f53;
+  margin-bottom: 2rem;
+}
+
+/* ===== Mensajes de error ===== */
+.alert {
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  text-align: center;
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1.5px solid #f5c2c7;
+}
+
+/* ===== Formulario ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Grupo de formulario */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Etiquetas */
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-texto);
+}
+
+/* Inputs */
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  padding: 0.6rem 1rem;
+  border: 1.8px solid #d0d7e0;
+  border-radius: 12px;
+  background-color: #fefefe;
+  font-size: 1rem;
+  color: #3c4a6e;
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.05);
+  transition: border-color 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus {
+  outline: none;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 6px var(--color-primario);
+}
+
+/* Botones */
+form .btn {
+  background: linear-gradient(135deg, var(--color-primario));
+  color: var(--blanco);
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgb(92 106 196 / 0.3);
+  transition: transform 0.3s ease;
+  width: max-content;
+}
+
+form .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgb(60 80 232 / 0.4);
+}
+
+/* Botón secundario (Cancelar) */
+form .btn.secondary {
+  background: #aaaebf;
+  margin-left: 1rem;
+  box-shadow: none;
+  padding: 0.75rem 1.5rem;
+  transition: background-color 0.3s ease;
+}
+
+form .btn.secondary:hover {
+  background: #8a8fb4;
+}
+
+/* Contenedor para botones para que estén alineados */
+form > .btn,
+form > .btn.secondary {
+  display: inline-block;
+}
+
+/* En dispositivos móviles */
+@media (max-width: 480px) {
+  .dashboard-content {
+    padding: 1.5rem 1rem 2rem 1rem;
+    max-width: 100%;
+  }
+
+  form {
+    gap: 1rem;
+  }
+
+  form .btn,
+  form .btn.secondary {
+    width: 100%;
+    margin-left: 0;
+    text-align: center;
+  }
+}
