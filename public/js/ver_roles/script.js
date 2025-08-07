@@ -28,7 +28,7 @@ function initRolesPago() {
           <td>$${parseFloat(rol.salario).toFixed(2)}</td>
           <td>$${parseFloat(rol.total).toFixed(2)}</td>
           <td>${rol.estado}</td>
-          <td><a href="/rolpago/pdf/${rol.id}" class="btn btn-sm btn-danger" target="_blank" rel="noopener noreferrer">PDF</a></td>
+          <td><a href="/rolpago/pdf/${rol.id_trabajador}" class="btn btn-sm btn-danger" target="_blank" rel="noopener noreferrer">PDF</a></td>
         `;
         tablaRoles.appendChild(tr);
       });
