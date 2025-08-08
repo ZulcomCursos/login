@@ -109,12 +109,11 @@
         <th>Tipo de Problema</th>
         <th>Descripción</th>
         <th>Solución</th>
-        <th>Prioridad</th> <!-- Nueva columna -->
+        <th>Prioridad</th> 
         <th>Estado</th>
         <th>Fecha de Creación</th>
         <th>Fecha de Solución</th>
-        <th>Hora de Solución</th>
-        <th>Hora de Visita</th>
+        
         <th>Acciones</th>
       </tr>
     </thead>
@@ -148,8 +147,7 @@
 
           <td><%= new Date(ticket.createdAt).toLocaleDateString('es-EC', { timeZone: 'America/Guayaquil' }) %></td>
           <td><%= ticket.solutionDate || '—' %></td>
-          <td><%= ticket.solutionTime || '—' %></td>
-          <td><%= ticket.horaVisita || '—' %></td>
+         
 
           <td>
             <div class="acciones-container">

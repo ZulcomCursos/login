@@ -1,5 +1,11 @@
 window.loadContent = async function(url) {
   try {
+    // Si es dashboard gerente o alguna subruta, hacer recarga completa para evitar cargar dentro del SPA
+    if (url.startsWith('/dashboard/gerente')) {
+      window.location.href = url;
+      return;
+    }
+
     const res = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
     if (!res.ok) throw new Error('Error al cargar vista');
     const html = await res.text();
@@ -289,7 +295,13 @@ function configurarSpaLinks() {
 
 window.addEventListener('popstate', function(event) {
   const url = event.state?.url || window.location.pathname;
-  if (url) window.loadContent(url);
+
+  // Si la URL es dashboard gerente, hacer recarga completa al usar atrás
+  if (url.startsWith('/dashboard/gerente')) {
+    window.location.href = url;
+  } else {
+    if (url) window.loadContent(url);
+  }
 });
 
 // <-- Corrección: cargar contenido dinámico en carga de página para rutas SPA
