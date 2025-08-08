@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mis Roles de Pago</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/login/public/css/styles_rol.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body class="container mt-5" data-usuario-id="<%= usuarioId %>">
+
+  <h2 class="mb-4">Mis Roles de Pago</h2>
+
+  <!-- Filtro por mes -->
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <label for="filtroMes" class="form-label">Filtrar por mes:</label>
+      <select id="filtroMes" class="form-select">
+        <option value="">Todos los meses</option>
+        <option value="2025-01">Enero 2025</option>
+        <option value="2025-02">Febrero 2025</option>
+        <option value="2025-03">Marzo 2025</option>
+        <option value="2025-04">Abril 2025</option>
+        <option value="2025-05">Mayo 2025</option>
+        <option value="2025-06">Junio 2025</option>
+        <option value="2025-07">Julio 2025</option>
+        <option value="2025-08">Agosto 2025</option>
+        <option value="2025-09">Septiembre 2025</option>
+        <option value="2025-10">Octubre 2025</option>
+        <option value="2025-11">Noviembre 2025</option>
+        <option value="2025-12">Diciembre 2025</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Periodo</th>
+          <th>Salario</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-roles">
+        <!-- Datos dinámicos -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Carga script técnico -->
+  <script src="/ver_roles/script_tecnico.js"></script>
+
+</body>
+</html>

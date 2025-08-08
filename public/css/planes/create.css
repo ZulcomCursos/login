@@ -1,127 +1,124 @@
-/* ===== Contenedor principal (ya definido) */
+/* ===== Contenedor del formulario ===== */
 .dashboard-content {
-  max-width: 600px;
+  max-width: 900px;
   margin: 2rem auto;
-  background-color: var(--blanco);
-  padding: 2.5rem 2.5rem 3rem 2.5rem;
+  padding: 2rem 2.5rem;
+  background-color: #ffffff; /* blanco puro */
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(46, 58, 89, 0.07);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
-/* ===== Título ===== */
+/* ===== Título del formulario ===== */
 .dashboard-content h2 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #222f53;
+  font-size: 1.75rem;
+  color: #1d3557; /* azul oscuro del estilo */
   margin-bottom: 2rem;
-}
-
-/* ===== Mensajes de error ===== */
-.alert {
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
-  text-align: center;
-  background-color: #f8d7da;
-  color: #842029;
-  border: 1.5px solid #f5c2c7;
-}
-
-/* ===== Formulario ===== */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-/* Grupo de formulario */
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Etiquetas */
-.form-group label {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--color-texto);
-}
-
-/* Inputs */
-.form-group input[type="text"],
-.form-group input[type="number"] {
-  padding: 0.6rem 1rem;
-  border: 1.8px solid #d0d7e0;
-  border-radius: 12px;
-  background-color: #fefefe;
-  font-size: 1rem;
-  color: #3c4a6e;
-  box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.05);
-  transition: border-color 0.3s ease;
-}
-
-.form-group input[type="text"]:focus,
-.form-group input[type="number"]:focus {
-  outline: none;
-  border-color: var(--color-primario);
-  box-shadow: 0 0 6px var(--color-primario);
-}
-
-/* Botones */
-form .btn {
-  background: linear-gradient(135deg, var(--color-primario));
-  color: var(--blanco);
-  padding: 0.75rem 1.5rem;
   font-weight: bold;
-  border: none;
+  text-align: left;
+}
+
+/* ===== Agrupación de campos ===== */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #1f2937; /* gris oscuro */
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* ===== Inputs, selects y textareas ===== */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid #cbd5e1; /* borde gris claro */
+  border-radius: 10px;
+  background-color: #f9fafb; /* fondo muy claro */
+  font-size: 1rem;
+  color: #111827; /* texto oscuro */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #4f46e5; /* azul para foco */
+  background-color: #fff; /* fondo blanco */
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); /* sombra azul suave */
+}
+
+/* ===== Radios (si tienes) ===== */
+.form-group div {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+input[type="radio"] {
+  transform: scale(1.2);
+  margin-left: 0.5rem;
+}
+
+/* ===== Botones ===== */
+form .btn {
+  display: inline-block;
+  padding: 0.7rem 1.6rem;
   border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
   cursor: pointer;
-  box-shadow: 0 6px 16px rgb(92 106 196 / 0.3);
-  transition: transform 0.3s ease;
-  width: max-content;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  text-align: center;
 }
 
-form .btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 24px rgb(60 80 232 / 0.4);
+/* Botón Guardar (primario) */
+form .btn[type="submit"] {
+  background-color: #4f46e5; /* azul intenso */
+  color: #fff;
 }
 
-/* Botón secundario (Cancelar) */
+form .btn[type="submit"]:hover {
+  background-color: #4338ca; /* azul más oscuro */
+  transform: translateY(-2px);
+}
+
+/* Botón Cancelar (secundario) */
 form .btn.secondary {
-  background: #aaaebf;
-  margin-left: 1rem;
-  box-shadow: none;
-  padding: 0.75rem 1.5rem;
-  transition: background-color 0.3s ease;
+  background-color: #e5e7eb; /* gris claro */
+  color: #1f2937; /* gris oscuro */
 }
 
 form .btn.secondary:hover {
-  background: #8a8fb4;
+  background-color: #d1d5db; /* gris un poco más oscuro */
+  transform: translateY(-1px);
 }
 
-/* Contenedor para botones para que estén alineados */
-form > .btn,
-form > .btn.secondary {
-  display: inline-block;
-}
-
-/* En dispositivos móviles */
-@media (max-width: 480px) {
+/* ===== Responsive en pantallas pequeñas ===== */
+@media (max-width: 768px) {
   .dashboard-content {
-    padding: 1.5rem 1rem 2rem 1rem;
-    max-width: 100%;
+    padding: 1.5rem;
   }
 
-  form {
-    gap: 1rem;
-  }
-
-  form .btn,
-  form .btn.secondary {
+  form .btn {
     width: 100%;
-    margin-left: 0;
-    text-align: center;
+    margin: 0.5rem 0;
+  }
+
+  .form-group div {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

@@ -58,7 +58,7 @@
 }
 
 .nav-item::before {
-  content: "›";
+
   color: var(--purple-300);
 }
 
@@ -91,7 +91,7 @@
   transform: translateY(-1px);
 }
 
-/* Estilos para el submenú VERTICAL ajustado */
+/* Estilos para el submenï¿½ VERTICAL ajustado */
 .nav-item.dropdown {
   position: relative;
   padding: 12px 20px;
@@ -110,7 +110,7 @@
   top: 100%;
   left: 0;
   z-index: 1000;
-  /* Eliminé border y box-shadow que podrían causar la línea negra */
+  /* Eliminï¿½ border y box-shadow que podrï¿½an causar la lï¿½nea negra */
   background-color: var(--white);
   border-radius: 0 0 4px 4px;
 }
@@ -135,7 +135,7 @@
 .nav-item.dropdown:hover {
   background-color: var(--blue-100);
   border-left: 3px solid var(--blue-500);
-  border-bottom: none; /* Añadido para prevenir línea inferior */
+  border-bottom: none; /* Aï¿½adido para prevenir lï¿½nea inferior */
 }
 
 /* Asegurando que no haya bordes en los estados hover */

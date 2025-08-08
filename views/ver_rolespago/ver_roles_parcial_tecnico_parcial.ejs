@@ -1,0 +1,31 @@
+<h2 class="mb-4">Mis Roles de Pago </h2>
+
+<div class="row mb-3">
+  <div class="col-md-4">
+    <label for="filtroMes" class="form-label">Filtrar por mes:</label>
+    <select id="filtroMes" class="form-select">
+      <option value="">Todos los meses</option>
+      <option value="2025-01">Enero 2025</option>
+      <option value="2025-02">Febrero 2025</option>
+      <option value="2025-03">Marzo 2025</option>
+      <!-- etc -->
+    </select>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>Periodo</th>
+        <th>Salario</th>
+        <th>Total</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-roles">
+      <!-- Aquí se cargarán los roles -->
+    </tbody>
+  </table>
+</div>
