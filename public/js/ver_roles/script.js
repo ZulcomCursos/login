@@ -52,6 +52,12 @@ function initRolesPago() {
 // Función global para cargar vistas dinámicamente en el Dashboard
 window.loadContent = async function(url) {
   try {
+    // Si la ruta es dashboard administracion o subrutas, recarga completa
+    if (url.startsWith('/dashboard/administracion')) {
+      window.location.href = url;
+      return;
+    }
+
     const response = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
     if (!response.ok) throw new Error('Error al cargar vista');
 
@@ -100,8 +106,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // Manejar navegación por el botón de atrás/adelante
   window.addEventListener('popstate', function(event) {
     const url = event.state?.url || window.location.pathname;
-    if (url) {
-      loadContent(url);
+
+    // Si la URL es dashboard administracion, recarga completa
+    if (url.startsWith('/dashboard/administracion')) {
+      window.location.href = url;
+    } else {
+      if (url) {
+        loadContent(url);
+      }
     }
   });
 });

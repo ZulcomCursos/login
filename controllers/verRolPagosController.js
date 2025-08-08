@@ -94,9 +94,54 @@ const generarPDFPorRol = async (req, res) => {
   }
 };
 
+// Para vista del técnico
+const verRolesPagoVistaTecnico = (req, res) => {
+  // Detecta si es AJAX
+  const isAjax = req.xhr || req.headers['x-requested-with'] === 'XMLHttpRequest';
+
+  if (isAjax) {
+    // Renderiza solo el parcial (sin layout del dashboard)
+    return res.render('ver_rolespago/ver_roles_pago_tecnico', { 
+      usuarioId: req.user.id,
+      layout: false 
+    });
+  }
+
+  // Si es acceso directo o recarga, redirige al dashboard
+  return res.redirect('/dashboard/tecnico');
+};
+
+const listarRolesTecnico = async (req, res) => {
+  const userId = req.user.id; // siempre filtra por usuario logueado
+  const mesFiltro = req.query.mes; // opcional para filtro
+
+  let sql = 'SELECT * FROM roles_pago WHERE id_trabajador = ?';
+  let params = [userId];
+
+  if (mesFiltro) {
+    sql += ' AND periodo = ?';
+    params.push(mesFiltro);
+  }
+
+  sql += ' ORDER BY periodo DESC';
+
+  try {
+    const [roles] = await sequelize.query(sql, { replacements: params });
+    res.json(roles);
+  } catch (err) {
+    console.error('Error al listar roles del técnico:', err);
+    res.status(500).json({ error: 'Error al obtener los roles' });
+  }
+};
+
+
 module.exports = {
   protegerRuta,
   verRolesPagoVista,
   listarMisRoles,
   generarPDFPorRol,
+
+  // técnico
+  verRolesPagoVistaTecnico,
+  listarRolesTecnico
 };

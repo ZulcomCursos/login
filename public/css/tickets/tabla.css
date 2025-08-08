@@ -157,8 +157,8 @@ h1, h2 {
 
 /* ===== Tabla ===== */
 .table {
-   width: 80%; /* reduce el ancho de la tabla */
-  margin: 0 auto; /* la centra */
+  width: 100%;
+  border-collapse: separate;
   border-spacing: 0 16px;
   font-variant-numeric: tabular-nums;
 }
