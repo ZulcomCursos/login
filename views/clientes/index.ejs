@@ -30,62 +30,62 @@
         </div>
       </header>
 
-      <!-- Contenido específico del dashboard administrativo -->
       <div class="dashboard-content">
-        <h2>Lista de Clientes</h2>
-        <a href="/clientes/create" class="btn">Nuevo Cliente</a>
+  <h2>Lista de Clientes</h2>
+  <a href="/clientes/create" class="btn">Nuevo Cliente</a>
 
-        <!-- Filtros avanzados -->
-        <div class="filtro-avanzado">
-          <input type="text" id="filtroCedula" placeholder="Filtrar por cédula">
-          <input type="text" id="filtroNombre" placeholder="Filtrar por nombres">
-          <input type="text" id="filtroApellido" placeholder="Filtrar por apellidos">
-          <select id="filtroEstado">
-            <option value="">Todos los estados</option>
-            <option value="Activo">Activo</option>
-            <option value="Inactivo">Inactivo</option>
-          </select>
-          <input type="text" id="filtroPlan" placeholder="Filtrar por plan">
-          <button onclick="limpiarFiltros()">Limpiar Filtros</button>
-        </div>
+  <!-- Filtros avanzados -->
+  <div class="filtro-avanzado">
+    <input type="text" id="filtroCedula" placeholder="Filtrar por cédula">
+    <input type="text" id="filtroNombre" placeholder="Filtrar por nombres">
+    <input type="text" id="filtroApellido" placeholder="Filtrar por apellidos">
+    <select id="filtroEstado">
+      <option value="">Todos los estados</option>
+      <option value="Activo">Activo</option>
+      <option value="Inactivo">Inactivo</option>
+    </select>
+    <input type="text" id="filtroPlan" placeholder="Filtrar por plan">
+    <button id="btnLimpiarFiltros">Limpiar Filtros</button>
+  </div>
 
-        <!-- Tabla de clientes -->
-        <table>
-          <thead>
-            <tr>
-              <th>Cédula</th>
-              <th>Nombres</th>
-              <th>Apellidos</th>
-              <th>Teléfono</th>
-              <th>Ubicación</th>
-              <th>Coordenadas</th>
-              <th>IP</th>
-              <th>Estado</th>
-              <th>Plan</th>           
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% clientes.forEach(cliente => { %>
-              <tr>
-                <td><%= cliente.cedula %></td>
-                <td><%= cliente.nombre %></td>
-                <td><%= cliente.apellido %></td>
-                <td><%= cliente.telefono1 %></td>
-                <td><%= cliente.direccion %></td>
-                <td><%= cliente.coordenadas %></td>
-                <td><%= cliente.ip %></td>
-                <td><%= cliente.estado %></td>
-                <td><%= cliente.Plan ? cliente.Plan.nombre_plan : 'Sin plan' %></td>
-                <td>    
-                  <a href="/clientes/<%= cliente.id_cliente %>/edit" class="btn">Editar</a>
-                  <a href="/pdf/generate/<%= cliente.id_cliente %>" class="btn contract-btn">Crear Contrato</a>    
-                </td>
-              </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </div>
+  <!-- Tabla de clientes -->
+  <table>
+    <thead>
+      <tr>
+        <th>Cédula</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Teléfono</th>
+        <th>Ubicación</th>
+        <th>Coordenadas</th>
+        <th>IP</th>
+        <th>Estado</th>
+        <th>Plan</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% clientes.forEach(cliente => { %>
+        <tr>
+          <td><%= cliente.cedula %></td>
+          <td><%= cliente.nombre %></td>
+          <td><%= cliente.apellido %></td>
+          <td><%= cliente.telefono1 %></td>
+          <td><%= cliente.direccion %></td>
+          <td><%= cliente.coordenadas %></td>
+          <td><%= cliente.ip %></td>
+          <td><%= cliente.estado %></td>
+          <td><%= cliente.Plan ? cliente.Plan.nombre_plan : 'Sin plan' %></td>
+          <td>    
+            <a href="/clientes/<%= cliente.id_cliente %>/edit" class="btn">Editar</a>
+            <a href="/pdf/generate/<%= cliente.id_cliente %>" class="btn contract-btn">Crear Contrato</a>    
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
     </main>
   </div>
   
