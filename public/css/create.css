@@ -3,7 +3,7 @@
   max-width: 900px;
   margin: 2rem auto;
   padding: 2rem 2.5rem;
-  background-color: #ffffff;
+  background-color: #ffffff; /* Blanco */
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -12,9 +12,10 @@
 /* ===== Título del formulario ===== */
 .dashboard-content h2 {
   font-size: 1.75rem;
-  color: #1d3557;
+  color: #1d3557; /* Azul oscuro */
   margin-bottom: 2rem;
   font-weight: bold;
+  text-align: left; /* Puedes poner center si prefieres */
 }
 
 /* ===== Agrupación de campos ===== */
@@ -25,7 +26,7 @@
 .form-group label {
   display: block;
   margin-bottom: 0.4rem;
-  color: #1f2937;
+  color: #1f2937; /* Gris oscuro */
   font-size: 1rem;
   font-weight: 600;
 }
@@ -33,15 +34,16 @@
 /* ===== Inputs, selects y textareas ===== */
 input[type="text"],
 input[type="email"],
+input[type="number"],
 select,
 textarea {
   width: 100%;
   padding: 0.7rem 1rem;
-  border: 1.5px solid #cbd5e1;
+  border: 1.5px solid #cbd5e1; /* Gris claro */
   border-radius: 10px;
-  background-color: #f9fafb;
+  background-color: #f9fafb; /* Fondo claro */
   font-size: 1rem;
-  color: #111827;
+  color: #111827; /* Texto oscuro */
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -49,12 +51,12 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: #4f46e5;
-  background-color: #fff;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  border-color: #4f46e5; /* Azul para foco */
+  background-color: #fff; /* Fondo blanco al enfocar */
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); /* Sombra azul suave */
 }
 
-/* ===== Radios de discapacidad ===== */
+/* ===== Radios (si los tienes) ===== */
 .form-group div {
   display: flex;
   gap: 1.2rem;
@@ -82,23 +84,25 @@ form .btn {
   text-align: center;
 }
 
+/* Botón Guardar */
 form .btn[type="submit"] {
-  background-color: #4f46e5;
+  background-color: #4f46e5; /* Azul fuerte */
   color: #fff;
 }
 
 form .btn[type="submit"]:hover {
-  background-color: #4338ca;
+  background-color: #4338ca; /* Azul más oscuro */
   transform: translateY(-2px);
 }
 
+/* Botón Cancelar */
 form .btn.secondary {
-  background-color: #e5e7eb;
-  color: #1f2937;
+  background-color: #e5e7eb; /* Gris claro */
+  color: #1f2937; /* Gris oscuro */
 }
 
 form .btn.secondary:hover {
-  background-color: #d1d5db;
+  background-color: #d1d5db; /* Gris un poco más oscuro */
   transform: translateY(-1px);
 }
 
