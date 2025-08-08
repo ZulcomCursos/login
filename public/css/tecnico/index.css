@@ -1,83 +1,100 @@
+/* Contenedor principal para que la tabla tenga fondo y sombra */
 .dashboard-content {
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
   background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 26px rgba(46, 58, 89, 0.07);
+  overflow-x: auto; /* Para tablas anchas en pantallas pequeñas */
 }
 
-.table thead {
-  background-color: #1e88e5;
+/* Tabla base */
+table.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 16px;
+  font-variant-numeric: tabular-nums;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #364467;
+}
+
+/* Encabezado */
+table.table thead {
+  background-color: #5c6ac4;
   color: white;
+  border-radius: 16px 16px 0 0;
+  user-select: none;
 }
 
-.table th,
-.table td {
-  padding: 12px 15px;
-  text-align: left;
-  font-size: 14px;
-  border-bottom: 1px solid #eee;
+table.table thead th {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1rem;
+  padding: 1rem 0.9rem;
+  letter-spacing: 0.02em;
 }
 
-.table tbody tr:hover {
-  background-color: #f1f9ff;
+/* Filas cuerpo tabla */
+table.table tbody tr {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(92, 106, 196, 0.12);
+  transition: background-color 0.3s ease;
 }
 
-.table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+table.table tbody tr:hover {
+  background-color: #eef1ff;
 }
 
-.table a {
-  color: #1e88e5;
+/* Celdas cuerpo */
+table.table tbody td {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 0.95rem;
+  padding: 1rem 1rem;
+  border-top: none;
+  border-bottom: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Enlaces para acción */
+.dashboard-content a {
+  display: inline-block;
+  padding: 0.4rem 0.75rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #fff;
+  background: linear-gradient(135deg, #5c6ac4, #3c50e8);
+  box-shadow: 0 6px 14px rgb(92 106 196 / 0.5);
   text-decoration: none;
-  font-weight: bold;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
 
-.table a:hover {
-  text-decoration: underline;
+.dashboard-content a:hover {
+  background: linear-gradient(135deg, #3c50e8, #5c6ac4);
+  transform: translateY(-3px);
 }
 
-.table span {
+/* Texto para estado no editable */
+.dashboard-content span {
+  font-weight: 600;
   color: #888;
   font-style: italic;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
-  .table, thead, tbody, th, td, tr {
-    display: block;
+  table.table thead {
+    font-size: 0.85rem;
   }
-
-  .table thead {
-    display: none;
+  table.table tbody td {
+    font-size: 0.85rem;
+    padding: 0.65rem 0.6rem;
   }
-
-  .table tr {
-    margin-bottom: 15px;
-    background-color: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    border-radius: 6px;
-    padding: 10px;
-  }
-
-  .table td {
-    padding: 10px;
-    border: none;
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .table td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    color: #333;
+  .dashboard-content a {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.6rem;
   }
 }

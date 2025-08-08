@@ -29,53 +29,55 @@
           <a href="/auth/logout" class="logout-btn" onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
         </div>
       </header>
+ <h2>Listado de Tickets</h2>
 
-      <div class="dashboard-content">
-        <table border="1" class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>Número</th>
-              <th>Cliente</th>
-              <th>Cédula</th>
-              <th>IP</th>
-              <th>Celular</th>
-              <th>Dirección</th>
-              <th>Referencia</th>
-              <th>Técnico</th>
-              <th>Tipo de Problema</th>
-              <th>Descripción</th>
-              <th>Estado</th>
-              <th>Hora Visita</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% tickets.forEach(ticket => { %>
-              <tr>
-                <td><%= ticket.ticketNumber %></td>
-                <td><%= ticket.client ? ticket.client.nombre + ' ' + ticket.client.apellido : 'Cliente no asignado' %></td>
-                <td><%= ticket.client?.cedula || 'Sin cédula' %></td>
-                <td><%= ticket.client?.ip || 'Sin IP' %></td>
-                <td><%= ticket.client?.telefono1 || 'Sin teléfono' %></td>
-                <td><%= ticket.client?.direccion || 'Sin dirección' %></td>
-                <td><%= ticket.client?.referencias || 'Sin referencia' %></td>
-                <td><%= ticket.tecnico ? ticket.tecnico.nombres + ' ' + ticket.tecnico.apellidos : 'Sin técnico asignado' %></td>
-                <td><%= ticket.issueType %></td>
-                <td><%= ticket.description %></td>
-                <td><%= ticket.status %></td>
-                <td><%= ticket.horaVisita || '—' %></td>
-                <td>
-                  <% if (ticket.status === 'abierto') { %>
-                    <a href="/tecnico/<%= ticket.id %>/resolver">Aceptar</a>
-                  <% } else { %>
-                    <span>No editable</span>
-                  <% } %>
-                </td>
-              </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </div>
+<div class="dashboard-content">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Número</th>
+        <th>Cliente</th>
+        <th>Cédula</th>
+        <th>IP</th>
+        <th>Celular</th>
+        <th>Dirección</th>
+        <th>Referencia</th>
+        <th>Técnico</th>
+        <th>Tipo de Problema</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Hora Visita</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tickets.forEach(ticket => { %>
+        <tr>
+          <td><%= ticket.ticketNumber %></td>
+          <td><%= ticket.client ? ticket.client.nombre + ' ' + ticket.client.apellido : 'Cliente no asignado' %></td>
+          <td><%= ticket.client?.cedula || 'Sin cédula' %></td>
+          <td><%= ticket.client?.ip || 'Sin IP' %></td>
+          <td><%= ticket.client?.telefono1 || 'Sin teléfono' %></td>
+          <td><%= ticket.client?.direccion || 'Sin dirección' %></td>
+          <td><%= ticket.client?.referencias || 'Sin referencia' %></td>
+          <td><%= ticket.tecnico ? ticket.tecnico.nombres + ' ' + ticket.tecnico.apellidos : 'Sin técnico asignado' %></td>
+          <td><%= ticket.issueType %></td>
+          <td><%= ticket.description %></td>
+          <td><%= ticket.status %></td>
+          <td><%= ticket.horaVisita || '—' %></td>
+          <td>
+            <% if (ticket.status === 'abierto') { %>
+              <a href="/tecnico/<%= ticket.id %>/resolver">Aceptar</a>
+            <% } else { %>
+              <span>No editable</span>
+            <% } %>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
     </main>
   </div>
 </body>

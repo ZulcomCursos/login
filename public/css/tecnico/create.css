@@ -1,0 +1,149 @@
+.dashboard-content {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 26px rgba(46, 58, 89, 0.07);
+  max-width: 700px;
+  margin: 2rem auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2e3a59;
+}
+
+/* Títulos y párrafos */
+.dashboard-content p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.dashboard-content p strong {
+  color: #344563;
+}
+
+/* Formulario */
+form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Labels */
+form label {
+  font-weight: 700;
+  color: #344563;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  letter-spacing: 0.03em;
+}
+
+/* Textarea */
+form textarea {
+  width: 100%;
+  border-radius: 12px;
+  border: 1.8px solid #d0d7e0;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  resize: vertical;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form textarea:focus {
+  border-color: #5c6ac4;
+  box-shadow: 0 0 8px rgba(92, 106, 196, 0.3);
+  outline: none;
+  background-color: #fff;
+}
+
+/* Select */
+form select {
+  width: 100%;
+  border-radius: 12px;
+  border: 1.8px solid #d0d7e0;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  color: #3c4a6e;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fefefe;
+}
+
+form select:focus {
+  border-color: #5c6ac4;
+  box-shadow: 0 0 8px rgba(92, 106, 196, 0.3);
+  outline: none;
+  background-color: #fff;
+}
+
+/* Checkbox label */
+form div > label {
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #344563;
+}
+
+/* Input number */
+form input[type="number"] {
+  width: 100%;
+  border-radius: 12px;
+  border: 1.8px solid #d0d7e0;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  color: #3c4a6e;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input[type="number"]:focus {
+  border-color: #5c6ac4;
+  box-shadow: 0 0 8px rgba(92, 106, 196, 0.3);
+  outline: none;
+  background-color: #fff;
+}
+
+/* Botón enviar */
+form button[type="submit"] {
+  background: linear-gradient(135deg, #5c6ac4, #3c50e8);
+  border: none;
+  border-radius: 16px;
+  padding: 0.85rem 1.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgb(92 106 196 / 0.4);
+  transition: background 0.3s ease, transform 0.3s ease;
+  align-self: flex-start;
+}
+
+form button[type="submit"]:hover,
+form button[type="submit"]:focus {
+  background: linear-gradient(135deg, #3c50e8, #5c6ac4);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgb(60 80 232 / 0.5);
+  outline: none;
+}
+
+/* Ocultar / mostrar campo precio */
+#campoPrecio {
+  margin-top: -1rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .dashboard-content {
+    padding: 1rem 1.5rem;
+    margin: 1rem;
+  }
+
+  form button[type="submit"] {
+    width: 100%;
+    text-align: center;
+  }
+}

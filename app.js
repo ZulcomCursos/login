@@ -42,7 +42,8 @@ const planesRoutes = require('./routes/planesRoutes');
 const pdfRoutes = require('./routes/pdfRoutes');
 const ticketsRoutes = require('./routes/ticketsRoutes');
 const verRolPagosRoutes = require('./routes/verRolPagosRoutes');
-const rolpagoRoutes = require('./routes/rolpagoRoutes');  
+const rolpagoRoutes = require('./routes/rolpagoRoutes'); 
+const rolpagoTecnicoRoutes = require('./routes/rolpagoTecnicoRoutes'); 
 app.use('/tecnico' , tecnicoRoutes); 
 app.use('/clientes', clientesRoutes);
 app.use('/planes', planesRoutes);
@@ -50,6 +51,7 @@ app.use('/pdf', pdfRoutes);
 app.use('/tickets', ticketsRoutes);
 app.use('/mis-roles', verRolPagosRoutes);
 app.use('/rolpago', rolpagoRoutes);
+app.use('/rolpago/tecnico', rolpagoTecnicoRoutes);
 
 // Solo iniciar el servidor si no es modo test
 if(NODE_ENV !== 'test'){

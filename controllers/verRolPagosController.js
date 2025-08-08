@@ -94,6 +94,7 @@ const generarPDFPorRol = async (req, res) => {
   }
 };
 
+
 // Para vista del técnico
 const verRolesPagoVistaTecnico = (req, res) => {
   // Detecta si es AJAX
@@ -133,7 +134,6 @@ const listarRolesTecnico = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener los roles' });
   }
 };
-
 
 module.exports = {
   protegerRuta,
