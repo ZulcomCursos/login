@@ -219,7 +219,7 @@ function init() {
     const id_trabajador = document.getElementById('colaboradoresSelect').value;
     const periodo = document.getElementById('periodo').value;
     const salario = parseFloat(document.getElementById('salario').value);
-    const horas_extra = parseFloat(document.getElementById('horas_extra').value) || 0;
+    const cantidad_horas_extra = parseFloat(document.getElementById('cantidad_horas_extra').value) || 0;
     const decimos = parseFloat(document.getElementById('decimos').value) || 0;
     const bonos = parseFloat(document.getElementById('bonos').value) || 0;
     const descuentos = parseFloat(document.getElementById('descuentos').value) || 0;
@@ -248,7 +248,7 @@ function init() {
       id_trabajador,
       periodo,
       salario,
-      horas_extra,
+      cantidad_horas_extra,
       decimos,
       bonos,
       descuentos,
