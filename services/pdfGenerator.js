@@ -55,7 +55,7 @@ const logoPath = path.resolve(__dirname, '..', 'public', 'img', 'logo.png');
   doc
     .fontSize(10)
     .font('Helvetica')
-    .text('RUC: 0999999999001', 120, 80);
+    .text('RUC: 17933214229001', 120, 80);
 
   doc
     .fontSize(16)
@@ -84,10 +84,12 @@ const logoPath = path.resolve(__dirname, '..', 'public', 'img', 'logo.png');
   let startY = 190;
   const rol = roles[0];
   const salario = toNumber(rol.salario);
-  const horasExtra = toNumber(rol.horas_extra);
+  const cantidadHorasExtra = toNumber(rol.horas_extra);
+  const valorHorasExtra = toNumber(rol.valor_horas_extras);
   const bonos = toNumber(rol.bonos);
   const descuentos = toNumber(rol.descuentos);
   const aporteIess = toNumber(rol.aporte_iess);
+  const aporteEmpleador = toNumber(rol.aporte_empleador);
   const total = toNumber(rol.total);
 
   const tableX = 50;
@@ -117,9 +119,13 @@ const logoPath = path.resolve(__dirname, '..', 'public', 'img', 'logo.png');
   doc.text(`$${salario.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
   startY += rowHeight;
 
-  doc.text('Horas Extra:', tableX, startY);
-  doc.text(`${horasExtra}`, tableX + 130, startY, { width: 80, align: 'right' });
-  startY += rowHeight;
+  doc.text('Horas extras trabajadas:', tableX, startY);
+doc.text(`${cantidadHorasExtra} horas`, tableX + 130, startY, { width: 80, align: 'right' });
+startY += rowHeight;
+
+doc.text('Pago horas extras:', tableX, startY);
+doc.text(`$${valorHorasExtra.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
+startY += rowHeight;
 
   doc.text('Bonos:', tableX, startY);
   doc.text(`$${bonos.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
@@ -133,6 +139,9 @@ const logoPath = path.resolve(__dirname, '..', 'public', 'img', 'logo.png');
 
   doc.text('Aporte IESS:', tableX + colWidth + gapBetweenCols, descY);
   doc.text(`$${aporteIess.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
+
+  doc.text('Aporte Empleador:', tableX + colWidth + gapBetweenCols, descY);
+  doc.text(`$${aporteEmpleador.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
 
   // Total neto
   startY += 50;

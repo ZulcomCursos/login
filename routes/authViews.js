@@ -34,24 +34,44 @@ router.get('/register', authenticate, authorize(['Gerente','Administracion']), e
 });
 
 // Procesar registro paso 1
-router.post('/register-step1', validatorRegisterStep1, (req, res) => {
-  // Guardar datos en sesión y redirigir al paso 2
-  req.session.registerData = req.body;
-  res.redirect('/auth/register-step2');
+router.post('/register-step1', validatorRegisterStep1, (req, res, next) => {
+  try {
+    // Verificar que req.session está definido
+    if (!req.session) {
+      throw new Error('Sesión no inicializada');
+    }
+    
+    // Guardar datos en sesión
+    req.session.registerData = req.body;
+    res.redirect('/auth/register-step2');
+  } catch (error) {
+    console.error('Error al guardar datos en sesión:', error);
+    return res.render('auth/register-step1', {
+      title: 'Registro - Paso 1',
+      errors: ['Ocurrió un error al procesar el formulario. Intente nuevamente.'],
+      formData: req.body
+    });
+  }
 });
 
 // Mostrar formulario de registro paso 2 (documentos)
 router.get('/register-step2', authenticate, authorize(['Gerente','Administracion']), (req, res) => {
-  if (!req.session.registerData) {
-    return res.redirect('/auth/register');
+  try {
+    // Verificar que req.session está definido y tiene datos
+    if (!req.session || !req.session.registerData) {
+      return res.redirect('/auth/register');
+    }
+    
+    res.render('auth/register-step2', {
+      title: 'Registro - Paso 2',
+      errors: [],
+      user: req.user
+    });
+  } catch (error) {
+    console.error('Error al mostrar paso 2:', error);
+    res.redirect('/auth/register');
   }
-  res.render('auth/register-step2', {
-    title: 'Registro - Paso 2',
-    errors: [],
-    user: req.user
-  });
 });
-
 // Procesar registro completo
 router.post(
   '/register-complete',

@@ -7,6 +7,7 @@ const path = require("path");
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser'); 
 const { sequelize, dbConnectMySql } = require("./config/mysql");
+const session = require('express-session'); // Añade esta línea
 
 const app = express();
 const NODE_ENV = process.env.NODE_ENV || 'development';
@@ -20,6 +21,17 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(methodOverride('_method'));
+
+// Configurar sesiones (Añade esto antes de las rutas)
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'tu_secreto_seguro_aqui',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { 
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000 // 1 día
+  }
+}));
 
 // Configurar el motor de vistas EJS
 app.set('view engine', 'ejs');
