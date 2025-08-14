@@ -1,4 +1,3 @@
-// models/Plan.js
 const { DataTypes } = require('sequelize');
 const {sequelize} = require('../../config/mysql');
 
@@ -19,7 +18,12 @@ const Plan = sequelize.define('Plan', {
   megas: {
     type: DataTypes.INTEGER,
     allowNull: false,
-  }
+  },
+  estado: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'Activo',
+  },
 }, {
   tableName: 'planes',
   timestamps: false,

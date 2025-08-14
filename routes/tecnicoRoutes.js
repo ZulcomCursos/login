@@ -12,13 +12,17 @@ const ensureUser = (req, res, next) => {
   next();
 };
 
-// Listar tickets asignados (solo usuarios con rol Técnico)
+// Listar tickets asignados
 router.get('/', authenticate, authorize(['Tecnico']), ensureUser, tecnicoController.index);
 
-// Mostrar formulario para resolver ticket (solo Técnico)
+// Mostrar formulario para resolver ticket
 router.get('/:id/resolver', authenticate, authorize(['Tecnico']), ensureUser, tecnicoController.resolverForm);
 
-// Guardar solución del ticket (solo Técnico)
+// Guardar solución del ticket
 router.post('/:id/resolver', authenticate, authorize(['Tecnico']), ensureUser, tecnicoController.resolverTicket);
+
+// Generar PDF
+router.get('/:id/pdf', authenticate, authorize(['Tecnico']), ensureUser, tecnicoController.generarPDF);
+
 
 module.exports = router;

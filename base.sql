@@ -25,6 +25,7 @@ CREATE TABLE planes (
     nombre_plan VARCHAR(100) NOT NULL,
     costo DECIMAL(10,2) NOT NULL,
     megas VARCHAR(50) NOT NULL,
+    estado ENUM('Activo','Suspendido') DEFAULT 'Activo',
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -104,3 +105,10 @@ CREATE TABLE roles_pago (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (id_trabajador) REFERENCES users(id)
 );
+
+ALTER TABLE clientes
+DROP FOREIGN KEY fk_clientes_plan;
+
+ALTER TABLE clientes
+ADD CONSTRAINT fk_clientes_plan FOREIGN KEY (id_plan) REFERENCES planes(id_plan) ON DELETE CASCADE;
+

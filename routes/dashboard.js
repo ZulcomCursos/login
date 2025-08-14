@@ -43,26 +43,18 @@ router.get('/user', authenticate, ensureUser, (req, res) => {
   });
 });
 
-
-
-
-// Catch-all para cualquier ruta interna SPA y redirigir al dashboard principal según el rol
-router.get('/:role/:section', authenticate, ensureUser, (req, res) => {
-  const { role } = req.params;
-
-  switch(role) {
-    case 'gerente':
+// Ruta principal que redirige según rol
+router.get('/', authenticate, ensureUser, (req, res) => {
+  switch(req.user.role) {
+    case 'Gerente':
       return res.redirect('/dashboard/gerente');
-    case 'administracion':
+    case 'Administracion':
       return res.redirect('/dashboard/administracion');
-    case 'tecnico':
+    case 'Tecnico':
       return res.redirect('/dashboard/tecnico');
-    case 'user':
-      return res.redirect('/dashboard/user');
     default:
-      return res.redirect('/dashboard');
+      return res.redirect('/dashboard/user');
   }
 });
-
 
 module.exports = router;

@@ -27,22 +27,21 @@ const {usersModel} = require ('../models')
   router.get('/register', authenticate, authorize(['Gerente','Administracion']), ensureUser,(req, res) => { 
     res.render('auth/register', { 
       title: 'Registro',
-      errors: [], // Inicializa como array vacío en lugar de null/undefined
+      errors: [], // Inicializa como array vacï¿½o en lugar de null/undefined
       formData: {},
       user: req.user 
     });
   })
 
-  // Procesar registro
-  router.post(
-    '/register',
-    upload.fields([
-      { name: 'copia_cedula', maxCount: 1 },
-      { name: 'record_policial', maxCount: 1 }
-    ]),
-    validatorRegister,
-    registerCtrl
-  );
+ router.post(
+  '/register',
+  upload.fields([
+    { name: 'copia_cedula', maxCount: 1 },
+    { name: 'record_policial', maxCount: 1 }
+  ]),
+  validatorRegister,
+  registerCtrl
+);
 
   // Descargar documentos
   router.get('/download/:type/:userId', authenticate, async (req, res) => {

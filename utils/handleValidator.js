@@ -4,18 +4,31 @@ const validateResults = (req, res, next) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.render(req.originalUrl, {
-        title: 'Registro',
-        errors: errors.array().map(err => err.msg), // Convertir a array de mensajes
-        formData: req.body
+      // Determinar la vista a renderizar basada en la ruta
+      let view;
+      if (req.originalUrl.includes('/login')) {
+        view = 'auth/login';
+      } else if (req.originalUrl.includes('/register')) {
+        view = 'auth/register';
+      } else {
+        view = 'auth/login'; // Vista por defecto
+      }
+
+      // Extraer solo los mensajes de error
+      const errorMessages = errors.array().map(err => err.msg);
+      
+      return res.render(view, {
+        title: view === 'auth/login' ? 'Iniciar Sesión' : 'Registro',
+        errors: errorMessages,
+        formData: req.body // Mantener los datos del formulario
       });
     }
     return next();
   } catch (e) {
-    console.error(e);
-    return res.render(req.originalUrl, {
-      title: 'Registro',
-      errors: ['Error en la validación'],
+    console.error('Error en validateResults:', e);
+    return res.render('auth/login', {
+      title: 'Error',
+      errors: ['Ocurrió un error al procesar la solicitud'],
       formData: req.body
     });
   }

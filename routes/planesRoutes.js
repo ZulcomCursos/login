@@ -30,4 +30,8 @@ router.post('/:id', authenticate, authorize(['Gerente', 'Administracion']), ensu
 // Eliminar plan (solo Gerente)
 router.get('/:id/delete', authenticate, authorize(['Gerente']), ensureUser, planesController.delete);
 
+//suspender 
+router.post('/:id/suspender', authenticate, authorize(['Gerente']), ensureUser, planesController.suspender);
+
+
 module.exports = router;

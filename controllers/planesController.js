@@ -2,13 +2,17 @@ const Plan = require('../models/mysql/Plan');
 
 exports.list = async (req, res) => {
   try {
-    const planes = await Plan.findAll({ order: [['id_plan', 'ASC']] });
+    const planes = await Plan.findAll({
+      where: { estado: 'Activo' },
+      order: [['id_plan', 'ASC']],
+    });
     res.render('planes/index', { planes, user: req.user });
   } catch (error) {
     console.error('Error al obtener los planes:', error);
     res.status(500).send('Error al obtener los planes');
   }
 };
+
 
 exports.createForm = (req, res) => {
   res.render('planes/create', { user: req.user });
@@ -26,6 +30,7 @@ exports.create = async (req, res) => {
       });
     }
 
+    // No hace falta setear estado porque tiene default 'Activo'
     await Plan.create({ nombre_plan, costo, megas });
     res.redirect('/planes');
   } catch (error) {
@@ -37,6 +42,7 @@ exports.create = async (req, res) => {
     });
   }
 };
+
 
 exports.editForm = async (req, res) => {
   try {
@@ -92,15 +98,39 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const id = req.params.id;
-    const deleted = await Plan.destroy({ where: { id_plan: id } });
+    const [updated] = await Plan.update(
+      { estado: 'Suspendido' },
+      { where: { id_plan: id, estado: 'Activo' } }
+    );
 
-    if (deleted === 0) {
-      return res.status(404).send('Plan no encontrado para eliminar');
+    if (updated === 0) {
+      return res.status(404).send('Plan no encontrado o ya suspendido');
     }
 
     res.redirect('/planes');
   } catch (error) {
-    console.error('Error al eliminar el plan:', error);
-    res.status(500).send('Error al eliminar el plan');
+    console.error('Error al suspender el plan:', error);
+    res.status(500).send('Error al suspender el plan');
   }
 };
+
+exports.suspender = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const [updated] = await Plan.update(
+      { estado: 'Suspendido' },
+      { where: { id_plan: id } }
+    );
+
+    if (updated === 0) {
+      return res.status(404).send('Plan no encontrado o ya suspendido');
+    }
+
+    res.redirect('/planes');
+  } catch (error) {
+    console.error('Error al suspender el plan:', error);
+    res.status(500).send('Error al suspender el plan');
+  }
+};
+
+
