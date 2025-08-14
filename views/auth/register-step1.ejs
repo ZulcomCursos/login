@@ -52,10 +52,10 @@
             <label for="role">Rol</label>
             <select id="role" name="role" required>
               <option value="">Seleccione un rol</option>
-              <option value="User" <%= (typeof formData !== 'undefined' && formData.role === 'User') ? 'selected' : '' %>>Usuario Normal</option>
               <option value="Tecnico" <%= (typeof formData !== 'undefined' && formData.role === 'Tecnico') ? 'selected' : '' %>>Técnico</option>
               <option value="Administracion" <%= (typeof formData !== 'undefined' && formData.role === 'Administracion') ? 'selected' : '' %>>Administración</option>
               <option value="Gerente" <%= (typeof formData !== 'undefined' && formData.role === 'Gerente') ? 'selected' : '' %>>Gerente</option>
+              <option value="User" <%= (typeof formData !== 'undefined' && formData.role === 'User') ? 'selected' : '' %>>Usuario Normal</option>
             </select>
           </div>
           <button type="submit" class="auth-button">Continuar</button>

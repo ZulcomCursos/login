@@ -18,6 +18,11 @@ const RolPago = sequelize.define('RolPago', {
     }
   },
   horas_extra: DataTypes.FLOAT,
+  valor_horas_extras: {       
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    defaultValue: 0
+  },
   decimos: DataTypes.FLOAT,
   bonos: DataTypes.FLOAT,
   descuentos: DataTypes.FLOAT,
