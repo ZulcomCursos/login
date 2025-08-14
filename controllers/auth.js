@@ -15,14 +15,19 @@ const registerCtrl = async (req, res) => {
   try {
     // Verificar que se subieron los archivos
     if (!req.files || !req.files['copia_cedula'] || !req.files['record_policial']) {
-      return res.render('auth/register', {
-        title: 'Registro',
+      return res.render('auth/register-step2', {
+        title: 'Registro - Paso 2',
         errors: ['Debe subir ambos documentos (copia de cédula y record policial)'],
-        formData: req.body
+        user: req.user
       });
     }
 
-    const reqData = matchedData(req);
+    // Combinar datos de sesión con archivos subidos
+    const reqData = {
+      ...req.session.registerData,
+      copia_cedula: req.files['copia_cedula'][0].filename,
+      record_policial: req.files['record_policial'][0].filename
+    };
     
     // Generar username automático
     const username = generateUsername(reqData.nombres, reqData.apellidos);
@@ -30,21 +35,18 @@ const registerCtrl = async (req, res) => {
     // Asignar cédula como contraseña
     const password = await encrypt(reqData.cedula);
     
-    // Obtener nombres de archivos
-    const copiaCedula = req.files['copia_cedula'][0].filename;
-    const recordPolicial = req.files['record_policial'][0].filename;
-    
     const userData = { 
       ...reqData, 
       password,
-      username,
-      copia_cedula: copiaCedula,
-      record_policial: recordPolicial
+      username
     };
     
     const dataUser = await usersModel.create(userData);
     const user = dataUser.get({ plain: true });
     delete user.password;
+
+    // Limpiar datos de sesión
+    delete req.session.registerData;
 
     const data = {
       token: await tokenSign(user),
@@ -79,10 +81,10 @@ const registerCtrl = async (req, res) => {
       });
     }
 
-    return res.render('auth/register', {
-      title: 'Registro',
+    return res.render('auth/register-step2', {
+      title: 'Registro - Paso 2',
       errors: errorMessages,
-      formData: req.body
+      user: req.user
     });
   }
 };

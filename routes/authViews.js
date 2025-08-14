@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { loginCtrl, registerCtrl, showChangePassword, changePassword } = require('../controllers/auth');
-const { validatorLogin, validatorRegister } = require('../validators/auth');
+const { validatorLogin,validatorRegisterStep1, validatorRegisterStep2,  } = require('../validators/auth');
 const authenticate = require('../middleware/authenticate');
 const authorize = require('../middleware/authorize');
 const upload = require('../utils/handleStorage'); 
@@ -23,23 +23,43 @@ const {usersModel} = require ('../models')
   // Procesar login
   router.post('/login', validatorLogin, loginCtrl);
 
-  // Mostrar formulario de registro
-  router.get('/register', authenticate, authorize(['Gerente','Administracion']), ensureUser,(req, res) => { 
-    res.render('auth/register', { 
-      title: 'Registro',
-      errors: [], // Inicializa como array vac�o en lugar de null/undefined
-      formData: {},
-      user: req.user 
-    });
-  })
+// Mostrar formulario de registro paso 1
+router.get('/register', authenticate, authorize(['Gerente','Administracion']), ensureUser, (req, res) => { 
+  res.render('auth/register-step1', { 
+    title: 'Registro - Paso 1',
+    errors: [],
+    formData: {},
+    user: req.user 
+  });
+});
 
- router.post(
-  '/register',
+// Procesar registro paso 1
+router.post('/register-step1', validatorRegisterStep1, (req, res) => {
+  // Guardar datos en sesión y redirigir al paso 2
+  req.session.registerData = req.body;
+  res.redirect('/auth/register-step2');
+});
+
+// Mostrar formulario de registro paso 2 (documentos)
+router.get('/register-step2', authenticate, authorize(['Gerente','Administracion']), (req, res) => {
+  if (!req.session.registerData) {
+    return res.redirect('/auth/register');
+  }
+  res.render('auth/register-step2', {
+    title: 'Registro - Paso 2',
+    errors: [],
+    user: req.user
+  });
+});
+
+// Procesar registro completo
+router.post(
+  '/register-complete',
   upload.fields([
     { name: 'copia_cedula', maxCount: 1 },
     { name: 'record_policial', maxCount: 1 }
   ]),
-  validatorRegister,
+  validatorRegisterStep2,
   registerCtrl
 );
 

@@ -3,45 +3,74 @@ const { sequelize } = require('../config/mysql');
 const { QueryTypes } = require('sequelize');
 const { generarPDFColaborador } = require('../services/pdfGenerator');
 
-// ✅ Crear un nuevo rol de pago
 const crearRolPago = async (req, res) => {
   try {
-    const { id_trabajador, salario, horas_extra, decimos, bonos, descuentos, periodo } = req.body;
+    const {
+      id_trabajador,
+      salario,
+      cantidad_horas_extra, // <-- coincide con tu front
+      decimos,
+      bonos,
+      descuentos,
+      periodo,
+    } = req.body;
 
     if (!salario || isNaN(salario)) {
-      return res.status(400).json({ mensaje: 'Salario inválido o no proporcionado' });
+      return res.status(400).json({ mensaje: "Salario inválido o no proporcionado" });
     }
 
     const salarioNum = parseFloat(salario);
-    const aporte_iess = (salarioNum * 0.0945).toFixed(2);
-    const total = (
-      salarioNum +
-      parseFloat(horas_extra || 0) +
-      parseFloat(decimos || 0) +
-      parseFloat(bonos || 0) -
-      parseFloat(descuentos || 0) -
-      parseFloat(aporte_iess)
-    ).toFixed(2);
+    const horasExtrasNum = parseFloat(cantidad_horas_extra) || 0; // <-- usamos esta variable
 
+    const horasTrabajadasAlMes = 240;
+    const valorHoraNormal = salarioNum / horasTrabajadasAlMes;
+
+    // Pago por horas extras (150%)
+    const pagoHorasExtra = horasExtrasNum * valorHoraNormal * 1.5;
+
+    // Base para cálculos de aportes
+    const baseAportes = salarioNum + pagoHorasExtra;
+
+    // Calcular aportes
+    const aporte_iess = parseFloat((baseAportes * 0.0945).toFixed(2));
+    const aporte_empleador = parseFloat((baseAportes * 0.1115).toFixed(2));
+
+
+
+    // Total neto
+    const total =
+      salarioNum +
+      pagoHorasExtra +
+      (parseFloat(decimos) || 0) +
+      (parseFloat(bonos) || 0) -
+      (parseFloat(descuentos) || 0) -
+      aporte_iess;
+
+    // Guardar datos en tabla RolPago
     const datosRol = {
       id_trabajador,
       periodo,
       salario: salarioNum,
-      horas_extra: horas_extra || 0,
-      decimos: decimos || 0,
+      horas_extra: horasExtrasNum, // <-- aquí se asigna correctamente
+      valor_horas_extras: parseFloat(pagoHorasExtra.toFixed(2)),
+      decimos: parseFloat(decimos || 0),
       aporte_iess,
-      bonos: bonos || 0,
-      descuentos: descuentos || 0,
-      total,
-      estado: 'generado'
+      aporte_empleador,
+      bonos: parseFloat(bonos || 0),
+      descuentos: parseFloat(descuentos || 0),
+      total: parseFloat(total.toFixed(2)),
+      estado: "generado",
     };
 
     await RolPago.create(datosRol);
-    return res.status(200).json({ mensaje: 'Rol de pago generado exitosamente', datos: datosRol });
 
+    return res.status(200).json({
+      mensaje: "Rol de pago generado exitosamente",
+      datos: datosRol
+    });
   } catch (error) {
-    console.error('Error al crear rol de pago:', error);
-    return res.status(500).json({ mensaje: 'Error al generar el rol de pago' });
+    console.error("Error al crear rol de pago:", error);
+    return res.status(500).json({ mensaje: "Error al generar el rol de pago" });
   }
 };
 

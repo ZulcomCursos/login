@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+   <link rel="stylesheet" href="/css/login/auth.css">
+</head>
+<body class="auth-page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2>Registro - Paso 2 de 2</h2>
+        <p>Suba los documentos requeridos</p>
+      </div>
+      <div class="auth-body">
+        <% if (errors && Array.isArray(errors) && errors.length > 0) { %>
+          <div class="auth-error">
+            <ul>
+              <% errors.forEach(error => { %>
+                <li><%= error %></li>
+              <% }); %>
+            </ul>
+          </div>
+        <% } %>
+        <form action="/auth/register-complete" method="POST" class="auth-form" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="copia_cedula">Copia de Cédula (PDF)</label>
+            <input type="file" id="copia_cedula" name="copia_cedula" accept=".pdf" required>
+          </div>
+          <div class="form-group">
+            <label for="record_policial">Record Policial (PDF)</label>
+            <input type="file" id="record_policial" name="record_policial" accept=".pdf" required>
+          </div>
+          <button type="submit" class="auth-button">Completar Registro</button>
+        </form>
+        <div class="auth-footer">
+          <a href="/auth/register">Volver al paso 1</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
