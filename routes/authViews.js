@@ -22,7 +22,6 @@ const {usersModel} = require ('../models')
 
   // Procesar login
   router.post('/login', validatorLogin, loginCtrl);
-
 // Mostrar formulario de registro paso 1
 router.get('/register', authenticate, authorize(['Gerente','Administracion']), ensureUser, (req, res) => { 
   res.render('auth/register-step1', { 
@@ -33,22 +32,45 @@ router.get('/register', authenticate, authorize(['Gerente','Administracion']), e
   });
 });
 
-// Procesar registro paso 1
-router.post('/register-step1', validatorRegisterStep1, (req, res, next) => {
+// Procesar registro paso 1 con verificación en base de datos
+router.post('/register-step1', validatorRegisterStep1, async (req, res) => {
   try {
-    // Verificar que req.session está definido
-    if (!req.session) {
-      throw new Error('Sesión no inicializada');
+    // Verificar duplicados en la base de datos
+    const existingUser = await usersModel.findOne({
+      where: {
+        [Op.or]: [
+          { cedula: req.body.cedula },
+          { telefono: req.body.telefono },
+          { email: req.body.email }
+        ]
+      }
+    });
+
+    if (existingUser) {
+      let errorMessage = '';
+      if (existingUser.cedula === req.body.cedula) {
+        errorMessage = 'La cédula ya está registrada';
+      } else if (existingUser.telefono === req.body.telefono) {
+        errorMessage = 'El teléfono ya está registrado';
+      } else if (existingUser.email === req.body.email) {
+        errorMessage = 'El email ya está registrado';
+      }
+
+      return res.render('auth/register-step1', {
+        title: 'Registro - Paso 1',
+        errors: [errorMessage],
+        formData: req.body
+      });
     }
-    
-    // Guardar datos en sesión
+
+    // Si no hay errores, guardar datos en sesión y pasar al paso 2
     req.session.registerData = req.body;
     res.redirect('/auth/register-step2');
   } catch (error) {
-    console.error('Error al guardar datos en sesión:', error);
+    console.error('Error en verificación de datos:', error);
     return res.render('auth/register-step1', {
       title: 'Registro - Paso 1',
-      errors: ['Ocurrió un error al procesar el formulario. Intente nuevamente.'],
+      errors: ['Error al verificar los datos. Intente nuevamente.'],
       formData: req.body
     });
   }
@@ -56,22 +78,16 @@ router.post('/register-step1', validatorRegisterStep1, (req, res, next) => {
 
 // Mostrar formulario de registro paso 2 (documentos)
 router.get('/register-step2', authenticate, authorize(['Gerente','Administracion']), (req, res) => {
-  try {
-    // Verificar que req.session está definido y tiene datos
-    if (!req.session || !req.session.registerData) {
-      return res.redirect('/auth/register');
-    }
-    
-    res.render('auth/register-step2', {
-      title: 'Registro - Paso 2',
-      errors: [],
-      user: req.user
-    });
-  } catch (error) {
-    console.error('Error al mostrar paso 2:', error);
-    res.redirect('/auth/register');
+  if (!req.session.registerData) {
+    return res.redirect('/auth/register');
   }
+  res.render('auth/register-step2', {
+    title: 'Registro - Paso 2',
+    errors: [],
+    user: req.user
+  });
 });
+
 // Procesar registro completo
 router.post(
   '/register-complete',
