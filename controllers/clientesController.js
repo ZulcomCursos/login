@@ -19,13 +19,18 @@ exports.list = async (req, res) => {
 /**uwu */
 exports.createForm = async (req, res) => {
     try {
-        const planes = await Plan.findAll();
+        const planes = await Plan.findAll({
+            where: { estado: 'Activo' }, 
+            order: [['id_plan', 'ASC']]
+        });
+
         res.render('clientes/create', { planes, user: req.user });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al cargar el formulario');
     }
 };
+
 
 exports.create = async (req, res) => {
     try {

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Ticket</title>
+  <link rel="stylesheet" href="/css/dashboard/navbar.css" />
+  <link rel="stylesheet" href="/css/dashboard/dashboard.css" />
+</head>
+
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/navtecnico') %>
+
+      <main class="main-content">
+        <header class="content-header">
+          <h1>PANEL TÉCNICO</h1>
+          <div class="user-actions">
+            <div>
+              <a href="/auth/change-password">
+                <img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil" />
+              </a>
+            </div>
+
+            <% if (user && user.nombres && user.apellidos) { %>
+              <span class="user-name">Técnico: <%= user.nombres %> <%= user.apellidos %></span>
+            <% } %>
+            <a href="/auth/logout" class="logout-btn"
+              onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
+          </div>
+        </header>
+
+        <section class="ticket-info">
+          <h2>Información del Cliente</h2>
+          <p><strong>Cliente:</strong> <%= ticket.client ? ticket.client.nombre + " " + ticket.client.apellido : "Sin cliente" %></p>
+          <p><strong>Cédula:</strong> <%= ticket.client?.cedula || "-" %></p>
+          <p><strong>IP:</strong> <%= ticket.client?.ip || "-" %></p>
+          <p><strong>Teléfono:</strong> <%= ticket.client?.telefono1 || "-" %></p>
+          <p><strong>Dirección:</strong> <%= ticket.client?.direccion || "-" %></p>
+          <p><strong>Referencia:</strong> <%= ticket.client?.referencias || "-" %></p>
+
+          <h2>Información del Ticket</h2>
+          <p><strong>Número de Ticket:</strong> <%= ticket.ticketNumber %></p>
+          <p><strong>Tipo de Problema:</strong> <%= ticket.issueType %></p>
+          <p><strong>Descripción:</strong> <%= ticket.description %></p>
+          <p><strong>Estado:</strong> <%= ticket.status %></p>
+          <p><strong>Hora de Visita:</strong> <%= ticket.horaVisita || "—" %></p>
+          <p><strong>Solución:</strong> <%= ticket.solution || "—" %></p>
+          <p><strong>Precio:</strong> <%= ticket.precio || "—" %></p>
+          <p><strong>Fecha de Solución:</strong> <%= ticket.solutionDate || "—" %></p>
+          <p><strong>Hora de Solución:</strong> <%= ticket.solutionTime || "—" %></p>
+
+          <!-- Botones de acción -->
+          <div class="acciones">
+            <a href="/tecnico" class="btn btn-volver">⬅ Volver</a>
+            <a href="/tecnico/<%= ticket.id %>/pdf" class="btn btn-pdf">📄 Generar PDF</a>
+          </div>
+        </section>
+      </main>
+  </div>
+</body>
+
+</html>

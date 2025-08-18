@@ -13,7 +13,12 @@ const ENGINE_DB = process.env.ENGINE_DB;
  */
 const registerCtrl = async (req, res) => {
   try {
-    // Verificar que se subieron los archivos
+    // Verificar que hay datos de sesión
+    if (!req.session.registerData) {
+      return res.redirect('/auth/register');
+    }
+
+    // Verificar archivos subidos
     if (!req.files || !req.files['copia_cedula'] || !req.files['record_policial']) {
       return res.render('auth/register-step2', {
         title: 'Registro - Paso 2',
@@ -22,7 +27,7 @@ const registerCtrl = async (req, res) => {
       });
     }
 
-    // Combinar datos de sesión con archivos subidos
+    // Combinar datos de sesión con archivos
     const reqData = {
       ...req.session.registerData,
       copia_cedula: req.files['copia_cedula'][0].filename,
@@ -41,6 +46,7 @@ const registerCtrl = async (req, res) => {
       username
     };
     
+    // Crear usuario en la base de datos
     const dataUser = await usersModel.create(userData);
     const user = dataUser.get({ plain: true });
     delete user.password;
@@ -56,7 +62,7 @@ const registerCtrl = async (req, res) => {
     return redirectByRole(res, data.token, user.role);
     
   } catch (e) {
-    console.error('Error en registerCtrl:', e);
+    console.error('Error en registro completo:', e);
     
     // Eliminar archivos si hubo error
     if (req.files) {

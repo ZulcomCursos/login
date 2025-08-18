@@ -74,22 +74,6 @@ const crearRolPago = async (req, res) => {
   }
 };
 
-// ✅ Listar colaboradores (Técnico / Administración)
-const listarColaboradores = async (req, res) => {
-  try {
-    const [usuarios] = await sequelize.query(
-      `SELECT id AS id_trabajador, nombres, apellidos, role AS cargo 
-       FROM users 
-       WHERE role IN ('Tecnico', 'Administracion')
-       ORDER BY nombres ASC`
-    );
-
-    return res.json(usuarios);
-  } catch (error) {
-    console.error('Error al listar colaboradores:', error);
-    return res.status(500).json({ mensaje: 'Error al listar usuarios' });
-  }
-};
 
 const listarRolesPago = async (req, res) => {
   try {
@@ -177,7 +161,6 @@ const generarPDF = async (req, res) => {
 
 module.exports = {
   crearRolPago,
-  listarColaboradores,
   listarRolesPago,
   generarPDF
 };

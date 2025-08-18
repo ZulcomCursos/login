@@ -6,7 +6,7 @@
   <title>ZULCOM - Gerente</title>
   <link rel="stylesheet" href="/css/dashboard/navbar.css">
   <link rel="stylesheet" href="/css/dashboard/dashboard.css">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
   <div class="dashboard-container">
@@ -32,8 +32,41 @@
       </div>
     </main>
   </div>
+  
   <!-- SPA Controller Script -->
   <script src="/js/js_rolpago/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Script para controlar navegación -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Prevenir que el usuario vuelva al login con el botón atrás
+      history.pushState(null, null, location.href);
+      
+      // Manejar el evento de retroceso/adelanto
+      window.onpopstate = function(event) {
+        // Mostrar confirmación solo si se intenta ir a una página anterior
+        if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+          // Si confirma, redirigir al logout
+          window.location.href = '/auth/logout';
+        } else {
+          // Si cancela, mantener en la misma página
+          history.pushState(null, null, location.href);
+        }
+      };
+      
+      // Manejar clics en el navbar para permitir navegación interna
+      const navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Permitir navegación normal para enlaces que no sean logout
+          if (!this.href.includes('/auth/logout')) {
+            window.onpopstate = null; // Desactivar temporalmente el control
+            return true;
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

@@ -198,7 +198,31 @@ const generarPDF = async (req, res) => {
     console.error(error);
     res.status(500).send('Error al generar PDF');
   }
+}
+const verInformacion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const tecnicoId = req.user.id;
+
+    const ticket = await Ticket.findOne({
+      where: { id, tecnicoId },
+      include: [
+        { model: Client, as: 'client' },
+        { model: User, as: 'tecnico' }
+      ]
+    });
+
+    if (!ticket) {
+      return res.status(404).send('Ticket no encontrado o no pertenece a este técnico');
+    }
+
+    res.render('tecnico/ver', { ticket, user: req.user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al mostrar la información del ticket');
+  }
 };
+
 
 
 
@@ -208,5 +232,6 @@ module.exports = {
   index,
   resolverForm,
   resolverTicket,
-  generarPDF
+  generarPDF,
+  verInformacion
 };

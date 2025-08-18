@@ -24,13 +24,15 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
   const nombreCompleto = `${colaborador.nombres} ${colaborador.apellidos}`;
 
   const fechaCreacion = new Date().toLocaleString('es-EC', {
-    dateStyle: 'short',
-    timeStyle: 'short'
-  });
+  dateStyle: 'short',
+  timeStyle: 'short'
+});
 
   // Datos desde colaborador
   const cedula = colaborador.cedula || 'N/A';
   const cargo = colaborador.cargo || 'N/A';
+
+  
 
   const moradoLogo = '#443fcc';
 
@@ -39,8 +41,7 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
   doc.pipe(res);
 
   // Logo
-const logoPath = path.resolve(__dirname, '..', 'public', 'img', 'logo.png');
-
+  const logoPath = path.join(__dirname, '../img/logo.png');
   if (fs.existsSync(logoPath)) {
     doc.image(logoPath, 50, 45, { width: 60 });
   }
@@ -55,13 +56,13 @@ const logoPath = path.resolve(__dirname, '..', 'public', 'img', 'logo.png');
   doc
     .fontSize(10)
     .font('Helvetica')
-    .text('RUC: 17933214229001', 120, 80);
+    .text('RUC: 1793214229001', 120, 80);
 
   doc
     .fontSize(16)
     .fillColor(moradoLogo)
     .font('Helvetica-Bold')
-    .text('ROL DE PAGO', { align: 'right' });
+    .text('Rol de Pago', { align: 'right' });
 
   doc
     .moveTo(50, 110)
@@ -119,29 +120,30 @@ const logoPath = path.resolve(__dirname, '..', 'public', 'img', 'logo.png');
   doc.text(`$${salario.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
   startY += rowHeight;
 
-  doc.text('Horas extras trabajadas:', tableX, startY);
+doc.text('Horas extras trabajadas:', tableX, startY);
 doc.text(`${cantidadHorasExtra} horas`, tableX + 130, startY, { width: 80, align: 'right' });
 startY += rowHeight;
 
 doc.text('Pago horas extras:', tableX, startY);
 doc.text(`$${valorHorasExtra.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
 startY += rowHeight;
-
-  doc.text('Bonos:', tableX, startY);
-  doc.text(`$${bonos.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
-
   // Descuentos
-  let descY = startY - (2 * rowHeight);
+let descY = startY - (2 * rowHeight);
 
-  doc.text('Descuentos:', tableX + colWidth + gapBetweenCols, descY);
-  doc.text(`$${descuentos.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
-  descY += rowHeight;
+doc.text('Bonos:', tableX, startY);
+doc.text(`$${bonos.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
+startY += rowHeight;
 
-  doc.text('Aporte IESS:', tableX + colWidth + gapBetweenCols, descY);
-  doc.text(`$${aporteIess.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
+doc.text('Descuentos:', tableX + colWidth + gapBetweenCols, descY);
+doc.text(`$${descuentos.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
+descY += rowHeight;
 
-  doc.text('Aporte Empleador:', tableX + colWidth + gapBetweenCols, descY);
-  doc.text(`$${aporteEmpleador.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
+doc.text('Aporte IESS:', tableX + colWidth + gapBetweenCols, descY);
+doc.text(`$${aporteIess.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
+descY += rowHeight;  // Aquí incrementamos la Y para la siguiente línea
+
+doc.text('Aporte Empleador:', tableX + colWidth + gapBetweenCols, descY);
+doc.text(`$${aporteEmpleador.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
 
   // Total neto
   startY += 50;

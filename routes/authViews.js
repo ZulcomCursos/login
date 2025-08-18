@@ -8,6 +8,7 @@ const upload = require('../utils/handleStorage');
 const fs = require('fs');
 const path = require('path');
 const {usersModel} = require ('../models')
+const { Op } = require('sequelize');
   const ensureUser = (req, res, next) => {
     if (!req.user) {
       return res.redirect('/auth/login');
@@ -23,7 +24,7 @@ const {usersModel} = require ('../models')
   // Procesar login
   router.post('/login', validatorLogin, loginCtrl);
 // Mostrar formulario de registro paso 1
-router.get('/register', authenticate, authorize(['Gerente','Administracion']), ensureUser, (req, res) => { 
+router.get('/register', authenticate, authorize(['Gerente']), ensureUser, (req, res) => { 
   res.render('auth/register-step1', { 
     title: 'Registro - Paso 1',
     errors: [],
@@ -36,36 +37,46 @@ router.get('/register', authenticate, authorize(['Gerente','Administracion']), e
 router.post('/register-step1', validatorRegisterStep1, async (req, res) => {
   try {
     // Verificar duplicados en la base de datos
-    const existingUser = await usersModel.findOne({
+    const existingUsers = await usersModel.findAll({
       where: {
         [Op.or]: [
           { cedula: req.body.cedula },
           { telefono: req.body.telefono },
           { email: req.body.email }
         ]
-      }
+      },
+      raw: true
     });
 
-    if (existingUser) {
-      let errorMessage = '';
-      if (existingUser.cedula === req.body.cedula) {
-        errorMessage = 'La cédula ya está registrada';
-      } else if (existingUser.telefono === req.body.telefono) {
-        errorMessage = 'El teléfono ya está registrado';
-      } else if (existingUser.email === req.body.email) {
-        errorMessage = 'El email ya está registrado';
-      }
+    if (existingUsers && existingUsers.length > 0) {
+      const errors = [];
+      
+      existingUsers.forEach(user => {
+        if (user.cedula === req.body.cedula) {
+          errors.push('La cédula ya está registrada');
+        }
+        if (user.telefono === req.body.telefono) {
+          errors.push('El teléfono ya está registrado');
+        }
+        if (user.email === req.body.email) {
+          errors.push('El email ya está registrado');
+        }
+      });
+
+      // Eliminar duplicados
+      const uniqueErrors = [...new Set(errors)];
 
       return res.render('auth/register-step1', {
         title: 'Registro - Paso 1',
-        errors: [errorMessage],
+        errors: uniqueErrors,
         formData: req.body
       });
     }
 
     // Si no hay errores, guardar datos en sesión y pasar al paso 2
     req.session.registerData = req.body;
-    res.redirect('/auth/register-step2');
+    return res.redirect('/auth/register-step2');
+    
   } catch (error) {
     console.error('Error en verificación de datos:', error);
     return res.render('auth/register-step1', {
@@ -135,11 +146,16 @@ router.post(
     }
   });
 
-  // Cerrar sesión
-  router.get('/logout', (req, res) => {
+ // Cerrar sesión
+router.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Error al destruir la sesión:', err);
+    }
     res.clearCookie('jwt');
     res.redirect('/auth/login');
   });
+});
 
   // Mostrar formulario para cambiar contraseña
   router.get('/change-password', authenticate, showChangePassword);

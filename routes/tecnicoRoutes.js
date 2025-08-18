@@ -24,5 +24,9 @@ router.post('/:id/resolver', authenticate, authorize(['Tecnico']), ensureUser, t
 // Generar PDF
 router.get('/:id/pdf', authenticate, authorize(['Tecnico']), ensureUser, tecnicoController.generarPDF);
 
+// Ver información detallada
+router.get('/:id/ver', authenticate, authorize(['Tecnico']), ensureUser, tecnicoController.verInformacion);
+
+
 
 module.exports = router;

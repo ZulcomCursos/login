@@ -18,7 +18,7 @@ const RolPago = sequelize.define('RolPago', {
     }
   },
   horas_extra: DataTypes.FLOAT,
-  valor_horas_extras: {       
+  valor_horas_extras: {       // <-- agregar esta columna
     type: DataTypes.FLOAT,
     allowNull: false,
     defaultValue: 0
@@ -33,6 +33,9 @@ const RolPago = sequelize.define('RolPago', {
   aporte_iess: {
     type: DataTypes.FLOAT,
     allowNull: false
+  },
+    aporte_empleador: {
+    type: DataTypes.FLOAT,
   },
   total: {
     type: DataTypes.FLOAT,

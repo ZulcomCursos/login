@@ -1,7 +1,5 @@
 const { check } = require("express-validator");
 const validateResults = require("../utils/handleValidator");
-
-// Validaciones para el paso 1 (datos personales)
 const validatorRegisterStep1 = [
   check("cedula")
     .exists().withMessage("La cédula es requerida")
@@ -71,7 +69,7 @@ const validatorLogin = [
   check("password")
     .exists().withMessage("La contraseña es requerida")
     .notEmpty().withMessage("La contraseña no puede estar vacía")
-    .isLength({min:3, max:15}).withMessage("La contraseña debe tener entre 3 y 15 caracteres"),
+    .isLength({min:1, max:15}).withMessage("La contraseña debe tener entre 3 y 15 caracteres"),
   (req, res, next) => {
     validateResults(req, res, next);
   }

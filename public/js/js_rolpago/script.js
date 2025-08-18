@@ -1,29 +1,17 @@
 window.loadContent = async function(url) {
   try {
-    // Si es dashboard gerente o alguna subruta, hacer recarga completa para evitar cargar dentro del SPA
-    if (url.startsWith('/dashboard/gerente')) {
-      window.location.href = url;
-      return;
-    }
-
     const res = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
-    if (!res.ok) throw new Error('Error al cargar vista');
+    if (!res.ok) throw new Error(`Error al cargar vista: ${res.status} ${res.statusText}`);
     const html = await res.text();
 
     const contentDiv = document.getElementById('contenido-dinamico'); 
     if (!contentDiv) throw new Error('No se encontró el contenedor #contenido-dinamico');
     contentDiv.innerHTML = html;
 
-    // <-- Corrección: ejecutar init() si es la vista crear rol para que el form funcione
-    if (url === '/rolpago/crear' && typeof init === 'function') {
-      init();
-    }
-
     // Cargar colaboradores en filtros y asignar listeners para filtros en el tab listado
     if (url === '/rolpago/crear' || url === '/rolpago/ver' || url === '/rolpago/listar') {
       await cargarFiltroColaboradores();
       asignarListenersFiltros();
-      // Cargar listado sin filtros inicial
       cargarListadoRoles();
     }
 
@@ -37,18 +25,15 @@ window.loadContent = async function(url) {
 
     // Si cargamos la vista de crear roles, cargar colaboradores para formulario
     if (url === '/rolpago/crear') {
-      cargarColaboradores();
-    }
+      await cargarColaboradores();
 
-    // Cargar script.js para Crear Roles de Pago
-    if (url.startsWith('/rolpago/crear')) {
+      // Cargar script.js para Crear Roles de Pago
       if (!document.getElementById('script-crear-rolpago')) {
         const script = document.createElement('script');
         script.id = 'script-crear-rolpago';
-        script.src = '/js_rolpago/script.js?t=' + new Date().getTime();
-        script.onload = () => {
-          if (typeof init === 'function') init();
-        };
+        script.src = '/js/js_rolpago/script.js?t=' + new Date().getTime();
+        script.onload = () => { if (typeof init === 'function') init(); };
+        script.onerror = () => console.error('Error al cargar script.js de Crear Roles de Pago');
         document.body.appendChild(script);
       } else {
         if (typeof init === 'function') init();
@@ -56,14 +41,13 @@ window.loadContent = async function(url) {
     }
 
     // Cargar script.js para Ver Roles de Pago
-    if (url.startsWith('/rolpago/ver')) {
+    if (url === '/rolpago/ver') {
       if (!document.getElementById('script-roles-pago')) {
         const script = document.createElement('script');
         script.id = 'script-roles-pago';
         script.src = '/ver_roles/script.js?t=' + new Date().getTime();
-        script.onload = () => {
-          if (typeof initRolesPago === 'function') initRolesPago();
-        };
+        script.onload = () => { if (typeof initRolesPago === 'function') initRolesPago(); };
+        script.onerror = () => console.error('Error al cargar script.js de Ver Roles de Pago');
         document.body.appendChild(script);
       } else {
         if (typeof initRolesPago === 'function') initRolesPago();
@@ -71,9 +55,9 @@ window.loadContent = async function(url) {
     }
 
   } catch (err) {
-    console.error(err);
+    console.error('Error en loadContent:', err);
     const contentDiv = document.getElementById('contenido-dinamico');
-    if (contentDiv) contentDiv.innerHTML = `<p class="text-danger">${err.message}</p>`;
+    if (contentDiv) contentDiv.innerHTML = `<p class="text-danger">Error: ${err.message}</p>`;
   }
 };
 
@@ -81,14 +65,11 @@ window.loadContent = async function(url) {
 async function cargarColaboradores() {
   try {
     const res = await fetch('/rolpago/colaboradores');
-    if (!res.ok) throw new Error('Error al obtener colaboradores');
+    if (!res.ok) throw new Error(`Error al obtener colaboradores: ${res.status} ${res.statusText}`);
     const colaboradores = await res.json();
 
     const select = document.getElementById('colaboradoresSelect');
-    if (!select) {
-      console.error('No se encontró el select colaboradoresSelect');
-      return;
-    }
+    if (!select) throw new Error('No se encontró el select colaboradoresSelect');
 
     select.innerHTML = '';
 
@@ -108,6 +89,7 @@ async function cargarColaboradores() {
     });
   } catch (error) {
     console.error('Error cargando colaboradores:', error);
+    alert('Error cargando colaboradores: ' + error.message);
   }
 }
 
@@ -115,14 +97,11 @@ async function cargarColaboradores() {
 async function cargarFiltroColaboradores() {
   try {
     const res = await fetch('/rolpago/colaboradores');
-    if (!res.ok) throw new Error('Error al obtener colaboradores');
+    if (!res.ok) throw new Error(`Error al obtener colaboradores: ${res.status} ${res.statusText}`);
     const colaboradores = await res.json();
 
     const filtroColaborador = document.getElementById('filtroColaborador');
-    if (!filtroColaborador) {
-      console.error('No se encontró el select filtroColaborador');
-      return;
-    }
+    if (!filtroColaborador) throw new Error('No se encontró el select filtroColaborador');
 
     filtroColaborador.innerHTML = '';
     const defaultOption = document.createElement('option');
@@ -139,6 +118,7 @@ async function cargarFiltroColaboradores() {
 
   } catch (error) {
     console.error('Error cargando colaboradores para filtro:', error);
+    alert('Error cargando colaboradores para filtro: ' + error.message);
   }
 }
 
@@ -173,7 +153,7 @@ async function cargarListadoRoles(filtroMes = '', filtroColaborador = '') {
     if ([...params].length > 0) url += `?${params.toString()}`;
 
     const res = await fetch(url);
-    if (!res.ok) throw new Error('Error al obtener roles');
+    if (!res.ok) throw new Error(`Error al obtener roles: ${res.status} ${res.statusText}`);
     const roles = await res.json();
 
     if (roles.length === 0) {
@@ -202,29 +182,39 @@ async function cargarListadoRoles(filtroMes = '', filtroColaborador = '') {
     });
   } catch (error) {
     tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error al cargar roles</td></tr>`;
-    console.error(error);
+    console.error('Error en cargarListadoRoles:', error);
+    alert('Error al cargar listado de roles: ' + error.message);
   }
 }
 
 // Función init que activa el submit para crear rol
 function init() {
-  cargarColaboradores();
-
   const form = document.getElementById('formularioRol');
   if (!form) return;
 
-  form.addEventListener('submit', async function (e) {
+  const mensajeDiv = document.getElementById('mensaje');
+  if (!mensajeDiv) return;
+
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const id_trabajador = document.getElementById('colaboradoresSelect').value;
-    const periodo = document.getElementById('periodo').value;
-    const salario = parseFloat(document.getElementById('salario').value);
-    const cantidad_horas_extra = parseFloat(document.getElementById('cantidad_horas_extra').value) || 0;
-    const decimos = parseFloat(document.getElementById('decimos').value) || 0;
-    const bonos = parseFloat(document.getElementById('bonos').value) || 0;
-    const descuentos = parseFloat(document.getElementById('descuentos').value) || 0;
+    const id_trabajadorEl = document.getElementById('colaboradoresSelect');
+    const periodoEl = document.getElementById('periodo');
+    const salarioEl = document.getElementById('salario');
+    const horasExtraEl = document.getElementById('cantidad_horas_extra');
+    const decimosEl = document.getElementById('decimos');
+    const bonosEl = document.getElementById('bonos');
+    const descuentosEl = document.getElementById('descuentos');
 
-    const mensajeDiv = document.getElementById('mensaje');
+    if (!id_trabajadorEl || !periodoEl || !salarioEl) return;
+
+    const id_trabajador = id_trabajadorEl.value;
+    const periodo = periodoEl.value;
+    const salario = parseFloat(salarioEl.value);
+    const cantidad_horas_extra = parseFloat(horasExtraEl?.value) || 0;
+    const decimos = parseFloat(decimosEl?.value) || 0;
+    const bonos = parseFloat(bonosEl?.value) || 0;
+    const descuentos = parseFloat(descuentosEl?.value) || 0;
 
     if (!id_trabajador) {
       mensajeDiv.textContent = 'Por favor, seleccione un colaborador.';
@@ -244,15 +234,7 @@ function init() {
       return;
     }
 
-    const data = {
-      id_trabajador,
-      periodo,
-      salario,
-      cantidad_horas_extra,
-      decimos,
-      bonos,
-      descuentos,
-    };
+    const data = { id_trabajador, periodo, salario, cantidad_horas_extra, decimos, bonos, descuentos };
 
     try {
       const res = await fetch('/rolpago/crear', {
@@ -267,14 +249,20 @@ function init() {
         mensajeDiv.textContent = result.mensaje || 'Rol de pago generado exitosamente.';
         mensajeDiv.className = 'text-success mt-3';
         form.reset();
+
+        // actualizar listado solo para el colaborador creado
+        const filtroMesVal = document.getElementById('filtroMes')?.value || '';
+        cargarListadoRoles(filtroMesVal, id_trabajador);
       } else {
         mensajeDiv.textContent = result.mensaje || 'Error al generar rol de pago.';
         mensajeDiv.className = 'text-danger mt-3';
+        console.error('Error al crear rol:', result);
       }
     } catch (error) {
       mensajeDiv.textContent = 'Error de conexión al generar rol de pago.';
       mensajeDiv.className = 'text-danger mt-3';
-      console.error(error);
+      console.error('Error en fetch /rolpago/crear:', error);
+      alert('Error de conexión: ' + error.message);
     }
   });
 }
@@ -295,19 +283,13 @@ function configurarSpaLinks() {
 
 window.addEventListener('popstate', function(event) {
   const url = event.state?.url || window.location.pathname;
-
-  // Si la URL es dashboard gerente, hacer recarga completa al usar atrás
-  if (url.startsWith('/dashboard/gerente')) {
-    window.location.href = url;
-  } else {
-    if (url) window.loadContent(url);
-  }
+  if (url) window.loadContent(url);
 });
 
-// <-- Corrección: cargar contenido dinámico en carga de página para rutas SPA
 document.addEventListener('DOMContentLoaded', () => {
   configurarSpaLinks();
 
+  // Si se recarga la página directamente en una ruta SPA, cargar contenido
   const rutasSpa = ['/rolpago/crear', '/rolpago/ver', '/rolpago/listar'];
   if (rutasSpa.includes(window.location.pathname)) {
     window.loadContent(window.location.pathname);

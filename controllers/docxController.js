@@ -27,7 +27,7 @@ exports.generateContract = async (req, res) => {
     // Formatear fechas
     const now = new Date();
     const fecha = format(now, 'dd/MM/yyyy');
-    const fecha1 = format(now, "d 'de' MMMM 'del' yyyy", { locale: es });
+    const fecha1 = format(now, "d 'de' MMMM 'del' yyyy", { locale: "es-EC", timeZone: "America/Guayaquil"});
     const hora = format(now, 'HH:mm');
 
     // Ruta de la plantilla y del DOCX resultante
