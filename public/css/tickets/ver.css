@@ -157,6 +157,52 @@ pre {
   color: white;
   text-decoration: none;
 }
+/* Estilo base para botones */
+.btn-custom {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+/* Botón volver */
+.btn-back {
+  background-color: #ffffff;
+  border: 2px solid #0d6efd;
+  color: #0d6efd;
+}
+.btn-back:hover {
+  background-color: #0d6efd;
+  color: #ffffff;
+}
+
+/* Botón PDF */
+.btn-pdf {
+  background-color: #dc3545;
+  border: 2px solid #dc3545;
+  color: #ffffff;
+}
+.btn-pdf:hover {
+  background-color: #b02a37;
+  border-color: #b02a37;
+  color: #ffffff;
+}
+
+/* Contenedor de botones */
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
 
 /* Responsive: en pantallas pequeñas, que la info quede vertical */
 @media (max-width: 991.98px) {

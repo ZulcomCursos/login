@@ -130,4 +130,34 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+const statusFilter = document.getElementById('statusFilter');
+const priorityFilter = document.getElementById('priorityFilter'); // 🔹 nuevo
+const searchFilter = document.getElementById('searchFilter');     // 🔹 nuevo
+const filas = document.querySelectorAll('tbody tr');
+
+function aplicarFiltro() {
+  const estado = statusFilter.value.toLowerCase();
+  const prioridad = (priorityFilter?.value || 'todas').toLowerCase();
+  const texto = (searchFilter?.value || '').trim().toLowerCase();
+
+  filas.forEach(fila => {
+    const filaEstado = (fila.getAttribute('data-status') || '').toLowerCase();
+    const filaPrio = (fila.getAttribute('data-priority') || '').toLowerCase();
+    const filaTexto = (fila.getAttribute('data-search') || fila.innerText).toLowerCase();
+
+    const okEstado = (estado === 'todos' || estado === filaEstado);
+    const okPrio = (prioridad === 'todas' || prioridad === filaPrio);
+    const okTexto = (texto === '' || filaTexto.includes(texto));
+
+    fila.style.display = (okEstado && okPrio && okTexto) ? '' : 'none';
+  });
+}
+
+// Eventos
+statusFilter.addEventListener('change', aplicarFiltro);
+priorityFilter?.addEventListener('change', aplicarFiltro);
+searchFilter?.addEventListener('input', aplicarFiltro);
+
+// Ejecutar al cargar (respetando que "Abiertos" esté seleccionado por defecto)
+window.addEventListener('DOMContentLoaded', aplicarFiltro);
 

@@ -7,57 +7,141 @@
   <title>Detalle del Ticket</title>
   <link rel="stylesheet" href="/css/dashboard/navbar.css" />
   <link rel="stylesheet" href="/css/dashboard/dashboard.css" />
+  <link rel="stylesheet" href="/css/tickets/ver.css" />
+  <!-- FontAwesome -->
+  <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <div class="dashboard-container">
     <%- include('../partials/navtecnico') %>
 
-      <main class="main-content">
-        <header class="content-header">
-          <h1>PANEL TÉCNICO</h1>
-          <div class="user-actions">
-            <div>
-              <a href="/auth/change-password">
-                <img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil" />
-              </a>
-            </div>
-
-            <% if (user && user.nombres && user.apellidos) { %>
-              <span class="user-name">Técnico: <%= user.nombres %> <%= user.apellidos %></span>
-            <% } %>
-            <a href="/auth/logout" class="logout-btn"
-              onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
+    <main class="main-content">
+      <header class="content-header">
+        <h1>PANEL TÉCNICO</h1>
+        <div class="user-actions">
+          <div>
+            <a href="/auth/change-password">
+              <img src="/img/logo-perfil.png" alt="Logo Perfil" class="img-perfil" />
+            </a>
           </div>
-        </header>
 
-        <section class="ticket-info">
-          <h2>Información del Cliente</h2>
-          <p><strong>Cliente:</strong> <%= ticket.client ? ticket.client.nombre + " " + ticket.client.apellido : "Sin cliente" %></p>
-          <p><strong>Cédula:</strong> <%= ticket.client?.cedula || "-" %></p>
-          <p><strong>IP:</strong> <%= ticket.client?.ip || "-" %></p>
-          <p><strong>Teléfono:</strong> <%= ticket.client?.telefono1 || "-" %></p>
-          <p><strong>Dirección:</strong> <%= ticket.client?.direccion || "-" %></p>
-          <p><strong>Referencia:</strong> <%= ticket.client?.referencias || "-" %></p>
+          <% if (user && user.nombres && user.apellidos) { %>
+            <span class="user-name">Técnico: <%= user.nombres %> <%= user.apellidos %></span>
+          <% } %>
+          <a href="/auth/logout" class="logout-btn"
+            onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
+        </div>
+      </header>
 
-          <h2>Información del Ticket</h2>
-          <p><strong>Número de Ticket:</strong> <%= ticket.ticketNumber %></p>
-          <p><strong>Tipo de Problema:</strong> <%= ticket.issueType %></p>
-          <p><strong>Descripción:</strong> <%= ticket.description %></p>
-          <p><strong>Estado:</strong> <%= ticket.status %></p>
-          <p><strong>Hora de Visita:</strong> <%= ticket.horaVisita || "—" %></p>
-          <p><strong>Solución:</strong> <%= ticket.solution || "—" %></p>
-          <p><strong>Precio:</strong> <%= ticket.precio || "—" %></p>
-          <p><strong>Fecha de Solución:</strong> <%= ticket.solutionDate || "—" %></p>
-          <p><strong>Hora de Solución:</strong> <%= ticket.solutionTime || "—" %></p>
-
-          <!-- Botones de acción -->
-          <div class="acciones">
-            <a href="/tecnico" class="btn btn-volver"> Volver</a>
-            <a href="/tecnico/<%= ticket.id %>/pdf" class="btn btn-pdf"> Generar PDF</a>
+      <!-- Tarjeta Cliente -->
+      <div class="container">
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-user"></i> Información del Cliente
           </div>
-        </section>
-      </main>
+          <div class="card-body">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <i class="fas fa-id-badge"></i>
+                <div>
+                  <div class="fw-bold">Cliente</div>
+                  <div><%= ticket.client ? ticket.client.nombre + " " + ticket.client.apellido : "Sin cliente" %></div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-address-card"></i>
+                <div>
+                  <div class="fw-bold">Cédula</div>
+                  <div><%= ticket.client?.cedula || "-" %></div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-network-wired"></i>
+                <div>
+                  <div class="fw-bold">IP</div>
+                  <div><%= ticket.client?.ip || "-" %></div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-phone"></i>
+                <div>
+                  <div class="fw-bold">Teléfono</div>
+                  <div><%= ticket.client?.telefono1 || "-" %></div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                  <div class="fw-bold">Dirección</div>
+                  <div><%= ticket.client?.direccion || "-" %></div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-info-circle"></i>
+                <div>
+                  <div class="fw-bold">Referencia</div>
+                  <div><%= ticket.client?.referencias || "-" %></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tarjeta Ticket -->
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-ticket-alt"></i> Información del Ticket
+          </div>
+          <div class="card-body">
+            <dl class="row">
+              <dt class="col-sm-4">Número de Ticket:</dt>
+              <dd class="col-sm-8"><%= ticket.ticketNumber %></dd>
+
+              <dt class="col-sm-4">Tipo de Problema:</dt>
+              <dd class="col-sm-8"><%= ticket.issueType %></dd>
+
+              <dt class="col-sm-4">Descripción:</dt>
+              <dd class="col-sm-8"><pre><%= ticket.description %></pre></dd>
+
+              <dt class="col-sm-4">Estado:</dt>
+              <dd class="col-sm-8"><%= ticket.status %></dd>
+
+              <dt class="col-sm-4">Hora de Visita:</dt>
+              <dd class="col-sm-8"><%= ticket.horaVisita || "—" %></dd>
+
+              <dt class="col-sm-4">Prioridad:</dt>
+              <dd class="col-sm-8">
+                <span class="badge 
+                  <%= ticket.priority === 'Alta' ? 'bg-danger' : 
+                      ticket.priority === 'Media' ? 'bg-warning text-dark' : 
+                      'bg-success' %>">
+                  <%= ticket.priority %>
+                </span>
+              </dd>
+
+              <dt class="col-sm-4">Solución:</dt>
+              <dd class="col-sm-8"><%= ticket.solution || "—" %></dd>
+
+              <dt class="col-sm-4">Precio:</dt>
+              <dd class="col-sm-8"><%= ticket.precio || "—" %></dd>
+
+              <dt class="col-sm-4">Fecha de Solución:</dt>
+              <dd class="col-sm-8"><%= ticket.solutionDate || "—" %></dd>
+
+              <dt class="col-sm-4">Hora de Solución:</dt>
+              <dd class="col-sm-8"><%= ticket.solutionTime || "—" %></dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="acciones">
+          <a href="/tecnico" class="btn-custom btn-back">⬅ Volver</a>
+          <a href="/tecnico/<%= ticket.id %>/pdf" class="btn-custom btn-pdf">📄 Generar PDF</a>
+        </div>
+      </div>
+    </main>
   </div>
 </body>
 

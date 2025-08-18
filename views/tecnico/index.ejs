@@ -5,9 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZULCOM - Técnico</title>
+
+  <!-- Tus CSS -->
   <link rel="stylesheet" href="/css/dashboard/navbar.css" />
   <link rel="stylesheet" href="/css/dashboard/dashboard.css" />
-  <link rel="stylesheet" href="/css/tecnico/index.css" />
+  <link rel="stylesheet" href="/css/tickets/tabla.css" />
+
+  <!-- Iconos (opcional) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -25,27 +30,51 @@
             </div>
 
             <% if (user && user.nombres && user.apellidos) { %>
-              <span class="user-name">Técnico: <%= user.nombres %> <%= user.apellidos %></span>
-            <% } %>
-            <a href="/auth/logout" class="logout-btn"
-              onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
+              <span class="user-name">Técnico: <%= user.nombres %>
+                  <%= user.apellidos %></span>
+              <% } %>
+                <a href="/auth/logout" class="logout-btn"
+                  onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
           </div>
-        </header>
+      </header>
 
-        <!-- 🔽 Filtro -->
-        <div class="filtro-tickets">
-          <label for="statusFilter">Filtrar por estado:</label>
-          <select id="statusFilter">
+      <!-- 🔽 Filtro avanzado (adaptado a tu CSS). Sin botón Aplicar -->
+      <form id="filtroAvanzadoForm" onsubmit="return false;">
+        <!-- Estado -->
+        <div>
+          <label for="statusFilter" class="form-label">Estado:</label>
+          <select id="statusFilter" class="form-select">
             <option value="todos">Todos</option>
             <option value="abierto" selected>Abiertos</option>
             <option value="cerrado">Cerrados</option>
           </select>
         </div>
 
+        <!-- Prioridad -->
+        <div>
+          <label for="priorityFilter" class="form-label">Prioridad:</label>
+          <select id="priorityFilter" class="form-select">
+            <option value="todas" selected>Todas</option>
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
+          </select>
+        </div>
+
+
+        <!-- Botón Limpiar (usa tu estilo y resetea al instante) -->
+        <div class="col-12 text-end">
+          <button type="reset" class="btn btn-secondary"><i class="bi bi-eraser"></i> Limpiar</button>
+        </div>
+      </form>
+
+      <!-- 🔽 Contenido -->
+      <div class="dashboard-content">
         <h2>Listado de Tickets</h2>
 
-        <div class="dashboard-content">
-          <table class="table table-bordered table-hover">
+        <!-- contenedor responsivo (coincide con tu CSS) -->
+        <div class="table-responsive">
+          <table class="table">
             <thead>
               <tr>
                 <th>Número</th>
@@ -60,60 +89,57 @@
                 <th>Acción</th>
               </tr>
             </thead>
-            <tbody>
-              <% tickets.forEach(ticket => { %>
-                <tr data-status="<%= ticket.status %>">
+            <tbody id="tablaTickets">
+              <% tickets.forEach(ticket => { 
+                   const clienteNombre = ticket.client ? `${ticket.client.nombre} ${ticket.client.apellido}` : '';
+                   const telefono = ticket.client?.telefono1 || '';
+                   const direccion = ticket.client?.direccion || '';
+                   const referencias = ticket.client?.referencias || '';
+                   const searchBlob = `${ticket.ticketNumber} ${clienteNombre} ${telefono} ${direccion} ${referencias} ${ticket.issueType} ${ticket.description}`.trim();
+              %>
+                <tr
+                  data-status="<%= ticket.status %>"
+                  data-priority="<%= ticket.priority %>"
+                  data-search="<%- searchBlob %>">
                   <td><%= ticket.ticketNumber %></td>
-                  <td><%= ticket.client ? `${ticket.client.nombre} ${ticket.client.apellido}` : 'Cliente no asignado' %></td>
-                  <td><%= ticket.client?.telefono1 || 'Sin teléfono' %></td>
-                  <td><%= ticket.client?.direccion || 'Sin dirección' %></td>
-                  <td><%= ticket.client?.referencias || 'Sin referencia' %></td>
+                  <td><%= clienteNombre || 'Cliente no asignado' %></td>
+                  <td><%= telefono || 'Sin teléfono' %></td>
+                  <td><%= direccion || 'Sin dirección' %></td>
+                  <td><%= referencias || 'Sin referencia' %></td>
                   <td><%= ticket.issueType %></td>
                   <td><%= ticket.description %></td>
                   <td><%= ticket.horaVisita || '—' %></td>
                   <td>
-                    <span class="badge <%= ticket.priority === 'Alta' ? 'bg-danger' : ticket.priority === 'Media' ? 'bg-warning text-dark' : 'bg-success' %>">
+                    <span class="badge <%= ticket.priority === 'Alta'
+                                            ? 'bg-danger'
+                                            : ticket.priority === 'Media'
+                                              ? 'bg-warning'
+                                              : 'bg-success' %>">
                       <%= ticket.priority %>
                     </span>
                   </td>
                   <td>
-                    <% if(ticket.status === 'abierto') { %>
-                      <a href="/tecnico/<%= ticket.id %>/resolver" class="btn btn-success">Aceptar</a>
-                    <% } %>
-                    <a href="/tecnico/<%= ticket.id %>/ver" class="btn btn-info">Ver Información</a>
+                    <div class="acciones-container">
+                      <% if(ticket.status === 'abierto') { %>
+                        <a href="/tecnico/<%= ticket.id %>/resolver" class="btn-accion warning">
+                          <i class="bi bi-check2-circle"></i>&nbsp;Aceptar
+                        </a>
+                      <% } %>
+                      <a href="/tecnico/<%= ticket.id %>/ver" class="btn-accion info">
+                        <i class="bi bi-eye"></i>&nbsp;Ver
+                      </a>
+                    </div>
                   </td>
                 </tr>
               <% }) %>
             </tbody>
           </table>
         </div>
-
-      </main>
+      </div>
+    </main>
   </div>
-  
-  <!-- 🔽 Script filtro -->
-  <script>
-    const filtro = document.getElementById('statusFilter');
-    const filas = document.querySelectorAll('tbody tr');
 
-    function aplicarFiltro() {
-      const valor = filtro.value;
-      filas.forEach(fila => {
-        const estado = fila.getAttribute('data-status');
-        if (valor === 'todos' || valor === estado) {
-          fila.style.display = '';
-        } else {
-          fila.style.display = 'none';
-        }
-      });
-    }
-
-    // Ejecutar cuando cambie el filtro
-    filtro.addEventListener('change', aplicarFiltro);
-
-    // Ejecutar al cargar (para mostrar solo abiertos al inicio)
-    window.addEventListener('DOMContentLoaded', aplicarFiltro);
-  </script>
+  <!-- Tu JS -->
+  <script src="/js/tickets/tickets.js"></script>
 </body>
-
 </html>

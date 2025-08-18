@@ -297,9 +297,14 @@ function configurarSpaLinks() {
   });
 }
 
+// CORRECCIÓN POPSTATE para que no se cargue dashboard dentro de otro
 window.addEventListener('popstate', function(event) {
   const url = event.state?.url || window.location.pathname;
-  if (url) window.loadContent(url);
+  if (url) {
+    const contentDiv = document.getElementById('contenido-dinamico');
+    if (contentDiv) contentDiv.innerHTML = ''; // Vaciar antes de cargar
+    window.loadContent(url);
+  }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
