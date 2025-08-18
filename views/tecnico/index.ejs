@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="/css/dashboard/navbar.css" />
   <link rel="stylesheet" href="/css/dashboard/dashboard.css" />
   <link rel="stylesheet" href="/css/tecnico/index.css" />
-  <!-- Puedes agregar aquí otros estilos necesarios para la tabla -->
 </head>
 
 <body>
@@ -26,14 +25,14 @@
             </div>
 
             <% if (user && user.nombres && user.apellidos) { %>
-              <span class="user-name">Técnico: <%= user.nombres %>
-                  <%= user.apellidos %></span>
-              <% } %>
-                <a href="/auth/logout" class="logout-btn"
-                  onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
+              <span class="user-name">Técnico: <%= user.nombres %> <%= user.apellidos %></span>
+            <% } %>
+            <a href="/auth/logout" class="logout-btn"
+              onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
           </div>
         </header>
 
+        <!-- 🔽 Filtro -->
         <div class="filtro-tickets">
           <label for="statusFilter">Filtrar por estado:</label>
           <select id="statusFilter">
@@ -49,49 +48,72 @@
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
-                <th>Número</th>/
-                <th>Cliente</th>/
+                <th>Número</th>
+                <th>Cliente</th>
                 <th>Celular</th>
-                <th>Dirección</th>/
+                <th>Dirección</th>
                 <th>Referencia</th>
                 <th>Tipo de Problema</th>
                 <th>Descripción</th>
                 <th>Hora Visita</th>
-                <th>Prioridad </th>
+                <th>Prioridad</th>
                 <th>Acción</th>
               </tr>
             </thead>
             <tbody>
-  <% tickets.forEach(ticket => { %>
-    <tr data-status="<%= ticket.status %>">
-      <td><%= ticket.ticketNumber %></td>
-      <td><%= ticket.client ? `${ticket.client.nombre} ${ticket.client.apellido}` : 'Cliente no asignado' %></td>
-      <td><%= ticket.client?.telefono1 || 'Sin teléfono' %></td>
-      <td><%= ticket.client?.direccion || 'Sin dirección' %></td>
-      <td><%= ticket.client?.referencias || 'Sin referencia' %></td>
-      <td><%= ticket.issueType %></td>
-      <td><%= ticket.description %></td>
-      <td><%= ticket.horaVisita || '—' %></td>
-      <td>
-        <span class="badge <%= ticket.priority === 'Alta' ? 'bg-danger' : ticket.priority === 'Media' ? 'bg-warning text-dark' : 'bg-success' %>">
-          <%= ticket.priority %>
-        </span>
-      </td>
-      <td>
-        <% if(ticket.status === 'abierto') { %>
-          <a href="/tecnico/<%= ticket.id %>/resolver" class="btn btn-success">Aceptar</a>
-        <% } %>
-        <a href="/tecnico/<%= ticket.id %>/ver" class="btn btn-info">Ver Información</a>
-      </td>
-    </tr>
-  <% }) %>
-</tbody>
-
+              <% tickets.forEach(ticket => { %>
+                <tr data-status="<%= ticket.status %>">
+                  <td><%= ticket.ticketNumber %></td>
+                  <td><%= ticket.client ? `${ticket.client.nombre} ${ticket.client.apellido}` : 'Cliente no asignado' %></td>
+                  <td><%= ticket.client?.telefono1 || 'Sin teléfono' %></td>
+                  <td><%= ticket.client?.direccion || 'Sin dirección' %></td>
+                  <td><%= ticket.client?.referencias || 'Sin referencia' %></td>
+                  <td><%= ticket.issueType %></td>
+                  <td><%= ticket.description %></td>
+                  <td><%= ticket.horaVisita || '—' %></td>
+                  <td>
+                    <span class="badge <%= ticket.priority === 'Alta' ? 'bg-danger' : ticket.priority === 'Media' ? 'bg-warning text-dark' : 'bg-success' %>">
+                      <%= ticket.priority %>
+                    </span>
+                  </td>
+                  <td>
+                    <% if(ticket.status === 'abierto') { %>
+                      <a href="/tecnico/<%= ticket.id %>/resolver" class="btn btn-success">Aceptar</a>
+                    <% } %>
+                    <a href="/tecnico/<%= ticket.id %>/ver" class="btn btn-info">Ver Información</a>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
           </table>
         </div>
 
       </main>
   </div>
+  
+  <!-- 🔽 Script filtro -->
+  <script>
+    const filtro = document.getElementById('statusFilter');
+    const filas = document.querySelectorAll('tbody tr');
+
+    function aplicarFiltro() {
+      const valor = filtro.value;
+      filas.forEach(fila => {
+        const estado = fila.getAttribute('data-status');
+        if (valor === 'todos' || valor === estado) {
+          fila.style.display = '';
+        } else {
+          fila.style.display = 'none';
+        }
+      });
+    }
+
+    // Ejecutar cuando cambie el filtro
+    filtro.addEventListener('change', aplicarFiltro);
+
+    // Ejecutar al cargar (para mostrar solo abiertos al inicio)
+    window.addEventListener('DOMContentLoaded', aplicarFiltro);
+  </script>
 </body>
 
 </html>

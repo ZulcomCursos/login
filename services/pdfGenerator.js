@@ -20,19 +20,21 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
 
   const doc = new PDFDocument({ margin: 50, size: 'A4' });
 
+  // Tomar primer rol
+  const rol = roles[0];
+
   // Nombre completo desde colaborador
   const nombreCompleto = `${colaborador.nombres} ${colaborador.apellidos}`;
 
   const fechaCreacion = new Date().toLocaleString('es-EC', {
-  dateStyle: 'short',
-  timeStyle: 'short'
-});
+    dateStyle: 'short',
+    timeStyle: 'short'
+  });
 
   // Datos desde colaborador
   const cedula = colaborador.cedula || 'N/A';
   const cargo = colaborador.cargo || 'N/A';
-
-  
+  const periodo = rol.periodo || 'N/A';
 
   const moradoLogo = '#443fcc';
 
@@ -71,7 +73,7 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
     .strokeColor(moradoLogo)
     .stroke();
 
-  // Datos colaborador
+  // Datos colaborador con periodo
   doc
     .fontSize(11)
     .fillColor('black')
@@ -79,11 +81,10 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
     .text(`Colaborador: ${nombreCompleto}`, 50, 120)
     .text(`Cédula: ${cedula}`, 50, 140)
     .text(`Cargo: ${cargo}`, 300, 120)
+    .text(`Periodo: ${periodo}`, 300, 140)
     .text(`Fecha de Creación: ${fechaCreacion}`, 50, 160);
 
-  // Tabla con rol[0]
-  let startY = 190;
-  const rol = roles[0];
+  // Valores del rol
   const salario = toNumber(rol.salario);
   const cantidadHorasExtra = toNumber(rol.horas_extra);
   const valorHorasExtra = toNumber(rol.valor_horas_extras);
@@ -93,6 +94,7 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
   const aporteEmpleador = toNumber(rol.aporte_empleador);
   const total = toNumber(rol.total);
 
+  let startY = 190;
   const tableX = 50;
   const colWidth = 220;
   const rowHeight = 20;
@@ -103,13 +105,10 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
     .fontSize(13)
     .fillColor(moradoLogo)
     .font('Helvetica-Bold')
-    .text('HABERES', tableX, startY);
-
-  doc
+    .text('HABERES', tableX, startY)
     .text('DESCUENTOS', tableX + colWidth + gapBetweenCols, startY);
 
   startY += 25;
-
   doc
     .fontSize(11)
     .fillColor('black')
@@ -120,30 +119,31 @@ const generarPDFColaborador = async (res, colaborador, roles, id) => {
   doc.text(`$${salario.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
   startY += rowHeight;
 
-doc.text('Horas extras trabajadas:', tableX, startY);
-doc.text(`${cantidadHorasExtra} horas`, tableX + 130, startY, { width: 80, align: 'right' });
-startY += rowHeight;
+  doc.text('Horas extras trabajadas:', tableX, startY);
+  doc.text(`${cantidadHorasExtra} horas`, tableX + 130, startY, { width: 80, align: 'right' });
+  startY += rowHeight;
 
-doc.text('Pago horas extras:', tableX, startY);
-doc.text(`$${valorHorasExtra.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
-startY += rowHeight;
+  doc.text('Pago horas extras:', tableX, startY);
+  doc.text(`$${valorHorasExtra.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
+  startY += rowHeight;
+
+  let descY = startY - (2 * rowHeight);
+
+  doc.text('Bonos:', tableX, startY);
+  doc.text(`$${bonos.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
+  startY += rowHeight;
+
   // Descuentos
-let descY = startY - (2 * rowHeight);
+  doc.text('Descuentos:', tableX + colWidth + gapBetweenCols, descY);
+  doc.text(`$${descuentos.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
+  descY += rowHeight;
 
-doc.text('Bonos:', tableX, startY);
-doc.text(`$${bonos.toFixed(2)}`, tableX + 130, startY, { width: 80, align: 'right' });
-startY += rowHeight;
+  doc.text('Aporte IESS:', tableX + colWidth + gapBetweenCols, descY);
+  doc.text(`$${aporteIess.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
+  descY += rowHeight;
 
-doc.text('Descuentos:', tableX + colWidth + gapBetweenCols, descY);
-doc.text(`$${descuentos.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
-descY += rowHeight;
-
-doc.text('Aporte IESS:', tableX + colWidth + gapBetweenCols, descY);
-doc.text(`$${aporteIess.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
-descY += rowHeight;  // Aquí incrementamos la Y para la siguiente línea
-
-doc.text('Aporte Empleador:', tableX + colWidth + gapBetweenCols, descY);
-doc.text(`$${aporteEmpleador.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
+  doc.text('Aporte Empleador:', tableX + colWidth + gapBetweenCols, descY);
+  doc.text(`$${aporteEmpleador.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 130, descY, { width: 80, align: 'right' });
 
   // Total neto
   startY += 50;
@@ -178,14 +178,12 @@ doc.text(`$${aporteEmpleador.toFixed(2)}`, tableX + colWidth + gapBetweenCols + 
     .moveTo(tableX, startY)
     .lineTo(tableX + 200, startY)
     .stroke();
-
   doc.text('Firma Empleado', tableX, startY + 5);
 
   doc
     .moveTo(tableX + 300, startY)
     .lineTo(tableX + 495, startY)
     .stroke();
-
   doc.text('Firma Gerente', tableX + 300, startY + 5);
 
   doc.end();

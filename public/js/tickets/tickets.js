@@ -131,19 +131,3 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-
-  const filtro = document.getElementById('statusFilter');
-  const filas = document.querySelectorAll('tbody tr');
-
-  filtro.addEventListener('change', () => {
-    const valor = filtro.value; // 'abierto', 'cerrado' o 'todos'
-    filas.forEach(fila => {
-      const estado = fila.getAttribute('data-status');
-      if(valor === 'todos' || valor === estado){
-        fila.style.display = '';
-      } else {
-        fila.style.display = 'none';
-      }
-    });
-  });
-
