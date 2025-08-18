@@ -45,7 +45,7 @@ window.loadContent = async function(url) {
       if (!document.getElementById('script-roles-pago')) {
         const script = document.createElement('script');
         script.id = 'script-roles-pago';
-        script.src = '/ver_roles/script.js?t=' + new Date().getTime();
+        script.src = '/js/ver_roles/script.js?t=' + new Date().getTime();
         script.onload = () => { if (typeof initRolesPago === 'function') initRolesPago(); };
         script.onerror = () => console.error('Error al cargar script.js de Ver Roles de Pago');
         document.body.appendChild(script);
@@ -187,8 +187,23 @@ async function cargarListadoRoles(filtroMes = '', filtroColaborador = '') {
   }
 }
 
+// Función para llenar el periodo automáticamente
+function llenarPeriodoActual() {
+  const periodoEl = document.getElementById('periodo');
+  if (!periodoEl) return;
+
+  const hoy = new Date();
+  const anio = hoy.getFullYear();
+  let mes = hoy.getMonth() + 1;
+  if (mes < 10) mes = '0' + mes;
+
+  periodoEl.value = `${anio}-${mes}`;
+}
+
 // Función init que activa el submit para crear rol
 function init() {
+  llenarPeriodoActual(); // <<--- LLENADO AUTOMÁTICO DEL PERIODO
+
   const form = document.getElementById('formularioRol');
   if (!form) return;
 
@@ -249,6 +264,7 @@ function init() {
         mensajeDiv.textContent = result.mensaje || 'Rol de pago generado exitosamente.';
         mensajeDiv.className = 'text-success mt-3';
         form.reset();
+        llenarPeriodoActual(); // resetear periodo al valor actual
 
         // actualizar listado solo para el colaborador creado
         const filtroMesVal = document.getElementById('filtroMes')?.value || '';
@@ -289,7 +305,6 @@ window.addEventListener('popstate', function(event) {
 document.addEventListener('DOMContentLoaded', () => {
   configurarSpaLinks();
 
-  // Si se recarga la página directamente en una ruta SPA, cargar contenido
   const rutasSpa = ['/rolpago/crear', '/rolpago/ver', '/rolpago/listar'];
   if (rutasSpa.includes(window.location.pathname)) {
     window.loadContent(window.location.pathname);

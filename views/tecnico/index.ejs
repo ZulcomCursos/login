@@ -33,6 +33,16 @@
                   onclick="return confirm('¿Estás seguro de cerrar sesión?')">Cerrar Sesión</a>
           </div>
         </header>
+
+        <div class="filtro-tickets">
+          <label for="statusFilter">Filtrar por estado:</label>
+          <select id="statusFilter">
+            <option value="todos">Todos</option>
+            <option value="abierto" selected>Abiertos</option>
+            <option value="cerrado">Cerrados</option>
+          </select>
+        </div>
+
         <h2>Listado de Tickets</h2>
 
         <div class="dashboard-content">
@@ -46,62 +56,37 @@
                 <th>Referencia</th>
                 <th>Tipo de Problema</th>
                 <th>Descripción</th>
-                <th>Prioridad </th>
                 <th>Hora Visita</th>
+                <th>Prioridad </th>
                 <th>Acción</th>
               </tr>
             </thead>
             <tbody>
-              <% tickets.forEach(ticket=> { %>
-                <tr>
-                  <td>
-                    <%= ticket.ticketNumber %>
-                  </td>
-                  <td>
-                    <% if (ticket.client) { %>
-                      <div>
-                          <%= ticket.client.apellido %>
-                        </div>
-                      <div>
-                        <%= ticket.client.nombre %>
-                      </div>
-                      <% } else { %>
-                        Cliente no asignado
-                        <% } %>
-                  </td>
-                  <td>
-                    <%= ticket.client?.telefono1 || 'Sin teléfono' %>
-                  </td>
-                  <td>
-                    <%= ticket.client?.direccion || 'Sin dirección' %>
-                  </td>
-                  <td>
-                    <%= ticket.client?.referencias || 'Sin referencia' %>
-                  </td>
-                  <td>
-                    <%= ticket.issueType %>
-                  </td>
-                  <td>
-                    <%= ticket.description %>
-                  </td>
-                  <td>
-                    <%= ticket.horaVisita || '—' %>
-                  </td>
-                  <td>
-                    <% if (ticket.status==='abierto' ) { %>
-                      <!-- Botón para aceptar -->
-                      <a href="/tecnico/<%= ticket.id %>/resolver" class="btn btn-success">Aceptar</a>
+  <% tickets.forEach(ticket => { %>
+    <tr data-status="<%= ticket.status %>">
+      <td><%= ticket.ticketNumber %></td>
+      <td><%= ticket.client ? `${ticket.client.nombre} ${ticket.client.apellido}` : 'Cliente no asignado' %></td>
+      <td><%= ticket.client?.telefono1 || 'Sin teléfono' %></td>
+      <td><%= ticket.client?.direccion || 'Sin dirección' %></td>
+      <td><%= ticket.client?.referencias || 'Sin referencia' %></td>
+      <td><%= ticket.issueType %></td>
+      <td><%= ticket.description %></td>
+      <td><%= ticket.horaVisita || '—' %></td>
+      <td>
+        <span class="badge <%= ticket.priority === 'Alta' ? 'bg-danger' : ticket.priority === 'Media' ? 'bg-warning text-dark' : 'bg-success' %>">
+          <%= ticket.priority %>
+        </span>
+      </td>
+      <td>
+        <% if(ticket.status === 'abierto') { %>
+          <a href="/tecnico/<%= ticket.id %>/resolver" class="btn btn-success">Aceptar</a>
+        <% } %>
+        <a href="/tecnico/<%= ticket.id %>/ver" class="btn btn-info">Ver Información</a>
+      </td>
+    </tr>
+  <% }) %>
+</tbody>
 
-                      <!-- Botón para generar PDF (si no existe aún) -->
-
-                      <% } %>
-                        <a href="/tecnico/<%= ticket.id %>/ver" class="btn btn-info">Ver Información</a>
-                  </td>
-
-
-                </tr>
-                <% }) %>
-            </tbody>
           </table>
         </div>
 

@@ -32,26 +32,10 @@
           </div>
 
           <div class="mb-3">
-            <label for="periodo" class="form-label">Periodo</label>
-            <select id="periodo" name="periodo" class="form-select" required>
-              <option value="" disabled selected>Seleccione un periodo</option>
-              <!-- Meses ejemplo 2024 y 2025 -->
-              <option value="2025-12">2025-12</option>
-              <option value="2025-11">2025-11</option>
-              <option value="2025-10">2025-10</option>
-              <option value="2025-09">2025-09</option>
-              <option value="2025-08">2025-08</option>
-              <option value="2025-07">2025-07</option>
-              <option value="2025-06">2025-06</option>
-              <option value="2025-05">2025-05</option>
-              <option value="2025-04">2025-04</option>
-              <option value="2025-03">2025-03</option>
-              <option value="2025-02">2025-02</option>
-              <option value="2025-01">2025-01</option>
-
-              
-            </select>
-          </div>
+              <label for="periodo" class="form-label">Periodo</label>
+              <!-- Ahora es un input readonly que se llena automáticamente -->
+              <input type="text" id="periodo" name="periodo" class="form-control" readonly />
+            </div>
 
           <div class="mb-3">
             <label for="horas_extra" class="form-label">Horas Extra</label>
