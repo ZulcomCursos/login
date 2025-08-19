@@ -22,7 +22,7 @@ const validatorRegisterStep1 = [
   check("apellidos")
     .exists().withMessage("Los apellidos son requeridos")
     .notEmpty().withMessage("Los apellidos no pueden estar vacios")
-    .isLength({min:3, max:99}).withMessage("Los apellidos deben tener mas de 3 caracteres"),
+    .isLength({min:8, max:99}).withMessage("Los apellidos deben tener mas de 10 caracteres"),
   check("email")
     .exists().withMessage("El email es requerido")
     .notEmpty().withMessage("El email no puede estar vacío")

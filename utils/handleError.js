@@ -7,7 +7,7 @@ const handleHttpError = (res, message = "Algo sucedió", code = 403) => {
   }
   
   // Para vistas
-  const view = res.req.originalUrl.includes('login') ? 'auth/login' : 'auth/register';
+  const view = res.req.originalUrl.includes('login') ? 'auth/login' : 'auth/register-step1';
   const title = res.req.originalUrl.includes('login') ? 'Iniciar Sesión' : 'Registro';
   
   return res.render(view, {

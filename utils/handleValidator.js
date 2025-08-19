@@ -8,8 +8,8 @@ const validateResults = (req, res, next) => {
       let view;
       if (req.originalUrl.includes('/login')) {
         view = 'auth/login';
-      } else if (req.originalUrl.includes('/register')) {
-        view = 'auth/register';
+      } else if (req.originalUrl.includes('/register-step1')) {
+        view = 'auth/register-step1';
       } else {
         view = 'auth/login'; // Vista por defecto
       }

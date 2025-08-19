@@ -80,11 +80,6 @@
                 <th>Número</th>
                 <th>Cliente</th>
                 <th>Celular</th>
-                <th>Dirección</th>
-                <th>Referencia</th>
-                <th>Tipo de Problema</th>
-                <th>Descripción</th>
-                <th>Hora Visita</th>
                 <th>Prioridad</th>
                 <th>Acción</th>
               </tr>
@@ -104,11 +99,6 @@
                   <td><%= ticket.ticketNumber %></td>
                   <td><%= clienteNombre || 'Cliente no asignado' %></td>
                   <td><%= telefono || 'Sin teléfono' %></td>
-                  <td><%= direccion || 'Sin dirección' %></td>
-                  <td><%= referencias || 'Sin referencia' %></td>
-                  <td><%= ticket.issueType %></td>
-                  <td><%= ticket.description %></td>
-                  <td><%= ticket.horaVisita || '—' %></td>
                   <td>
                     <span class="badge <%= ticket.priority === 'Alta'
                                             ? 'bg-danger'

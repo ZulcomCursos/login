@@ -7,33 +7,52 @@ const Cliente = require('../models/mysql/Cliente');
 const Plan = require('../models/mysql/Plan');
 
 exports.generateContract = async (req, res) => {
-  try {
-    const id = req.params.id;
+    try {
+        const id = req.params.id;
 
-    // Obtener datos del cliente usando Sequelize
-    const cliente = await Cliente.findByPk(id);
-    if (!cliente) {
-      return res.status(404).send('Cliente no encontrado');
-    }
+        // Obtener datos del cliente
+        const cliente = await Cliente.findByPk(id);
+        if (!cliente) {
+            return res.status(404).send('Cliente no encontrado');
+        }
 
-    // Obtener datos del plan
-    const plan = await Plan.findByPk(cliente.id_plan);
-    if (!plan) {
-      return res.status(404).send('Plan no encontrado');
-    }
+        // Obtener datos del plan
+        const plan = await Plan.findByPk(cliente.id_plan);
+        if (!plan) {
+            return res.status(404).send('Plan no encontrado');
+        }
 
-    const costo = Number(plan.costo);
+        const costo = Number(plan.costo);
 
-    // Formatear fechas
-    const now = new Date();
-    const fecha = format(now, 'dd/MM/yyyy');
-    const fecha1 = format(now, "d 'de' MMMM 'del' yyyy", { locale: "es-EC", timeZone: "America/Guayaquil"});
-    const hora = format(now, 'HH:mm');
+        // Obtener fecha y hora actual
+        const now = new Date();
+
+        // Formatear fechas con zona horaria de Ecuador usando toLocaleString
+        const fecha = now.toLocaleDateString('es-EC', {
+            timeZone: 'America/Guayaquil',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+
+        const fecha1 = now.toLocaleDateString('es-EC', {
+            timeZone: 'America/Guayaquil',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+
+        const hora = now.toLocaleTimeString('es-EC', {
+            timeZone: 'America/Guayaquil',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        });
 
     // Ruta de la plantilla y del DOCX resultante
     const templatePath = path.join(__dirname, '../templates/contrato_template.docx');
     const downloadsPath = '/tmp';
-    const outputFileName = `Contrato_${cliente.nombre}_${cliente.apellido}_${cliente.cedula}.docx`;
+    const outputFileName = `Contrato_${cliente.apellido}_${cliente.nombre}_.docx`;
     const outputPath = path.join(downloadsPath, outputFileName);
 
     // Datos para reemplazar en la plantilla
